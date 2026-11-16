@@ -2,7 +2,7 @@ export const profile = {
   name: 'Nour Oumousse',
   role: 'Brand Designer',
   location: 'Rabat, MA',
-  email: 'hey@heynour.com',
+  email: 'nour.oumousse@gmail.com',
   phone: '(+212) 669 83 11 52',
   status: 'Available for freelance — remote',
   tagline: [
