@@ -1,30 +1,60 @@
-# nouroumousse.github.io
+# Nour Oumousse — Portfolio
 
-Portfolio of **Nour Oumousse** — brand designer. A minimal, terminal-inspired rebuild
-of the old Carrd site (https://oumousse.carrd.co/).
+A minimal, techy portfolio built with **plain HTML, CSS and vanilla JS** — no frameworks, no build step. This means it can be deployed directly to **GitHub Pages** by pushing these files to your repo.
 
-## Stack
+## Deploy to GitHub Pages
 
-- [Vite](https://vite.dev) + React 19
-- [Tailwind CSS v4](https://tailwindcss.com) (via `@tailwindcss/vite`)
-- [Radix UI](https://www.radix-ui.com/primitives) headless primitives — Dialog (project case files + mobile menu), Tabs (experience/education/skills), Tooltip, Separator, Label, Slot
-- Fonts: Space Grotesk + IBM Plex Mono
+1. Create a repository named `username.github.io` (recommended), or any repo name.
+2. Push these three/four files to the repo's root (`index.html`, `styles.css`, `main.js`, `README.md`).
+3. Go to **Settings → Pages → Source** and select branch `main` / folder `/ (root)`.
+4. Your site will be live at `https://username.github.io/` (or `https://username.github.io/repo-name/`).
 
-## Sections
+That's it — no `npm install`, no `dist/` folder, no CI required.
 
-`hero → work → about → speaking & community → contact`
+## Optional: GitHub Actions auto-deploy (for non-user repos)
 
-All content lives in `src/data.js` — edit there to update projects, experience, talks and links.
+If you prefer Actions, add `.github/workflows/deploy.yml`:
 
-## Develop
-
-```bash
-npm install
-npm run dev      # http://localhost:5173
-npm run build    # outputs to dist/
+```yaml
+name: Deploy
+on:
+  push:
+    branches: [main]
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+jobs:
+  deploy:
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/configure-pages@v4
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: .   # upload repo root directly — nothing to build
+      - id: deployment
+        uses: actions/deploy-pages@v3
 ```
 
-## Deploy (GitHub Pages)
+## Local preview
 
-Push the contents of `dist/` to your `gh-pages` branch (or use an action that runs
-`npm run build` and deploys `dist/`).
+Any static server works, e.g.:
+
+```bash
+python3 -m http.server 8080
+# then open http://localhost:8080
+```
+
+## Structure
+
+| File | Purpose |
+|---|---|
+| `index.html` | All content: hero, work, experience, education, contact |
+| `styles.css` | Design system (dark, engineering grid, acid-lime accent) |
+| `main.js` | Copy-email button, scroll reveal animations, footer year |
+
+To edit projects/experience, just change the markup in `index.html`.
