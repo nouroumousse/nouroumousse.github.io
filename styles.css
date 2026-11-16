@@ -314,3 +314,19 @@ section:last-of-type { border-bottom: none; }
   .contact-actions { width: 100%; }
   .contact-actions .btn { flex: 1 1 auto; justify-content: center; }
 }
+
+
+/* Match the two contact actions exactly */
+.contact-actions .btn {
+  width: 160px;
+  min-height: 42px;
+  justify-content: center;
+  font-size: 0.75rem;
+  padding: 0.5rem 0.9rem;
+}
+@media (max-width: 420px) {
+  .contact-actions .btn {
+    width: auto;
+    flex: 1 1 0;
+  }
+}
