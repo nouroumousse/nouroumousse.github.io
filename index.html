@@ -1,17 +1,181 @@
 <!doctype html>
-<html lang="en" class="dark">
-  <head>
-    <meta charset="UTF-8" />
-    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta name="description" content="Nour Oumousse — Brand Designer. Minimal identities, app icons, type design. Rabat, Morocco." />
-    <title>NOUR_OUMOUSSE — brand designer</title>
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:ital,wght@0,300;0,400;0,500;1,400&family=Space+Grotesk:wght@300..700&display=swap" rel="stylesheet" />
-  </head>
-  <body>
-    <div id="root"></div>
-    <script type="module" src="/src/main.jsx"></script>
-  </body>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Nour Oumousse — Product Designer &amp; Frontend Engineer</title>
+<meta name="description" content="Nour Oumousse — product designer & frontend engineer. Portfolio: work, experience, education and contact." />
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' rx='6' fill='%230a0a0b'/><text x='16' y='22' font-family='monospace' font-size='16' fill='%23d4ff3f' text-anchor='middle'>N</text></svg>" />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;700&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+<div class="grid-bg" aria-hidden="true"></div>
+
+<header class="site-header">
+  <a class="logo" href="#top"><span class="accent">N</span>OUR<span class="accent">.</span>O</a>
+  <nav aria-label="Primary">
+    <a href="#work">work</a>
+    <a href="#experience">experience</a>
+    <a href="#education">education</a>
+    <a href="#contact">contact</a>
+  </nav>
+  <span class="status"><span class="dot"></span>available for work</span>
+</header>
+
+<main id="top">
+
+  <!-- ============ HERO ============ -->
+  <section class="hero" aria-label="Introduction">
+    <p class="kicker mono">// product design × frontend engineering</p>
+    <h1>I design interfaces<br />and ship the code<span class="accent">_</span></h1>
+    <p class="lede">Nour Oumousse — a designer-engineer hybrid building clean, fast, human products. Currently crafting design systems &amp; frontends that scale.</p>
+    <div class="hero-actions">
+      <a class="btn btn-primary" href="#work">view work <span aria-hidden="true">→</span></a>
+      <a class="btn" href="mailto:nour.oumousse@gmail.com">get in touch</a>
+    </div>
+    <dl class="hero-meta mono">
+      <div><dt>location</dt><dd>Remote / Europe</dd></div>
+      <div><dt>focus</dt><dd>UX · Design Systems · FE</dd></div>
+      <div><dt>stack</dt><dd>Figma · React · TS · Tailwind</dd></div>
+    </dl>
+  </section>
+
+  <!-- ============ WORK ============ -->
+  <section id="work" aria-labelledby="work-title">
+    <div class="section-head">
+      <h2 class="mono" id="work-title"><span class="accent">01</span> / selected_work</h2>
+      <span class="rule" aria-hidden="true"></span>
+    </div>
+    <div class="cards">
+      <article class="card">
+        <div class="card-top mono"><span>P01</span><span class="year">2025</span></div>
+        <h3>Lumen — Analytics Dashboard</h3>
+        <p>End-to-end design and frontend build of a real-time analytics platform. Dark-mode data viz, component library, 60fps charts.</p>
+        <ul class="tags mono"><li>Product Design</li><li>React</li><li>D3</li></ul>
+      </article>
+      <article class="card">
+        <div class="card-top mono"><span>P02</span><span class="year">2025</span></div>
+        <h3>Kite — Design System</h3>
+        <p>A token-driven design system spanning web + mobile. Documented with live components and automated visual regression.</p>
+        <ul class="tags mono"><li>Design Systems</li><li>Figma</li><li>Storybook</li></ul>
+      </article>
+      <article class="card">
+        <div class="card-top mono"><span>P03</span><span class="year">2024</span></div>
+        <h3>Sahara — E-commerce</h3>
+        <p>Headless storefront for a North-African lifestyle brand. Checkout conversion up 34% after UX overhaul.</p>
+        <ul class="tags mono"><li>UX/UI</li><li>Next.js</li><li>Shopify</li></ul>
+      </article>
+      <article class="card">
+        <div class="card-top mono"><span>P04</span><span class="year">2024</span></div>
+        <h3>Pulse — Fitness App</h3>
+        <p>Mobile-first training companion: adaptive plans, haptic feedback loops, offline-first sync.</p>
+        <ul class="tags mono"><li>Mobile Design</li><li>React Native</li></ul>
+      </article>
+      <article class="card">
+        <div class="card-top mono"><span>P05</span><span class="year">2023</span></div>
+        <h3>Atlas — SaaS Onboarding</h3>
+        <p>Redesigned onboarding flows for a B2B logistics SaaS. Time-to-value cut from days to under an hour.</p>
+        <ul class="tags mono"><li>UX Research</li><li>Prototyping</li></ul>
+      </article>
+      <article class="card">
+        <div class="card-top mono"><span>P06</span><span class="year">2023</span></div>
+        <h3>Noor — Portfolio CMS</h3>
+        <p>Minimal headless CMS + theme for photographers. Blazing static pages, editable anywhere.</p>
+        <ul class="tags mono"><li>Frontend</li><li>Headless CMS</li></ul>
+      </article>
+    </div>
+  </section>
+
+  <!-- ============ EXPERIENCE ============ -->
+  <section id="experience" aria-labelledby="exp-title">
+    <div class="section-head">
+      <h2 class="mono" id="exp-title"><span class="accent">02</span> / experience</h2>
+      <span class="rule" aria-hidden="true"></span>
+    </div>
+    <ol class="timeline">
+      <li>
+        <span class="tl-date mono">2024 — now</span>
+        <div>
+          <h3>Product Designer &amp; Frontend Engineer</h3>
+          <p class="tl-org">Freelance</p>
+          <p>Designing and building full product surfaces for startups: research → UI → production React. Own design systems, marketing sites and web apps end-to-end.</p>
+        </div>
+      </li>
+      <li>
+        <span class="tl-date mono">2022 — 2024</span>
+        <div>
+          <h3>UI/UX Designer</h3>
+          <p class="tl-org">Tech Studio</p>
+          <p>Shipped 15+ client products. Ran usability testing, built reusable component libraries, paired daily with engineers through handoff to launch.</p>
+        </div>
+      </li>
+      <li>
+        <span class="tl-date mono">2021 — 2022</span>
+        <div>
+          <h3>Frontend Developer (Intern → Junior)</h3>
+          <p class="tl-org">Digital Agency</p>
+          <p>Built responsive marketing sites and internal tools. Learned to translate design intent into accessible, performant interfaces.</p>
+        </div>
+      </li>
+    </ol>
+  </section>
+
+  <!-- ============ EDUCATION ============ -->
+  <section id="education" aria-labelledby="edu-title">
+    <div class="section-head">
+      <h2 class="mono" id="edu-title"><span class="accent">03</span> / education</h2>
+      <span class="rule" aria-hidden="true"></span>
+    </div>
+    <ol class="timeline">
+      <li>
+        <span class="tl-date mono">2019 — 2022</span>
+        <div>
+          <h3>B.Sc. Computer Science</h3>
+          <p class="tl-org">University</p>
+          <p>Focus on human-computer interaction, algorithms and web technologies.</p>
+        </div>
+      </li>
+      <li>
+        <span class="tl-date mono">ongoing</span>
+        <div>
+          <h3>Self-directed design track</h3>
+          <p class="tl-org">Courses &amp; practice</p>
+          <p>Continuous learning in UX research, typography, motion design and design systems.</p>
+        </div>
+      </li>
+    </ol>
+  </section>
+
+  <!-- ============ CONTACT ============ -->
+  <section id="contact" aria-labelledby="ct-title">
+    <div class="section-head">
+      <h2 class="mono" id="ct-title"><span class="accent">04</span> / contact</h2>
+      <span class="rule" aria-hidden="true"></span>
+    </div>
+    <div class="contact-box">
+      <p class="contact-line">Have an idea worth building? Let's talk.</p>
+      <a class="email-link mono" href="mailto:nour.oumousse@gmail.com">nour.oumousse@gmail.com</a>
+      <button class="btn btn-copy mono" id="copy-btn" type="button" data-email="nour.oumousse@gmail.com">copy email ⧉</button>
+      <ul class="socials mono">
+        <li><a href="https://github.com/oumousse" target="_blank" rel="noopener">github ↗</a></li>
+        <li><a href="https://www.linkedin.com/in/nour-oumousse" target="_blank" rel="noopener">linkedin ↗</a></li>
+        <li><a href="https://dribbble.com/oumousse" target="_blank" rel="noopener">dribbble ↗</a></li>
+        <li><a href="https://oumousse.carrd.co" target="_blank" rel="noopener">old site ↗</a></li>
+      </ul>
+    </div>
+  </section>
+
+</main>
+
+<footer class="site-footer mono">
+  <span>© <span id="year"></span> Nour Oumousse</span>
+  <span>handcrafted — no frameworks, no build step</span>
+  <a href="#top">back to top ↑</a>
+</footer>
+
+<script src="main.js"></script>
+</body>
 </html>
