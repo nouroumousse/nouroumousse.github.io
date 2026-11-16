@@ -7,7 +7,7 @@
   const apiUrl = `https://api.github.com/repos/${repository}/contents/docs?ref=main`;
 
   const cleanMarkdown = (markdown) => markdown
-    .replace(/^\s*\`\`\`[\s\S]*?^\s*\`\`\`\s*$/gm, " ")
+    .replace(/^\s*\x60{3}[\s\S]*?^\s*\x60{3}\s*$/gm, " ")
     .replace(/!\[([^\]]*)\]\([^)]*\)/g, "$1")
     .replace(/\[([^\]]+)\]\([^)]*\)/g, "$1")
     .replace(/^\s{0,3}#{1,6}\s+/gm, "")
