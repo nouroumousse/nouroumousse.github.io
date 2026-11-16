@@ -463,3 +463,68 @@ section:last-of-type { border-bottom: none; }
 @media (max-width: 380px) {
   .stack-card { font-size: 0.62rem; }
 }
+
+
+/* ---------- stack logo marquee ---------- */
+.stack-logo-marquee {
+  width: calc(100vw - 1rem);
+  max-width: 100%;
+  overflow: hidden;
+  margin: 0 0 0 50%;
+  transform: translateX(-50%);
+  padding: 1.1rem 0;
+  -webkit-mask-image: linear-gradient(90deg, transparent, #000 7%, #000 93%, transparent);
+  mask-image: linear-gradient(90deg, transparent, #000 7%, #000 93%, transparent);
+}
+.stack-logo-track {
+  display: flex;
+  width: max-content;
+  align-items: center;
+  gap: 4.5rem;
+  animation: stack-logo-scroll 34s linear infinite;
+  will-change: transform;
+}
+.stack-logo-group {
+  display: flex;
+  align-items: center;
+  gap: 4.5rem;
+  flex: 0 0 auto;
+}
+.stack-logo {
+  width: 64px;
+  height: 64px;
+  display: grid;
+  place-items: center;
+  flex: 0 0 64px;
+  opacity: 0.72;
+  transition: opacity 0.2s, transform 0.2s;
+}
+.stack-logo:hover {
+  opacity: 1;
+  transform: scale(1.08);
+}
+.stack-logo img {
+  display: block;
+  max-width: 42px;
+  max-height: 42px;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  filter: grayscale(1) brightness(0) invert(1);
+}
+.stack-logo-marquee:hover .stack-logo-track {
+  animation-play-state: paused;
+}
+@keyframes stack-logo-scroll {
+  from { transform: translateX(0); }
+  to { transform: translateX(-50%); }
+}
+@media (max-width: 640px) {
+  .stack-logo-track, .stack-logo-group { gap: 2.5rem; }
+  .stack-logo { width: 48px; height: 48px; flex-basis: 48px; }
+  .stack-logo img { max-width: 32px; max-height: 32px; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .stack-logo-track { animation: none; }
+  .stack-logo-marquee { overflow-x: auto; }
+}
