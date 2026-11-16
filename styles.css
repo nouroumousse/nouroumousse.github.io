@@ -584,3 +584,96 @@ body.community-page main#top > section:not(:last-child) {
   .blog-entry { grid-template-columns: 1fr; gap: 0.9rem; }
   .blog-entry-link { justify-self: start; }
 }
+
+
+/* Article reader page */
+.article-shell {
+  max-width: 880px;
+  margin: 0 auto;
+  padding: clamp(3rem, 7vw, 6rem) clamp(1rem, 5vw, 2.5rem) clamp(5rem, 9vw, 7rem);
+}
+.article-back {
+  display: inline-flex;
+  color: var(--muted);
+  font-size: 0.75rem;
+  text-decoration: none;
+  margin-bottom: 2.5rem;
+  transition: color 0.2s;
+}
+.article-back:hover { color: var(--accent); }
+.article-heading {
+  padding-bottom: 2rem;
+  border-bottom: 1px solid var(--line);
+}
+.article-meta {
+  color: var(--accent);
+  font-size: 0.72rem;
+  margin-bottom: 1rem;
+  letter-spacing: 0.06em;
+}
+.article-heading h1 {
+  max-width: 18ch;
+  font-size: clamp(2.2rem, 6vw, 4rem);
+  line-height: 1.1;
+  letter-spacing: -0.035em;
+  overflow-wrap: anywhere;
+}
+.article-content {
+  max-width: 72ch;
+  margin-top: 2.3rem;
+  color: var(--text);
+  font-size: clamp(1rem, 1.5vw, 1.08rem);
+  line-height: 1.85;
+  overflow-wrap: anywhere;
+}
+.article-content > * + * { margin-top: 1.2rem; }
+.article-content h2,
+.article-content h3,
+.article-content h4 {
+  margin-top: 2.2rem;
+  line-height: 1.25;
+  letter-spacing: -0.02em;
+}
+.article-content h2 { font-size: 1.7rem; }
+.article-content h3 { font-size: 1.35rem; }
+.article-content h4 { font-size: 1.1rem; }
+.article-content a {
+  color: var(--accent);
+  text-decoration-thickness: 1px;
+  text-underline-offset: 3px;
+}
+.article-content ul,
+.article-content ol { padding-left: 1.5rem; }
+.article-content li { padding-left: 0.25rem; margin: 0.35rem 0; }
+.article-content blockquote {
+  margin-left: 0;
+  padding: 0.25rem 0 0.25rem 1.2rem;
+  border-left: 2px solid var(--accent);
+  color: var(--muted);
+}
+.article-content pre {
+  max-width: 100%;
+  overflow-x: auto;
+  padding: 1rem 1.2rem;
+  background: var(--surface);
+  border: 1px solid var(--line);
+  font-size: 0.85rem;
+  line-height: 1.65;
+}
+.article-content :not(pre) > code {
+  padding: 0.12rem 0.35rem;
+  background: var(--surface);
+  border: 1px solid var(--line);
+  font-family: var(--font-mono);
+  font-size: 0.88em;
+}
+.article-content img {
+  display: block;
+  max-width: 100%;
+  height: auto;
+  margin: 1.8rem auto;
+}
+.article-content hr {
+  border: 0;
+  border-top: 1px solid var(--line);
+}
