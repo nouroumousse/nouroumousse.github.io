@@ -1,6 +1,6 @@
 media: media
 content:
-  - name: articles
+  - name: pages
     label: Articles
     type: collection
     path: docs
