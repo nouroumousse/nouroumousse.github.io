@@ -611,3 +611,42 @@ section:last-of-type { border-bottom: none; }
     font-size: 19px;
   }
 }
+
+
+/* Self-contained stack SVG artwork: fixed viewport for every mark */
+.stack-icon-svg {
+  display: block;
+  width: 40px;
+  height: 40px;
+  min-width: 40px;
+  min-height: 40px;
+  overflow: visible;
+  flex: 0 0 40px;
+}
+.stack-logo {
+  display: grid;
+  place-items: center;
+  width: 64px;
+  height: 64px;
+  min-width: 64px;
+  flex: 0 0 64px;
+  opacity: 1;
+}
+.stack-logo-group {
+  align-items: center;
+}
+@media (max-width: 640px) {
+  .stack-icon-svg {
+    width: 34px;
+    height: 34px;
+    min-width: 34px;
+    min-height: 34px;
+    flex-basis: 34px;
+  }
+  .stack-logo {
+    width: 54px;
+    height: 54px;
+    min-width: 54px;
+    flex-basis: 54px;
+  }
+}
