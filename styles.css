@@ -474,3 +474,10 @@ section:last-of-type { border-bottom: none; }
     white-space: nowrap !important;
   }
 }
+
+
+/* Current-page navigation state */
+.site-header nav a.active,
+.site-header nav a[aria-current="page"] {
+  color: var(--accent);
+}
