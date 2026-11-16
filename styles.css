@@ -370,3 +370,66 @@ section:last-of-type { border-bottom: none; }
   border-color: var(--accent) !important;
   box-shadow: none !important;
 }
+
+
+/* Contact buttons — final explicit visual swap and identical geometry */
+.contact-box .contact-actions > #copy-btn,
+.contact-box .contact-actions > .btn-download {
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  box-sizing: border-box !important;
+  flex: 0 0 240px !important;
+  width: 240px !important;
+  height: 68px !important;
+  min-height: 68px !important;
+  padding: 0 1rem !important;
+  font-family: var(--font-mono) !important;
+  font-size: 1rem !important;
+  line-height: 1 !important;
+  text-align: center !important;
+  text-decoration: none !important;
+  border-width: 1px !important;
+  border-style: solid !important;
+  border-radius: 0 !important;
+}
+.contact-box .contact-actions > #copy-btn {
+  background: var(--accent) !important;
+  color: #0a0a0b !important;
+  border-color: var(--accent) !important;
+  font-weight: 500 !important;
+}
+.contact-box .contact-actions > #copy-btn:hover,
+.contact-box .contact-actions > #copy-btn:focus-visible {
+  background: var(--accent) !important;
+  color: #0a0a0b !important;
+  border-color: var(--accent) !important;
+}
+.contact-box .contact-actions > .btn-download {
+  background: transparent !important;
+  color: var(--text) !important;
+  border-color: var(--line) !important;
+  font-weight: 400 !important;
+}
+.contact-box .contact-actions > .btn-download:hover,
+.contact-box .contact-actions > .btn-download:focus-visible {
+  background: var(--surface) !important;
+  color: var(--accent) !important;
+  border-color: var(--accent) !important;
+}
+@media (max-width: 520px) {
+  .contact-box .contact-actions {
+    width: 100%;
+    gap: 0.75rem;
+  }
+  .contact-box .contact-actions > #copy-btn,
+  .contact-box .contact-actions > .btn-download {
+    flex: 1 1 0 !important;
+    width: 0 !important;
+    min-width: 0 !important;
+    height: 58px !important;
+    min-height: 58px !important;
+    padding: 0 0.5rem !important;
+    font-size: 0.82rem !important;
+  }
+}
