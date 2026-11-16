@@ -1,7 +1,7 @@
 media: media
 content:
-  - name: pages
-    label: Pages
+  - name: articles
+    label: Articles
     type: collection
     path: docs
     fields:
