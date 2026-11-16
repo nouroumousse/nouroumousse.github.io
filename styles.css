@@ -480,3 +480,11 @@ section { padding: clamp(4rem, 9vw, 7rem) 0; border-bottom: none; }
 .site-header nav a[aria-current="page"] {
   color: var(--accent);
 }
+
+
+/* Community page: no horizontal separators between sections */
+body.community-page main#top > section,
+body.community-page main#top > section:not(:last-child) {
+  border-bottom: 0 !important;
+  box-shadow: none !important;
+}
