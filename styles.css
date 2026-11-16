@@ -207,3 +207,87 @@ section:last-of-type { border-bottom: none; }
   justify-content: center;
   margin-top: 1.75rem;
 }
+
+
+/* ---------- testimonials marquee ---------- */
+.testimonials-intro {
+  color: var(--muted);
+  font-size: 0.95rem;
+  margin: -1.35rem 0 1.75rem;
+}
+.testimonial-marquee {
+  width: calc(100vw - 1rem);
+  max-width: 100%;
+  overflow: hidden;
+  margin-left: 50%;
+  transform: translateX(-50%);
+  padding: 0.5rem 0 1rem;
+  -webkit-mask-image: linear-gradient(90deg, transparent, #000 5%, #000 95%, transparent);
+  mask-image: linear-gradient(90deg, transparent, #000 5%, #000 95%, transparent);
+}
+.testimonial-track {
+  display: flex;
+  width: max-content;
+  gap: 1rem;
+  animation: testimonial-scroll 68s linear infinite;
+}
+.testimonial-group {
+  display: flex;
+  align-items: stretch;
+  gap: 1rem;
+}
+.testimonial-card {
+  width: min(360px, 78vw);
+  min-height: 270px;
+  display: flex;
+  flex-direction: column;
+  padding: 1.5rem;
+  background: var(--surface);
+  border: 1px solid var(--line);
+}
+.testimonial-mark {
+  color: var(--accent);
+  font-size: 2.4rem;
+  line-height: 1;
+  font-weight: 700;
+  margin-bottom: 0.65rem;
+}
+.testimonial-card blockquote {
+  color: var(--text);
+  font-size: 0.94rem;
+  line-height: 1.65;
+  flex: 1;
+}
+.testimonial-author {
+  display: flex;
+  flex-direction: column;
+  gap: 0.2rem;
+  margin-top: 1.5rem;
+  padding-top: 1rem;
+  border-top: 1px solid var(--line);
+}
+.testimonial-author strong {
+  font-size: 0.95rem;
+  font-weight: 500;
+}
+.testimonial-author span {
+  color: var(--muted);
+  font-family: var(--font-mono);
+  font-size: 0.68rem;
+  line-height: 1.5;
+}
+.testimonial-marquee:hover .testimonial-track,
+.testimonial-marquee:focus-within .testimonial-track {
+  animation-play-state: paused;
+}
+@keyframes testimonial-scroll {
+  from { transform: translateX(0); }
+  to { transform: translateX(calc(-50% - 0.5rem)); }
+}
+@media (max-width: 640px) {
+  .testimonial-card { min-height: 300px; padding: 1.2rem; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .testimonial-track { animation: none; }
+  .testimonial-marquee { overflow-x: auto; }
+}
