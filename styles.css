@@ -528,3 +528,46 @@ section:last-of-type { border-bottom: none; }
   .stack-logo-track { animation: none; }
   .stack-logo-marquee { overflow-x: auto; }
 }
+
+
+/* ---------- consistent stack logo sizing ---------- */
+.stack-logo {
+  width: 64px;
+  height: 64px;
+  flex: 0 0 64px;
+  display: grid;
+  place-items: center;
+  opacity: 0.9;
+}
+.stack-logo img,
+.stack-logo-fallback {
+  width: 40px;
+  height: 40px;
+  max-width: 40px;
+  max-height: 40px;
+  display: grid;
+  place-items: center;
+  object-fit: contain;
+}
+.stack-logo img {
+  filter: none;
+  opacity: 1;
+}
+.stack-logo-fallback {
+  box-sizing: border-box;
+  border: 1.5px solid rgba(255,255,255,0.78);
+  border-radius: 10px;
+  color: #fff;
+  font-family: var(--font-mono);
+  font-size: 17px;
+  font-weight: 600;
+  letter-spacing: -0.08em;
+  line-height: 1;
+}
+@media (max-width: 640px) {
+  .stack-logo { width: 48px; height: 48px; flex-basis: 48px; }
+  .stack-logo img, .stack-logo-fallback {
+    width: 32px; height: 32px; max-width: 32px; max-height: 32px;
+  }
+  .stack-logo-fallback { border-radius: 8px; font-size: 14px; }
+}
