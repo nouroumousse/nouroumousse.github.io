@@ -291,3 +291,26 @@ section:last-of-type { border-bottom: none; }
   .testimonial-track { animation: none; }
   .testimonial-marquee { overflow-x: auto; }
 }
+
+
+/* Contact action buttons */
+.contact-actions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.75rem;
+}
+.btn-download {
+  background: var(--accent);
+  color: #0a0a0b;
+  border-color: var(--accent);
+  font-weight: 500;
+}
+.btn-download:hover {
+  color: #0a0a0b;
+  box-shadow: 0 0 24px rgba(212, 255, 63, 0.2);
+}
+@media (max-width: 420px) {
+  .contact-actions { width: 100%; }
+  .contact-actions .btn { flex: 1 1 auto; justify-content: center; }
+}
