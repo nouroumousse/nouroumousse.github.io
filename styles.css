@@ -431,3 +431,34 @@ section:last-of-type { border-bottom: none; }
     font-size: 0.85rem !important;
   }
 }
+
+
+/* Three independent availability status pulses */
+.status-dots {
+  display: inline-flex;
+  align-items: center;
+  gap: 3px;
+  flex: 0 0 auto;
+}
+.status-dots .dot {
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  background: var(--accent);
+  display: block;
+  opacity: 0.3;
+  transform: scale(0.82);
+  animation-name: status-pulse;
+  animation-timing-function: ease-in-out;
+  animation-iteration-count: infinite;
+}
+.status-dots .dot-1 { animation-duration: 1.15s; animation-delay: 0s; }
+.status-dots .dot-2 { animation-duration: 1.85s; animation-delay: 0.24s; }
+.status-dots .dot-3 { animation-duration: 2.65s; animation-delay: 0.51s; }
+@keyframes status-pulse {
+  0%, 100% { opacity: 0.28; transform: scale(0.82); }
+  45%, 60% { opacity: 1; transform: scale(1.18); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .status-dots .dot { animation: none; opacity: 1; transform: none; }
+}
