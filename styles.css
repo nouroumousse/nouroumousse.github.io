@@ -571,3 +571,16 @@ section:last-of-type { border-bottom: none; }
   }
   .stack-logo-fallback { border-radius: 8px; font-size: 14px; }
 }
+
+
+/* Embedded vector marks for tools without a reliable hosted logo asset */
+.stack-custom-mark {
+  display: block;
+  width: 40px;
+  height: 40px;
+  color: #fff;
+  overflow: visible;
+}
+@media (max-width: 640px) {
+  .stack-custom-mark { width: 32px; height: 32px; }
+}
