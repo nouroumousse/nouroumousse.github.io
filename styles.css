@@ -342,3 +342,31 @@ section:last-of-type { border-bottom: none; }
     flex: 1 1 0;
   }
 }
+
+
+/* Final contact button appearance: Copy Email is the lime primary action */
+.contact-actions #copy-btn {
+  background: var(--accent) !important;
+  color: #0a0a0b !important;
+  border: 1px solid var(--accent) !important;
+  font-weight: 500 !important;
+}
+.contact-actions #copy-btn:hover,
+.contact-actions #copy-btn:focus-visible {
+  background: var(--accent) !important;
+  color: #0a0a0b !important;
+  border-color: var(--accent) !important;
+  box-shadow: 0 0 24px rgba(212, 255, 63, 0.2);
+}
+.contact-actions .btn-download {
+  background: var(--surface) !important;
+  color: var(--text) !important;
+  border: 1px solid var(--line) !important;
+  font-weight: 400 !important;
+}
+.contact-actions .btn-download:hover,
+.contact-actions .btn-download:focus-visible {
+  color: var(--accent) !important;
+  border-color: var(--accent) !important;
+  box-shadow: none !important;
+}
