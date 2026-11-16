@@ -173,3 +173,37 @@ section:last-of-type { border-bottom: none; }
   .reveal { opacity: 1; transform: none; transition: none; }
   .dot { animation: none; }
 }
+
+
+/* ---------- portfolio refinements ---------- */
+.logo {
+  font-family: var(--font-display);
+  font-size: 1rem;
+  font-weight: 700;
+  letter-spacing: -0.035em;
+  white-space: nowrap;
+}
+.work-link {
+  display: inline-flex;
+  align-self: flex-start;
+  align-items: center;
+  gap: 0.35rem;
+  margin-top: 0.35rem;
+  padding: 0.38rem 0.7rem;
+  border: 1px solid var(--line);
+  background: transparent;
+  color: var(--text);
+  font-size: 0.68rem;
+  text-decoration: none;
+  transition: border-color 0.2s, color 0.2s, background 0.2s, transform 0.2s;
+}
+.work-link:hover {
+  border-color: var(--accent);
+  color: var(--accent);
+  transform: translateY(-2px);
+}
+.work-more {
+  display: flex;
+  justify-content: center;
+  margin-top: 1.75rem;
+}
