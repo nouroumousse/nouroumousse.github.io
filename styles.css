@@ -149,7 +149,18 @@ section:last-of-type { border-bottom: none; }
   display: flex; flex-direction: column; align-items: flex-start; gap: 1.1rem;
 }
 .contact-line { font-size: clamp(1.2rem, 3vw, 1.6rem); font-weight: 700; letter-spacing: -0.01em; }
-.btn-copy { font-size: 0.75rem; padding: 0.5rem 0.9rem; }
+.btn-copy {
+  font-size: 0.75rem;
+  padding: 0.5rem 0.9rem;
+  background: var(--accent);
+  color: #0a0a0b !important;
+  border-color: var(--accent);
+  font-weight: 500;
+}
+.btn-copy:hover {
+  color: #0a0a0b !important;
+  box-shadow: 0 0 24px rgba(212, 255, 63, 0.2);
+}
 .socials { list-style: none; display: flex; flex-wrap: wrap; gap: 1.25rem; margin-top: 0.5rem; }
 .socials a { color: var(--muted); text-decoration: none; font-size: 0.8rem; transition: color 0.2s; }
 .socials a:hover { color: var(--accent); }
@@ -301,14 +312,15 @@ section:last-of-type { border-bottom: none; }
   gap: 0.75rem;
 }
 .btn-download {
-  background: var(--accent);
-  color: #0a0a0b;
-  border-color: var(--accent);
-  font-weight: 500;
+  background: var(--surface);
+  color: var(--text);
+  border-color: var(--line);
+  font-weight: 400;
 }
 .btn-download:hover {
-  color: #0a0a0b;
-  box-shadow: 0 0 24px rgba(212, 255, 63, 0.2);
+  color: var(--accent);
+  border-color: var(--accent);
+  box-shadow: none;
 }
 @media (max-width: 420px) {
   .contact-actions { width: 100%; }
