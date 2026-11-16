@@ -149,8 +149,6 @@ section:last-of-type { border-bottom: none; }
   display: flex; flex-direction: column; align-items: flex-start; gap: 1.1rem;
 }
 .contact-line { font-size: clamp(1.2rem, 3vw, 1.6rem); font-weight: 700; letter-spacing: -0.01em; }
-.email-link { font-size: clamp(0.95rem, 2.5vw, 1.2rem); color: var(--accent); text-decoration: none; border-bottom: 1px dashed var(--accent); }
-.email-link:hover { opacity: 0.8; }
 .btn-copy { font-size: 0.75rem; padding: 0.5rem 0.9rem; }
 .socials { list-style: none; display: flex; flex-wrap: wrap; gap: 1.25rem; margin-top: 0.5rem; }
 .socials a { color: var(--muted); text-decoration: none; font-size: 0.8rem; transition: color 0.2s; }
