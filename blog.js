@@ -56,7 +56,8 @@
       excerpt: cleanMarkdown(body),
       dateLabel,
       timestamp,
-      url: file.html_url
+      url: "article.html?file=" + encodeURIComponent(file.name),
+      filename: file.name
     };
   };
 
@@ -93,10 +94,8 @@
     const link = document.createElement("a");
     link.className = "blog-entry-link mono";
     link.href = article.url;
-    link.target = "_blank";
-    link.rel = "noopener noreferrer";
     link.textContent = "read article ↗";
-    link.setAttribute("aria-label", "Read " + article.title + " on GitHub");
+    link.setAttribute("aria-label", "Read " + article.title);
 
     content.append(meta, heading, excerpt);
     card.append(content, link);
