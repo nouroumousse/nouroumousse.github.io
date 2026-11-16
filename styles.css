@@ -462,3 +462,23 @@ section:last-of-type { border-bottom: none; }
 @media (prefers-reduced-motion: reduce) {
   .status-dots .dot { animation: none; opacity: 1; transform: none; }
 }
+
+
+/* Let Download CV size to its full label instead of the Copy Email width */
+.contact-box .contact-actions > .btn-download {
+  flex: 0 0 auto !important;
+  width: max-content !important;
+  min-width: max-content !important;
+  max-width: 100% !important;
+  white-space: nowrap !important;
+  gap: 0.55rem !important;
+}
+@media (max-width: 520px) {
+  .contact-box .contact-actions > .btn-download {
+    flex: 0 0 auto !important;
+    width: max-content !important;
+    min-width: max-content !important;
+    max-width: 100% !important;
+    white-space: nowrap !important;
+  }
+}
