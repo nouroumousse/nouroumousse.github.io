@@ -584,3 +584,30 @@ section:last-of-type { border-bottom: none; }
 @media (max-width: 640px) {
   .stack-custom-mark { width: 32px; height: 32px; }
 }
+
+
+/* Full-colour stack logos and matching fallback tiles */
+.stack-logo img {
+  filter: none !important;
+  opacity: 1;
+}
+.stack-brand-mark {
+  width: 40px;
+  height: 40px;
+  display: grid;
+  place-items: center;
+  border-radius: 10px;
+  background: var(--brand);
+  color: #fff;
+  font: 700 23px/1 Arial, sans-serif;
+  letter-spacing: -0.06em;
+  box-shadow: 0 2px 12px rgba(0,0,0,.18);
+}
+@media (max-width: 640px) {
+  .stack-brand-mark {
+    width: 32px;
+    height: 32px;
+    border-radius: 8px;
+    font-size: 19px;
+  }
+}
