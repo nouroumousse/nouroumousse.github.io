@@ -550,7 +550,7 @@ section:last-of-type { border-bottom: none; }
   object-fit: contain;
 }
 .stack-logo img {
-  filter: none;
+  filter: grayscale(1) brightness(0) invert(1);
   opacity: 1;
 }
 .stack-logo-fallback {
