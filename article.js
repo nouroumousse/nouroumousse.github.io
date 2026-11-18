@@ -3,6 +3,7 @@
   const state = document.getElementById("article-state");
   const panel = document.getElementById("article-panel");
   const titleElement = document.getElementById("article-title");
+  const subtitleElement = document.getElementById("article-subtitle");
   const dateElement = document.getElementById("article-date");
   const contentElement = document.getElementById("article-content");
 
@@ -162,6 +163,7 @@
     const metadata = match ? match[1] : "";
     const body = match ? markdown.slice(match[0].length).trim() : markdown.trim();
     const titleMatch = metadata.match(/^title\s*:\s*(.*?)\s*$/m);
+    const subtitleMatch = metadata.match(/^subtitle\s*:\s*(.*?)\s*$/m);
     const dateMatch = metadata.match(/^date\s*:\s*["']?(\d{4}-\d{2}-\d{2})/m);
     const filenameDate = filename.match(/^(\d{4}-\d{2}-\d{2})-/);
     const dateString = dateMatch?.[1] || filenameDate?.[1] || "";
@@ -183,7 +185,10 @@
       ? titleMatch[1].replace(/^["']|["']$/g, "").trim()
       : filename.replace(/\.md$/i, "").replace(/^\d{4}-\d{2}-\d{2}-/, "").replace(/[-_]/g, " ");
 
-    return { title, dateLabel, body };
+    const subtitle = subtitleMatch
+      ? subtitleMatch[1].replace(/^["']|["']$/g, "").trim()
+      : "";
+    return { title, subtitle, dateLabel, body };
   };
 
   const loadArticle = async () => {
@@ -205,6 +210,10 @@
       const article = parseFrontmatter(markdown);
 
       titleElement.textContent = article.title;
+      if (subtitleElement) {
+        subtitleElement.textContent = article.subtitle;
+        subtitleElement.hidden = !article.subtitle;
+      }
       document.title = article.title + " — Nour Oumousse";
 
       const plainDescription = article.body
