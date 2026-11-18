@@ -44,3 +44,4 @@ content:
       - name: visible
         label: Visible on website
         type: boolean
+        default: true
