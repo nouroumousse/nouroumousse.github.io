@@ -9,7 +9,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;700&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet" />
-<link rel="stylesheet" href="styles.css?v=work-tiles-20261117" />
+<link rel="stylesheet" href="styles.css?v=floating-work-cards-20261118" />
 </head>
 <body class="work-page">
 <div class="grid-bg" aria-hidden="true"></div>
@@ -39,85 +39,68 @@
       <h2 class="mono" id="work-title"><span class="accent">01</span> / selected_work</h2>
       <span class="rule" aria-hidden="true"></span>
     </div>
-    <div class="project-grid">
-      <article class="project-tile project-tile--wide">
-        <a class="project-visual" href="https://rewildingindia.org" target="_blank" rel="noopener" aria-label="Visit Rewilding India">
-          <img src="assets/placeholder-rewilding.svg" alt="Temporary animated visual placeholder for Rewilding India" />
-          <span class="project-visual-index mono">01 / BRAND IDENTITY</span>
-          <span class="project-visual-arrow" aria-hidden="true">↗</span>
-        </a>
-        <div class="project-caption">
-          <div><h3>Rewilding India</h3><p>Brand identity · Conservation</p></div>
-          <span class="project-caption-note mono">2025</span>
+    <div class="floating-workspace" id="floating-workspace" aria-label="Draggable project cards">
+      <article class="floating-project" style="--tilt:-4deg;--float-delay:-1.2s;--card-width:340px">
+        <div class="project-drag-handle mono" aria-label="Drag Rewilding India card" title="Drag to move">↕ <span>MOVE CARD</span><span>01</span></div>
+        <img class="floating-project-image" src="assets/placeholder-rewilding.svg" alt="Temporary visual placeholder for Rewilding India" draggable="false" />
+        <div class="floating-project-info">
+          <p class="mono">BRAND IDENTITY · CONSERVATION</p>
+          <h3>Rewilding India</h3>
+          <div class="floating-project-bottom"><span class="mono">2025</span><a class="floating-open mono" href="https://rewildingindia.org" target="_blank" rel="noopener">open ↗</a></div>
         </div>
-        <p class="project-description">Designed the new brand identity for the Rewilding India organisation.</p>
       </article>
 
-      <article class="project-tile">
-        <a class="project-visual" href="https://todays-budget.com" target="_blank" rel="noopener" aria-label="Visit Today's Budget">
-          <img src="assets/placeholder-todays-budget.svg" alt="Temporary animated app mockup placeholder for Today's Budget" />
-          <span class="project-visual-index mono">02 / APP BRANDING</span>
-          <span class="project-visual-arrow" aria-hidden="true">↗</span>
-        </a>
-        <div class="project-caption">
-          <div><h3>Today's Budget</h3><p>Brand identity · App icons</p></div>
-          <span class="project-caption-note mono">2025</span>
+      <article class="floating-project" style="--tilt:3deg;--float-delay:-3.1s;--card-width:315px">
+        <div class="project-drag-handle mono" aria-label="Drag Today's Budget card" title="Drag to move">↕ <span>MOVE CARD</span><span>02</span></div>
+        <img class="floating-project-image" src="assets/placeholder-todays-budget.svg" alt="Temporary app mockup placeholder for Today's Budget" draggable="false" />
+        <div class="floating-project-info">
+          <p class="mono">APP BRANDING · APP ICONS</p>
+          <h3>Today's Budget</h3>
+          <div class="floating-project-bottom"><span class="mono">2025</span><a class="floating-open mono" href="https://todays-budget.com" target="_blank" rel="noopener">open ↗</a></div>
         </div>
-        <p class="project-description">Designed the brand identity for the Today's Budget app, including adaptive Android and iOS app icons.</p>
       </article>
 
-      <article class="project-tile">
-        <a class="project-visual" href="https://culturebooster.com" target="_blank" rel="noopener" aria-label="Visit Culture Booster">
-          <img src="assets/placeholder-culture-booster.svg" alt="Temporary animated visual identity placeholder for Culture Booster" />
-          <span class="project-visual-index mono">03 / BRAND IDENTITY</span>
-          <span class="project-visual-arrow" aria-hidden="true">↗</span>
-        </a>
-        <div class="project-caption">
-          <div><h3>Culture Booster</h3><p>Brand identity · Visual design</p></div>
-          <span class="project-caption-note mono">SELECTED WORK</span>
+      <article class="floating-project" style="--tilt:2deg;--float-delay:-2s;--card-width:325px">
+        <div class="project-drag-handle mono" aria-label="Drag Culture Booster card" title="Drag to move">↕ <span>MOVE CARD</span><span>03</span></div>
+        <img class="floating-project-image" src="assets/placeholder-culture-booster.svg" alt="Temporary visual identity placeholder for Culture Booster" draggable="false" />
+        <div class="floating-project-info">
+          <p class="mono">BRAND IDENTITY · VISUAL DESIGN</p>
+          <h3>Culture Booster</h3>
+          <div class="floating-project-bottom"><span class="mono">SELECTED WORK</span><a class="floating-open mono" href="https://culturebooster.com" target="_blank" rel="noopener">open ↗</a></div>
         </div>
-        <p class="project-description">Worked on the brand identity of Culture Booster and various other parts of its visual communication.</p>
       </article>
 
-      <article class="project-tile project-tile--wide">
-        <div class="project-visual">
-          <img src="assets/placeholder-tellhop.svg" alt="Temporary animated visual placeholder for Tellhop" />
-          <span class="project-visual-index mono">04 / BRAND IDENTITY</span>
-          <span class="project-visual-arrow" aria-hidden="true">↗</span>
+      <article class="floating-project" style="--tilt:-2deg;--float-delay:-4s;--card-width:300px">
+        <div class="project-drag-handle mono" aria-label="Drag Tellhop card" title="Drag to move">↕ <span>MOVE CARD</span><span>04</span></div>
+        <img class="floating-project-image" src="assets/placeholder-tellhop.svg" alt="Temporary visual placeholder for Tellhop" draggable="false" />
+        <div class="floating-project-info">
+          <p class="mono">BRAND IDENTITY · VISUAL DESIGN</p>
+          <h3>Tellhop</h3>
+          <div class="floating-project-bottom"><span class="mono">SELECTED WORK</span><a class="floating-open mono" href="https://oumousse.carrd.co/#work" target="_blank" rel="noopener">open ↗</a></div>
         </div>
-        <div class="project-caption">
-          <div><h3>Tellhop</h3><p>Brand identity · Visual design</p></div>
-          <span class="project-caption-note mono">SELECTED WORK</span>
-        </div>
-        <p class="project-description">Designed a new brand identity for Tellhop.</p>
       </article>
 
-      <article class="project-tile">
-        <div class="project-visual">
-          <img src="assets/placeholder-warmdaz.svg" alt="Temporary animated landscape placeholder for Warmdaz Social Innovation Incubator" />
-          <span class="project-visual-index mono">05 / ART DIRECTION</span>
-          <span class="project-visual-arrow" aria-hidden="true">↗</span>
+      <article class="floating-project" style="--tilt:4deg;--float-delay:-2.7s;--card-width:340px">
+        <div class="project-drag-handle mono" aria-label="Drag Warmdaz card" title="Drag to move">↕ <span>MOVE CARD</span><span>05</span></div>
+        <img class="floating-project-image" src="assets/placeholder-warmdaz.svg" alt="Temporary landscape placeholder for Warmdaz Social Innovation Incubator" draggable="false" />
+        <div class="floating-project-info">
+          <p class="mono">ART DIRECTION · DESIGN EDUCATION</p>
+          <h3>Warmdaz Social Innovation Incubator</h3>
+          <div class="floating-project-bottom"><span class="mono">2026</span><a class="floating-open mono" href="https://oumousse.carrd.co/#work" target="_blank" rel="noopener">open ↗</a></div>
         </div>
-        <div class="project-caption">
-          <div><h3>Warmdaz Social Innovation Incubator</h3><p>Brand identity · Design education</p></div>
-          <span class="project-caption-note mono">2026</span>
-        </div>
-        <p class="project-description">Designed the programme's brand identity and worked as a Design &amp; Marketing Instructor, supporting digital skills education for rural youth.</p>
       </article>
 
-      <article class="project-tile">
-        <div class="project-visual">
-          <img src="assets/placeholder-independent.svg" alt="Temporary collage-style placeholder for independent and studio projects" />
-          <span class="project-visual-index mono">06 / CLIENT WORK</span>
-          <span class="project-visual-arrow" aria-hidden="true">↗</span>
+      <article class="floating-project" style="--tilt:-3deg;--float-delay:-1.8s;--card-width:330px">
+        <div class="project-drag-handle mono" aria-label="Drag independent projects card" title="Drag to move">↕ <span>MOVE CARD</span><span>06</span></div>
+        <img class="floating-project-image" src="assets/placeholder-independent.svg" alt="Temporary collage placeholder for independent and studio projects" draggable="false" />
+        <div class="floating-project-info">
+          <p class="mono">BRANDING · REBRANDING · VISUAL ASSETS</p>
+          <h3>Independent &amp; Studio Projects</h3>
+          <div class="floating-project-bottom"><span class="mono">VARIOUS</span><a class="floating-open mono" href="https://oumousse.carrd.co/#work" target="_blank" rel="noopener">open ↗</a></div>
         </div>
-        <div class="project-caption">
-          <div><h3>Independent &amp; Studio Projects</h3><p>Branding · Rebranding · Visual assets</p></div>
-          <span class="project-caption-note mono">VARIOUS</span>
-        </div>
-        <p class="project-description">Branding and rebranding work for startups and established brands. Clients include African Conservation Foundation, Ponder, Quokkie, Tellhop, Rewilding India, Culture Booster and Today's Budget.</p>
       </article>
     </div>
+    <p class="workspace-hint mono">↕ GRAB A CARD AND MOVE IT AROUND</p>
     <div class="work-more"><a class="btn mono" href="https://oumousse.carrd.co/#work" target="_blank" rel="noopener">more selected work ↗</a></div>
   </section>
 </main>
@@ -129,5 +112,6 @@
 </footer>
 
 <script src="main.js"></script>
+<script src="work.js?v=floating-work-cards-20261118"></script>
 </body>
 </html>
