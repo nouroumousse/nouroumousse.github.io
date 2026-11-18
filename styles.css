@@ -860,3 +860,136 @@ body.community-page main#top > section:not(:last-child) {
     transition-duration: 0.01ms !important;
   }
 }
+
+
+/* Stamp-edged project cards and click-to-expand project view */
+.work-page .floating-workspace.has-expanded-card::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  z-index: 30;
+  background: rgba(5, 6, 5, .48);
+  -webkit-backdrop-filter: blur(7px);
+  backdrop-filter: blur(7px);
+  pointer-events: none;
+}
+.work-page .floating-project {
+  clip-path: polygon(5.00% 0%, 7.80% 2.2%, 10.63% 0%, 13.43% 2.2%, 16.25% 0%, 19.05% 2.2%, 21.88% 0%, 24.68% 2.2%, 27.50% 0%, 30.30% 2.2%, 33.13% 0%, 35.92% 2.2%, 38.75% 0%, 41.55% 2.2%, 44.38% 0%, 47.17% 2.2%, 50.00% 0%, 52.80% 2.2%, 55.63% 0%, 58.42% 2.2%, 61.25% 0%, 64.05% 2.2%, 66.88% 0%, 69.67% 2.2%, 72.50% 0%, 75.30% 2.2%, 78.13% 0%, 80.92% 2.2%, 83.75% 0%, 86.55% 2.2%, 89.38% 0%, 92.17% 2.2%, 95.00% 0%, 97.80% 2.2%, 100% 5.00%, 97.2% 7.80%, 100% 10.63%, 97.2% 13.43%, 100% 16.25%, 97.2% 19.05%, 100% 21.88%, 97.2% 24.68%, 100% 27.50%, 97.2% 30.30%, 100% 33.13%, 97.2% 35.92%, 100% 38.75%, 97.2% 41.55%, 100% 44.38%, 97.2% 47.17%, 100% 50.00%, 97.2% 52.80%, 100% 55.63%, 97.2% 58.42%, 100% 61.25%, 97.2% 64.05%, 100% 66.88%, 97.2% 69.67%, 100% 72.50%, 97.2% 75.30%, 100% 78.13%, 97.2% 80.92%, 100% 83.75%, 97.2% 86.55%, 100% 89.38%, 97.2% 92.17%, 100% 95.00%, 97.2% 97.80%, 95.00% 100%, 92.20% 97.2%, 89.38% 100%, 86.58% 97.2%, 83.75% 100%, 80.95% 97.2%, 78.13% 100%, 75.33% 97.2%, 72.50% 100%, 69.70% 97.2%, 66.88% 100%, 64.08% 97.2%, 61.25% 100%, 58.45% 97.2%, 55.63% 100%, 52.83% 97.2%, 50.00% 100%, 47.20% 97.2%, 44.38% 100%, 41.58% 97.2%, 38.75% 100%, 35.95% 97.2%, 33.13% 100%, 30.32% 97.2%, 27.50% 100%, 24.70% 97.2%, 21.88% 100%, 19.07% 97.2%, 16.25% 100%, 13.45% 97.2%, 10.63% 100%, 7.83% 97.2%, 5.00% 100%, 2.20% 97.2%, 0% 95.00%, 2.8% 92.20%, 0% 89.38%, 2.8% 86.58%, 0% 83.75%, 2.8% 80.95%, 0% 78.13%, 2.8% 75.33%, 0% 72.50%, 2.8% 69.70%, 0% 66.88%, 2.8% 64.08%, 0% 61.25%, 2.8% 58.45%, 0% 55.63%, 2.8% 52.83%, 0% 50.00%, 2.8% 47.20%, 0% 44.38%, 2.8% 41.58%, 0% 38.75%, 2.8% 35.95%, 0% 33.13%, 2.8% 30.32%, 0% 27.50%, 2.8% 24.70%, 0% 21.88%, 2.8% 19.07%, 0% 16.25%, 2.8% 13.45%, 0% 10.63%, 2.8% 7.83%, 0% 5.00%, 2.8% 2.20%);
+  border: 0;
+  border-radius: 0;
+  padding: 10px;
+  background: #d4d0bd;
+  box-shadow: 0 18px 45px rgba(0,0,0,.32), 0 2px 8px rgba(0,0,0,.18);
+  transition: box-shadow .28s ease, background .28s ease, width .28s ease;
+}
+.work-page .floating-project > * {
+  position: relative;
+  z-index: 1;
+}
+.work-page .floating-project-image {
+  background: #171918;
+}
+.work-page .floating-project-info {
+  background: #171918;
+}
+.work-page .project-expanded-details {
+  display: none;
+}
+.work-page .floating-project.is-expanded {
+  grid-column: 1 / -1;
+  position: relative;
+  z-index: 40 !important;
+  display: grid;
+  grid-template-columns: minmax(0, 1.05fr) minmax(220px, .95fr);
+  grid-template-rows: auto 1fr;
+  align-items: stretch;
+  gap: 0;
+  width: min(780px, calc(100% - 1rem));
+  max-width: none;
+  justify-self: center;
+  margin: .5rem auto 1rem;
+  transform: rotate(0deg) scale(1.015);
+  translate: 0 0;
+  animation: none;
+  cursor: default;
+  background: #d4d0bd;
+  box-shadow: 0 35px 100px rgba(0,0,0,.7), 0 0 0 1px rgba(212,255,63,.35);
+}
+.work-page .floating-project.is-expanded .project-drag-handle {
+  grid-column: 1 / -1;
+  cursor: pointer;
+}
+.work-page .floating-project.is-expanded .floating-project-image {
+  grid-column: 1;
+  grid-row: 2;
+  width: 100%;
+  height: 100%;
+  min-height: 260px;
+  aspect-ratio: auto;
+  object-fit: cover;
+}
+.work-page .floating-project.is-expanded .floating-project-info {
+  grid-column: 1;
+  grid-row: 3;
+}
+.work-page .floating-project.is-expanded .project-expanded-details {
+  grid-column: 2;
+  grid-row: 2 / 4;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: .85rem;
+  min-width: 0;
+  padding: clamp(1.1rem, 3vw, 2rem);
+  color: #171918;
+  background: #d4d0bd;
+}
+.work-page .project-expanded-details > p:first-child {
+  color: #62665b;
+  font-size: .62rem;
+  letter-spacing: .12em;
+}
+.work-page .project-expanded-details h4 {
+  font-size: clamp(1.35rem, 3vw, 2rem);
+  line-height: 1.1;
+  letter-spacing: -.04em;
+}
+.work-page .project-expanded-details > p:not(:first-child) {
+  color: #45483f;
+  font-size: .9rem;
+  line-height: 1.7;
+}
+.work-page .project-expanded-hint {
+  margin-top: 1rem;
+  color: #727568;
+  font-size: .56rem;
+  letter-spacing: .08em;
+}
+.work-page .floating-workspace.has-expanded-card .floating-project:not(.is-expanded) {
+  filter: saturate(.65) brightness(.7);
+}
+@media (max-width: 620px) {
+  .work-page .floating-project.is-expanded {
+    grid-template-columns: 1fr;
+    grid-template-rows: auto auto auto auto;
+    width: min(440px, calc(100% - .5rem));
+  }
+  .work-page .floating-project.is-expanded .floating-project-image {
+    grid-column: 1;
+    grid-row: 2;
+    min-height: 190px;
+    aspect-ratio: 1.35 / 1;
+  }
+  .work-page .floating-project.is-expanded .floating-project-info {
+    grid-column: 1;
+    grid-row: 3;
+  }
+  .work-page .floating-project.is-expanded .project-expanded-details {
+    grid-column: 1;
+    grid-row: 4;
+    padding: 1rem 1.1rem 1.4rem;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .work-page .floating-project.is-expanded { transition: none; }
+}
