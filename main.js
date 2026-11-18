@@ -49,3 +49,105 @@ if (!prefersReduced && "IntersectionObserver" in window) {
   );
   targets.forEach((el) => io.observe(el));
 }
+
+
+// Optional original ambient synthwave loop. Audio starts only after visitor opt-in.
+(() => {
+  const toggle = document.querySelector(".music-toggle");
+  if (!toggle) return;
+
+  let context = null;
+  let master = null;
+  let timer = null;
+  let step = 0;
+  let active = false;
+
+  const progression = [
+    [110.00, 164.81, 220.00, 261.63],
+    [98.00, 146.83, 196.00, 246.94],
+    [130.81, 196.00, 261.63, 329.63],
+    [87.31, 130.81, 174.61, 220.00]
+  ];
+
+  const playTone = (frequency, start, duration, volume, type = "sine") => {
+    const oscillator = context.createOscillator();
+    const envelope = context.createGain();
+    const filter = context.createBiquadFilter();
+    oscillator.type = type;
+    oscillator.frequency.setValueAtTime(frequency, start);
+    filter.type = "lowpass";
+    filter.frequency.setValueAtTime(type === "triangle" ? 1100 : 700, start);
+    envelope.gain.setValueAtTime(0.0001, start);
+    envelope.gain.exponentialRampToValueAtTime(volume, start + 0.35);
+    envelope.gain.setValueAtTime(volume, start + Math.max(0.4, duration - 0.7));
+    envelope.gain.exponentialRampToValueAtTime(0.0001, start + duration);
+    oscillator.connect(filter);
+    filter.connect(envelope);
+    envelope.connect(master);
+    oscillator.start(start);
+    oscillator.stop(start + duration + 0.05);
+  };
+
+  const playBar = () => {
+    if (!active || !context) return;
+    const now = context.currentTime + 0.05;
+    const chord = progression[step % progression.length];
+    chord.forEach((note, index) => {
+      playTone(note, now, 3.7, index === 0 ? 0.075 : 0.025, "sine");
+    });
+    const melody = [chord[2] * 2, chord[1] * 2, chord[3] * 2, chord[2] * 2];
+    melody.forEach((note, index) => {
+      playTone(note, now + index * 0.82, 0.9, 0.018, "triangle");
+    });
+    playTone(chord[0] / 2, now, 3.4, 0.11, "triangle");
+    step++;
+  };
+
+  const stopMusic = async () => {
+    active = false;
+    if (timer) window.clearInterval(timer);
+    timer = null;
+    if (context && context.state !== "closed") await context.close();
+    context = null;
+    master = null;
+    toggle.setAttribute("aria-pressed", "false");
+    toggle.setAttribute("aria-label", "Turn background music on");
+    toggle.title = "Turn background music on";
+  };
+
+  const startMusic = async () => {
+    const AudioContextClass = window.AudioContext || window.webkitAudioContext;
+    if (!AudioContextClass) {
+      toggle.title = "Audio is not supported by this browser";
+      return;
+    }
+    context = new AudioContextClass();
+    await context.resume();
+    master = context.createGain();
+    master.gain.value = 0.42;
+    master.connect(context.destination);
+    active = true;
+    step = 0;
+    playBar();
+    timer = window.setInterval(playBar, 3600);
+    toggle.setAttribute("aria-pressed", "true");
+    toggle.setAttribute("aria-label", "Turn background music off");
+    toggle.title = "Turn background music off";
+  };
+
+  toggle.addEventListener("click", async () => {
+    toggle.disabled = true;
+    try {
+      if (active) await stopMusic();
+      else await startMusic();
+    } catch (error) {
+      console.warn("Background music could not start:", error);
+      await stopMusic();
+    } finally {
+      toggle.disabled = false;
+    }
+  });
+  window.addEventListener("pagehide", () => {
+    if (context && context.state !== "closed") context.close();
+  });
+})();
