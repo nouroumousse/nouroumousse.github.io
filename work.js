@@ -3,7 +3,6 @@
   if (!workspace) return;
 
   const cards = [...workspace.querySelectorAll(".floating-project")];
-  let topZ = 10;
   let activeDrag = null;
   let suppressClick = false;
 
@@ -14,30 +13,26 @@
 
   const closeExpanded = () => {
     const expanded = workspace.querySelector(".floating-project.is-expanded");
-    if (expanded) {
-      expanded.classList.remove("is-expanded");
-      const details = expanded.querySelector(".project-expanded-details");
-      if (details) details.setAttribute("aria-hidden", "true");
-    }
+    if (!expanded) return;
+    expanded.classList.remove("is-expanded");
+    expanded.querySelector(".project-expanded-details")?.setAttribute("aria-hidden", "true");
     workspace.classList.remove("has-expanded-card");
   };
 
   const toggleExpanded = (card) => {
-    const wasExpanded = card.classList.contains("is-expanded");
-    closeExpanded();
-    if (!wasExpanded) {
-      card.classList.add("is-expanded");
-      card.style.zIndex = String(++topZ);
-      const details = card.querySelector(".project-expanded-details");
-      if (details) details.setAttribute("aria-hidden", "false");
-      workspace.classList.add("has-expanded-card");
+    if (card.classList.contains("is-expanded")) {
+      closeExpanded();
+      return;
     }
+    closeExpanded();
+    card.classList.add("is-expanded");
+    card.querySelector(".project-expanded-details")?.setAttribute("aria-hidden", "false");
+    workspace.classList.add("has-expanded-card");
   };
 
   workspace.addEventListener("pointerdown", (event) => {
     if (event.button !== undefined && event.button !== 0) return;
     if (event.target.closest("a, button")) return;
-
     const card = event.target.closest(".floating-project");
     if (!card || !workspace.contains(card) || card.classList.contains("is-expanded")) return;
 
@@ -50,24 +45,22 @@
       originY: readOffset(card, "--drag-y"),
       moved: false
     };
-    try { workspace.setPointerCapture(event.pointerId); } catch (_) {}
   });
 
-  workspace.addEventListener("pointermove", (event) => {
+  window.addEventListener("pointermove", (event) => {
     if (!activeDrag || activeDrag.pointerId !== event.pointerId) return;
-    const { card, startX, startY, originX, originY } = activeDrag;
-    const dx = event.clientX - startX;
-    const dy = event.clientY - startY;
-    if (!activeDrag.moved && Math.abs(dx) + Math.abs(dy) > 5) {
-      activeDrag.moved = true;
-      card.classList.add("is-dragging");
-      card.style.zIndex = String(++topZ);
+    const drag = activeDrag;
+    const dx = event.clientX - drag.startX;
+    const dy = event.clientY - drag.startY;
+    if (!drag.moved && Math.abs(dx) + Math.abs(dy) > 6) {
+      drag.moved = true;
+      drag.card.classList.add("is-dragging");
     }
-    if (!activeDrag.moved) return;
-    card.style.setProperty("--drag-x", (originX + dx) + "px");
-    card.style.setProperty("--drag-y", (originY + dy) + "px");
+    if (!drag.moved) return;
+    drag.card.style.setProperty("--drag-x", (drag.originX + dx) + "px");
+    drag.card.style.setProperty("--drag-y", (drag.originY + dy) + "px");
     event.preventDefault();
-  });
+  }, { passive: false });
 
   const finishDrag = (event) => {
     if (!activeDrag || activeDrag.pointerId !== event.pointerId) return;
@@ -76,18 +69,11 @@
     card.classList.remove("is-dragging");
     if (moved) {
       suppressClick = true;
-      window.setTimeout(() => { suppressClick = false; }, 220);
+      window.setTimeout(() => { suppressClick = false; }, 250);
     }
-    try {
-      if (workspace.hasPointerCapture(event.pointerId)) {
-        workspace.releasePointerCapture(event.pointerId);
-      }
-    } catch (_) {}
   };
-
-  workspace.addEventListener("pointerup", finishDrag);
-  workspace.addEventListener("pointercancel", finishDrag);
-  workspace.addEventListener("lostpointercapture", finishDrag);
+  window.addEventListener("pointerup", finishDrag);
+  window.addEventListener("pointercancel", finishDrag);
 
   workspace.addEventListener("click", (event) => {
     const card = event.target.closest(".floating-project");
@@ -99,6 +85,13 @@
       return;
     }
     toggleExpanded(card);
+  });
+
+  // Clicking the dimmed area closes the selected card.
+  workspace.addEventListener("click", (event) => {
+    if (event.target === workspace && workspace.classList.contains("has-expanded-card")) {
+      closeExpanded();
+    }
   });
 
   document.addEventListener("keydown", (event) => {
