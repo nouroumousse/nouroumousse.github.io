@@ -24,13 +24,15 @@
       ? markdown.slice(frontmatterMatch[0].length).trim()
       : markdown.trim();
 
-    const titleMatch = frontmatter.match(/^title\s*:\s*(.*?)\s*$/m);
-    const title = titleMatch
-      ? titleMatch[1].replace(/^["']|["']$/g, "").trim()
-      : file.name
-          .replace(/\.md$/i, "")
-          .replace(/^\d{4}-\d{2}-\d{2}-/, "")
-          .replace(/[-_]/g, " ");
+    const readField = (key) => {
+      const match = frontmatter.match(new RegExp("^" + key + "\\s*:\\s*(.*?)\\s*$", "m"));
+      return match ? match[1].replace(/^["']|["']$/g, "").trim() : "";
+    };
+    const title = readField("title") || file.name
+      .replace(/\.md$/i, "")
+      .replace(/^\d{4}-\d{2}-\d{2}-/, "")
+      .replace(/[-_]/g, " ");
+    const subtitle = readField("subtitle");
 
     const dateInFrontmatter = frontmatter.match(/^date\s*:\s*["']?(\d{4}-\d{2}-\d{2})/m);
     const dateInFilename = file.name.match(/^(\d{4}-\d{2}-\d{2})-/);
@@ -53,7 +55,7 @@
 
     return {
       title,
-      excerpt: cleanMarkdown(body),
+      subtitle,
       dateLabel,
       timestamp,
       url: "article.html?file=" + encodeURIComponent(file.name),
@@ -83,13 +85,9 @@
     const heading = document.createElement("h3");
     heading.textContent = article.title;
 
-    const excerpt = document.createElement("p");
-    excerpt.className = "blog-entry-excerpt";
-    excerpt.textContent = article.excerpt
-      ? (article.excerpt.length > 220
-          ? article.excerpt.slice(0, 217).trimEnd() + "…"
-          : article.excerpt)
-      : "Open the article to read more.";
+    const subtitle = document.createElement("p");
+    subtitle.className = "blog-entry-subtitle";
+    subtitle.textContent = article.subtitle;
 
     const link = document.createElement("a");
     link.className = "blog-entry-link mono";
@@ -97,7 +95,8 @@
     link.textContent = "read article ↗";
     link.setAttribute("aria-label", "Read " + article.title);
 
-    content.append(meta, heading, excerpt);
+    content.append(meta, heading);
+    if (article.subtitle) content.append(subtitle);
     card.append(content, link);
     card.setAttribute("data-article-number", String(index + 1));
     return card;
