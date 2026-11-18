@@ -949,3 +949,34 @@ body.community-page main#top > section:not(:last-child) {
     font-size: 0.65rem;
   }
 }
+
+
+/* Share link action at the end of each article */
+.article-share {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.85rem;
+  margin-top: 2.5rem;
+  padding-top: 1.5rem;
+  border-top: 1px solid var(--line);
+}
+.article-copy-link {
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  padding: 0.7rem 1rem;
+  color: var(--text);
+  background: var(--surface);
+  border: 1px solid var(--line);
+  cursor: pointer;
+  transition: color .2s, border-color .2s, transform .2s;
+}
+.article-copy-link:hover,
+.article-copy-link:focus-visible {
+  color: var(--accent);
+  border-color: var(--accent);
+}
+.article-copy-status {
+  color: var(--accent);
+  font-size: 0.7rem;
+}
