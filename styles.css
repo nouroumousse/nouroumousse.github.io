@@ -860,3 +860,38 @@ body.community-page main#top > section:not(:last-child) {
     transition-duration: 0.01ms !important;
   }
 }
+
+
+/* Optional visitor-controlled ambient synth toggle */
+.music-toggle {
+  appearance: none;
+  border: 1px solid var(--line);
+  background: transparent;
+  color: var(--muted);
+  width: 25px;
+  height: 25px;
+  display: inline-grid;
+  place-items: center;
+  border-radius: 50%;
+  font: 500 1rem/1 var(--font-mono);
+  cursor: pointer;
+  margin-left: 0.15rem;
+  transition: color .2s ease, border-color .2s ease, background .2s ease;
+}
+.music-toggle:hover,
+.music-toggle:focus-visible {
+  color: var(--accent);
+  border-color: var(--accent);
+  outline: none;
+}
+.music-toggle[aria-pressed="true"] {
+  color: var(--accent);
+  border-color: var(--accent);
+  background: rgba(212,255,63,.08);
+  box-shadow: 0 0 12px rgba(212,255,63,.18);
+}
+.music-toggle span { display: block; transform: translateY(-1px); }
+@media (max-width: 760px) {
+  .site-header { flex-wrap: wrap; }
+  .status { margin-left: auto; }
+}
