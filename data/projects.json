@@ -61,5 +61,12 @@
     "link": "https://hub.gocnary.com/",
     "order": 7,
     "visible": true
+  },
+  {
+    "title": "App Icons Collection",
+    "image": "/media/appicons.png",
+    "category": "APP ICON . BEHANCE",
+    "link": "https://www.behance.net/gallery/221996957/App-Icons-Collection",
+    "visible": true
   }
 ]
