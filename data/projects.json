@@ -18,12 +18,11 @@
     "visible": true
   },
   {
-    "title": "Culture Booster",
-    "image": "/media/culture.png",
-    "category": "BRAND IDENTITY",
-    "year": "2021",
-    "link": "https://culturebooster.com",
-    "order": 8,
+    "title": "App Icons Collection",
+    "image": "/media/appicons.png",
+    "category": "APP ICONS . BEHANCE",
+    "link": "https://www.behance.net/gallery/221996957/App-Icons-Collection",
+    "order": 3,
     "visible": true
   },
   {
@@ -63,11 +62,12 @@
     "visible": true
   },
   {
-    "title": "App Icons Collection",
-    "image": "/media/appicons.png",
-    "category": "APP ICONS . BEHANCE",
-    "link": "https://www.behance.net/gallery/221996957/App-Icons-Collection",
-    "order": 3,
+    "title": "Culture Booster",
+    "image": "/media/culture.png",
+    "category": "BRAND IDENTITY",
+    "year": "2021",
+    "link": "https://culturebooster.com",
+    "order": 8,
     "visible": true
   },
   {
