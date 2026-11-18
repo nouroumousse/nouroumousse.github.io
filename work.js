@@ -5,10 +5,33 @@
   const cards = [...workspace.querySelectorAll(".floating-project")];
   let topZ = 10;
   let activeDrag = null;
+  let suppressClick = false;
 
   const readOffset = (card, name) => {
     const value = getComputedStyle(card).getPropertyValue(name).trim();
     return Number.parseFloat(value) || 0;
+  };
+
+  const closeExpanded = () => {
+    const expanded = workspace.querySelector(".floating-project.is-expanded");
+    if (expanded) {
+      expanded.classList.remove("is-expanded");
+      const details = expanded.querySelector(".project-expanded-details");
+      if (details) details.setAttribute("aria-hidden", "true");
+    }
+    workspace.classList.remove("has-expanded-card");
+  };
+
+  const toggleExpanded = (card) => {
+    const wasExpanded = card.classList.contains("is-expanded");
+    closeExpanded();
+    if (!wasExpanded) {
+      card.classList.add("is-expanded");
+      card.style.zIndex = String(++topZ);
+      const details = card.querySelector(".project-expanded-details");
+      if (details) details.setAttribute("aria-hidden", "false");
+      workspace.classList.add("has-expanded-card");
+    }
   };
 
   workspace.addEventListener("pointerdown", (event) => {
@@ -16,7 +39,7 @@
     if (event.target.closest("a, button")) return;
 
     const card = event.target.closest(".floating-project");
-    if (!card || !workspace.contains(card)) return;
+    if (!card || !workspace.contains(card) || card.classList.contains("is-expanded")) return;
 
     activeDrag = {
       card,
@@ -27,11 +50,7 @@
       originY: readOffset(card, "--drag-y"),
       moved: false
     };
-
-    card.classList.add("is-dragging");
-    card.style.zIndex = String(++topZ);
     try { workspace.setPointerCapture(event.pointerId); } catch (_) {}
-    event.preventDefault();
   });
 
   workspace.addEventListener("pointermove", (event) => {
@@ -39,9 +58,15 @@
     const { card, startX, startY, originX, originY } = activeDrag;
     const dx = event.clientX - startX;
     const dy = event.clientY - startY;
-    if (Math.abs(dx) + Math.abs(dy) > 3) activeDrag.moved = true;
+    if (!activeDrag.moved && Math.abs(dx) + Math.abs(dy) > 5) {
+      activeDrag.moved = true;
+      card.classList.add("is-dragging");
+      card.style.zIndex = String(++topZ);
+    }
+    if (!activeDrag.moved) return;
     card.style.setProperty("--drag-x", (originX + dx) + "px");
     card.style.setProperty("--drag-y", (originY + dy) + "px");
+    event.preventDefault();
   });
 
   const finishDrag = (event) => {
@@ -50,8 +75,8 @@
     activeDrag = null;
     card.classList.remove("is-dragging");
     if (moved) {
-      card.dataset.justDragged = "true";
-      window.setTimeout(() => delete card.dataset.justDragged, 180);
+      suppressClick = true;
+      window.setTimeout(() => { suppressClick = false; }, 220);
     }
     try {
       if (workspace.hasPointerCapture(event.pointerId)) {
@@ -66,10 +91,18 @@
 
   workspace.addEventListener("click", (event) => {
     const card = event.target.closest(".floating-project");
-    if (card && card.dataset.justDragged === "true" && !event.target.closest("a, button")) {
+    if (!card || !workspace.contains(card)) return;
+    if (event.target.closest("a, button")) return;
+    if (suppressClick) {
       event.preventDefault();
       event.stopPropagation();
+      return;
     }
+    toggleExpanded(card);
+  });
+
+  document.addEventListener("keydown", (event) => {
+    if (event.key === "Escape") closeExpanded();
   });
 
   cards.forEach((card) => {
