@@ -52,5 +52,14 @@
     "link": "https://www.producthunt.com/products/gitpaid",
     "order": 6,
     "visible": true
+  },
+  {
+    "title": "Cnary",
+    "image": "/media/cnary1.png",
+    "category": "BRAND IDENTITY",
+    "year": "2024",
+    "link": "https://hub.gocnary.com/",
+    "order": 7,
+    "visible": true
   }
 ]
