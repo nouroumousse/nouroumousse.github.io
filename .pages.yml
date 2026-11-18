@@ -9,3 +9,38 @@ content:
         type: string
       - name: body
         type: rich-text
+
+  - name: projects
+    label: Project Cards
+    type: file
+    path: data/projects.json
+    format: json
+    list: true
+    fields:
+      - name: title
+        label: Project title
+        type: string
+        required: true
+      - name: image
+        label: Project image
+        type: image
+        required: true
+        options:
+          path: projects
+          extensions: [jpg, jpeg, png, webp, avif, svg]
+          rename: safe
+      - name: category
+        label: Category
+        type: string
+      - name: year
+        label: Year / label
+        type: string
+      - name: link
+        label: Project link
+        type: string
+      - name: order
+        label: Display order
+        type: number
+      - name: visible
+        label: Visible on website
+        type: boolean
