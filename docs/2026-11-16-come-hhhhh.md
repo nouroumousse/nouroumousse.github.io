@@ -1,5 +1,6 @@
 ---
 title: Bab n Yids, Dadda Yids
+subtitle: An Amazigh Lullaby
 ---
 As a small child in a town tucked into the Anti-Atlas mountains, crying on my mother’s back as she tried to lull me to sleep, nothing etched itself into my memory more deeply than the tender old lullaby *Bab n Yids*.
 
@@ -7,13 +8,11 @@ As a small child in a town tucked into the Anti-Atlas mountains, crying on my mo
 
 ![](https://substackcdn.com/image/fetch/$s_!qX6k!,w_1456,c_limit,f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2F80aa107c-6cf7-44f3-ba5d-a31e62dbe7e5_2400x1600.jpeg)
 
-A sleeping kid
 
 
+&nbsp;
 
 ## Our Version of the Lullaby, Bab n Yids
-
-
 
 #### *Nmaggarkh Bab n Yids Innayi Matrbit*
 
@@ -52,8 +51,6 @@ Sleep Sleep, Sleep Sleep.
 
 
 ## An Alternative Version, Dadda Yids
-
-
 
 #### *Nmaggarkh Dadda Yids Innayi Matrbit*
 
