@@ -966,3 +966,20 @@ body.community-page main#top > section:not(:last-child) {
 @media (prefers-reduced-motion: reduce) {
   .work-page .floating-project { animation: none; }
 }
+
+
+/* Pointer dragging is available across the full card surface, not only its label bar. */
+.work-page .floating-project {
+  touch-action: none;
+  cursor: grab;
+}
+.work-page .floating-project.is-dragging {
+  cursor: grabbing;
+}
+.work-page .floating-project a,
+.work-page .floating-project button {
+  cursor: pointer;
+}
+.work-page .floating-project-image {
+  -webkit-user-drag: none;
+}
