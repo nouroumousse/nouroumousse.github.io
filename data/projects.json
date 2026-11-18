@@ -1,0 +1,56 @@
+[
+  {
+    "title": "Rewilding India",
+    "image": "/media/projects/placeholder-rewilding.svg",
+    "category": "BRAND IDENTITY · CONSERVATION",
+    "year": "2025",
+    "link": "https://rewildingindia.org",
+    "order": 1,
+    "visible": true
+  },
+  {
+    "title": "Today's Budget",
+    "image": "/media/projects/placeholder-todays-budget.svg",
+    "category": "APP BRANDING · APP ICONS",
+    "year": "2025",
+    "link": "https://todays-budget.com",
+    "order": 2,
+    "visible": true
+  },
+  {
+    "title": "Culture Booster",
+    "image": "/media/projects/placeholder-culture-booster.svg",
+    "category": "BRAND IDENTITY · VISUAL DESIGN",
+    "year": "SELECTED WORK",
+    "link": "https://culturebooster.com",
+    "order": 3,
+    "visible": true
+  },
+  {
+    "title": "Tellhop",
+    "image": "/media/projects/placeholder-tellhop.svg",
+    "category": "BRAND IDENTITY · VISUAL DESIGN",
+    "year": "SELECTED WORK",
+    "link": "https://oumousse.carrd.co/#work",
+    "order": 4,
+    "visible": true
+  },
+  {
+    "title": "Warmdaz Social Innovation Incubator",
+    "image": "/media/projects/placeholder-warmdaz.svg",
+    "category": "ART DIRECTION · DESIGN EDUCATION",
+    "year": "2026",
+    "link": "https://oumousse.carrd.co/#work",
+    "order": 5,
+    "visible": true
+  },
+  {
+    "title": "Independent & Studio Projects",
+    "image": "/media/projects/placeholder-independent.svg",
+    "category": "BRANDING · REBRANDING · VISUAL ASSETS",
+    "year": "VARIOUS",
+    "link": "https://oumousse.carrd.co/#work",
+    "order": 6,
+    "visible": true
+  }
+]
