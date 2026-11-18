@@ -51,7 +51,7 @@ if (!prefersReduced && "IntersectionObserver" in window) {
 }
 
 
-// Optional original ambient synthwave loop. Starts only after visitor opt-in.
+// Original cinematic space-ambient soundtrack. Starts only after visitor opt-in.
 (() => {
   const toggle = document.querySelector(".music-toggle");
   if (!toggle) return;
@@ -62,42 +62,81 @@ if (!prefersReduced && "IntersectionObserver" in window) {
   let step = 0;
   let active = false;
 
+  // Slow, wistful progression: D minor -> Bb major -> F -> C.
+  // The added ninths and suspended notes give it an open, weightless feeling.
   const progression = [
-    [110.00, 164.81, 220.00, 261.63],
-    [98.00, 146.83, 196.00, 246.94],
-    [130.81, 196.00, 261.63, 329.63],
-    [87.31, 130.81, 174.61, 220.00]
+    { notes: [146.83, 174.61, 220.00, 261.63, 329.63], bass: 73.42 },
+    { notes: [116.54, 146.83, 174.61, 220.00, 261.63], bass: 58.27 },
+    { notes: [87.31, 130.81, 174.61, 196.00, 261.63], bass: 43.65 },
+    { notes: [130.81, 164.81, 196.00, 220.00, 293.66], bass: 65.41 }
   ];
 
-  function tone(frequency, start, duration, volume, type) {
-    const oscillator = context.createOscillator();
-    const envelope = context.createGain();
+  function makeReverb(ctx) {
+    const convolver = ctx.createConvolver();
+    const length = ctx.sampleRate * 4.5;
+    const impulse = ctx.createBuffer(2, length, ctx.sampleRate);
+    for (let channel = 0; channel < 2; channel++) {
+      const data = impulse.getChannelData(channel);
+      for (let i = 0; i < length; i++) {
+        const fade = Math.pow(1 - i / length, 3.2);
+        data[i] = (Math.random() * 2 - 1) * fade;
+      }
+    }
+    convolver.buffer = impulse;
+    return convolver;
+  }
+
+  function voice(frequency, start, duration, volume, type, destination, options = {}) {
+    const osc = context.createOscillator();
+    const gain = context.createGain();
     const filter = context.createBiquadFilter();
-    oscillator.type = type;
-    oscillator.frequency.setValueAtTime(frequency, start);
+    osc.type = type;
+    osc.frequency.setValueAtTime(frequency, start);
+    if (options.detune) osc.detune.setValueAtTime(options.detune, start);
     filter.type = "lowpass";
-    filter.frequency.setValueAtTime(type === "triangle" ? 1200 : 850, start);
-    envelope.gain.setValueAtTime(0.0001, start);
-    envelope.gain.exponentialRampToValueAtTime(volume, start + 0.25);
-    envelope.gain.setValueAtTime(volume, start + Math.max(0.3, duration - 0.45));
-    envelope.gain.exponentialRampToValueAtTime(0.0001, start + duration);
-    oscillator.connect(filter);
-    filter.connect(envelope);
-    envelope.connect(master);
-    oscillator.start(start);
-    oscillator.stop(start + duration + 0.05);
+    filter.frequency.setValueAtTime(options.cutoff || 1500, start);
+    filter.Q.value = options.resonance || 0.35;
+    gain.gain.setValueAtTime(0.0001, start);
+    gain.gain.exponentialRampToValueAtTime(volume, start + (options.attack || 1.2));
+    gain.gain.setValueAtTime(volume, start + duration * 0.72);
+    gain.gain.exponentialRampToValueAtTime(0.0001, start + duration);
+    osc.connect(filter);
+    filter.connect(gain);
+    gain.connect(destination);
+    osc.start(start);
+    osc.stop(start + duration + 0.08);
   }
 
   function playBar() {
     if (!active || !context || context.state !== "running") return;
-    const now = context.currentTime + 0.04;
+    const now = context.currentTime + 0.08;
     const chord = progression[step % progression.length];
-    chord.forEach((note, index) => tone(note, now, 3.55, index === 0 ? 0.12 : 0.055, "sine"));
-    const melody = [chord[2] * 2, chord[1] * 2, chord[3] * 2, chord[2] * 2];
-    melody.forEach((note, index) => tone(note, now + index * 0.82, 0.78, 0.035, "triangle"));
-    tone(chord[0] / 2, now, 3.4, 0.13, "triangle");
+
+    // Wide, slowly blooming pad.
+    chord.notes.forEach((note, index) => {
+      const level = index === 0 ? 0.038 : 0.025;
+      voice(note, now, 7.8, level, "triangle", reverbBus, { cutoff: 1050, attack: 2.1 });
+      voice(note * 2, now, 7.5, level * 0.22, "sine", reverbBus, { detune: index % 2 ? -7 : 7, cutoff: 1900, attack: 2.8 });
+    });
+
+    // Deep, gentle sub-bass — more felt than heard.
+    voice(chord.bass, now, 7.7, 0.105, "sine", master, { cutoff: 180, attack: 2.4 });
+
+    // A sparse, floating sequence of distant star-like notes.
+    const pattern = [chord.notes[3], chord.notes[4], chord.notes[2] * 2, chord.notes[1] * 2,
+      chord.notes[4], chord.notes[2] * 2, chord.notes[3] * 2, chord.notes[1] * 2];
+    pattern.forEach((note, index) => {
+      const when = now + index * 0.92 + (index % 2) * 0.12;
+      voice(note, when, 1.65, 0.027, "sine", echoBus, { cutoff: 2600, attack: 0.035 });
+    });
+
+    // A very quiet upper shimmer, like light moving across a distant surface.
+    voice(chord.notes[4] * 4, now + 3.6, 3.2, 0.006, "sine", reverbBus, { cutoff: 4200, attack: 1.5 });
     step++;
   }
+
+  let reverbBus = null;
+  let echoBus = null;
 
   async function stopMusic() {
     active = false;
@@ -106,6 +145,8 @@ if (!prefersReduced && "IntersectionObserver" in window) {
     const oldContext = context;
     context = null;
     master = null;
+    reverbBus = null;
+    echoBus = null;
     if (oldContext && oldContext.state !== "closed") await oldContext.close();
     toggle.setAttribute("aria-pressed", "false");
     toggle.setAttribute("aria-label", "Turn background music on");
@@ -118,13 +159,34 @@ if (!prefersReduced && "IntersectionObserver" in window) {
     context = new AudioContextClass();
     if (context.state === "suspended") await context.resume();
     if (context.state !== "running") throw new Error("Audio could not be started");
+
     master = context.createGain();
-    master.gain.value = 0.65;
+    master.gain.value = 0.72;
     master.connect(context.destination);
+
+    const reverb = makeReverb(context);
+    const reverbLevel = context.createGain();
+    reverbLevel.gain.value = 0.24;
+    reverb.connect(reverbLevel);
+    reverbLevel.connect(master);
+    reverbBus = reverb;
+
+    const delay = context.createDelay(1.5);
+    delay.delayTime.value = 0.42;
+    const feedback = context.createGain();
+    feedback.gain.value = 0.24;
+    const echoLevel = context.createGain();
+    echoLevel.gain.value = 0.34;
+    delay.connect(feedback);
+    feedback.connect(delay);
+    delay.connect(echoLevel);
+    echoLevel.connect(master);
+    echoBus = delay;
+
     active = true;
     step = 0;
     playBar();
-    timer = window.setInterval(playBar, 3600);
+    timer = window.setInterval(playBar, 8000);
     toggle.setAttribute("aria-pressed", "true");
     toggle.setAttribute("aria-label", "Turn background music off");
     toggle.title = "Turn background music off";
