@@ -212,6 +212,32 @@
 
       titleElement.textContent = article.title;
       document.title = article.title + " — Nour Oumousse";
+
+      const plainDescription = article.body
+        .replace(/!\\[([^\\]]*)\\]\\([^)]*\\)/g, "$1")
+        .replace(/\\[([^\\]]+)\\]\\([^)]*\\)/g, "$1")
+        .replace(/^\\s{0,3}#{1,6}\\s+/gm, "")
+        .replace(/[>*_~`#]/g, " ")
+        .replace(/<[^>]*>/g, " ")
+        .replace(/\\s+/g, " ")
+        .trim()
+        .slice(0, 155);
+      const description = plainDescription || "An article by Nour Oumousse.";
+      const canonicalUrl = window.location.href.split("#")[0];
+      const canonical = document.querySelector('link[rel="canonical"]');
+      if (canonical) canonical.href = canonicalUrl;
+      const ogUrl = document.querySelector('meta[property="og:url"]');
+      if (ogUrl) ogUrl.content = canonicalUrl;
+      const ogTitle = document.querySelector('meta[property="og:title"]');
+      if (ogTitle) ogTitle.content = document.title;
+      const twitterTitle = document.querySelector('meta[name="twitter:title"]');
+      if (twitterTitle) twitterTitle.content = document.title;
+      const descriptionMeta = document.querySelector('meta[name="description"]');
+      if (descriptionMeta) descriptionMeta.content = description;
+      const ogDescription = document.querySelector('meta[property="og:description"]');
+      if (ogDescription) ogDescription.content = description;
+      const twitterDescription = document.querySelector('meta[name="twitter:description"]');
+      if (twitterDescription) twitterDescription.content = description;
       dateElement.textContent = article.dateLabel;
       dateElement.hidden = !article.dateLabel;
       contentElement.innerHTML = renderBlocks(article.body);
