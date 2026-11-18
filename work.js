@@ -6,8 +6,7 @@
   let topZ = 10;
 
   cards.forEach((card) => {
-    const handle = card.querySelector(".project-drag-handle");
-    if (!handle) return;
+    const handle = card;
 
     let pointerId = null;
     let startX = 0;
@@ -21,8 +20,9 @@
       return Number.parseFloat(value) || 0;
     };
 
-    handle.addEventListener("pointerdown", (event) => {
+    card.addEventListener("pointerdown", (event) => {
       if (event.button !== undefined && event.button !== 0) return;
+      if (event.target.closest("a, button")) return;
       pointerId = event.pointerId;
       startX = event.clientX;
       startY = event.clientY;
@@ -31,11 +31,11 @@
       moved = false;
       card.classList.add("is-dragging");
       card.style.zIndex = String(++topZ);
-      handle.setPointerCapture(pointerId);
+      card.setPointerCapture(pointerId);
       event.preventDefault();
     });
 
-    handle.addEventListener("pointermove", (event) => {
+    card.addEventListener("pointermove", (event) => {
       if (pointerId !== event.pointerId) return;
       const dx = event.clientX - startX;
       const dy = event.clientY - startY;
@@ -54,9 +54,9 @@
       }
     };
 
-    handle.addEventListener("pointerup", finish);
-    handle.addEventListener("pointercancel", finish);
-    handle.addEventListener("lostpointercapture", finish);
+    card.addEventListener("pointerup", finish);
+    card.addEventListener("pointercancel", finish);
+    card.addEventListener("lostpointercapture", finish);
   });
 
   workspace.addEventListener("click", (event) => {
