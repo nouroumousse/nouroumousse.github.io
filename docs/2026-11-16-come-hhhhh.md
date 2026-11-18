@@ -10,8 +10,6 @@ As a small child in a town tucked into the Anti-Atlas mountains, crying on my mo
 
 
 
-&nbsp;
-
 ## Our Version of the Lullaby, Bab n Yids
 
 #### *Nmaggarkh Bab n Yids Innayi Matrbit*
@@ -105,8 +103,6 @@ He told me, lull him, lull him, lull him
 Sleep, Sleep, Sleep, Sleep
 
 
-
-&nbsp;
 
 > ***[Listen on youtube](https://www.youtube.com/watch?v=MEvm_jDoTLE)*** 
 
