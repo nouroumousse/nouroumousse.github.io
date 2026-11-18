@@ -193,21 +193,15 @@
     }
 
     try {
-      const apiUrl = "https://api.github.com/repos/" + repository +
-        "/contents/docs/" + encodeURIComponent(filename) + "?ref=main";
-      const response = await fetch(apiUrl, {
-        headers: { Accept: "application/vnd.github+json" }
-      });
-      if (!response.ok) throw new Error("GitHub returned " + response.status);
+      // Read the published Markdown directly from GitHub Pages' raw content host.
+      // This avoids the GitHub Contents API rate limit and its base64 response format.
+      const rawUrl = "https://raw.githubusercontent.com/" + repository +
+        "/main/docs/" + encodeURIComponent(filename);
+      const response = await fetch(rawUrl, { cache: "no-store" });
+      if (!response.ok) throw new Error("Article file returned " + response.status);
 
-      const file = await response.json();
-      if (file.encoding !== "base64" || !file.content) {
-        throw new Error("The article content was not available.");
-      }
-
-      const binary = atob(file.content.replace(/\s/g, ""));
-      const bytes = Uint8Array.from(binary, character => character.charCodeAt(0));
-      const markdown = new TextDecoder("utf-8").decode(bytes);
+      const markdown = await response.text();
+      if (!markdown.trim()) throw new Error("The article file is empty.");
       const article = parseFrontmatter(markdown);
 
       titleElement.textContent = article.title;
