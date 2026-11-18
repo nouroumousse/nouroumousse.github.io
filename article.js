@@ -208,12 +208,12 @@
       document.title = article.title + " — Nour Oumousse";
 
       const plainDescription = article.body
-        .replace(/!\\[([^\\]]*)\\]\\([^)]*\\)/g, "$1")
-        .replace(/\\[([^\\]]+)\\]\\([^)]*\\)/g, "$1")
-        .replace(/^\\s{0,3}#{1,6}\\s+/gm, "")
-        .replace(/[>*_~`#]/g, " ")
+        .replace(/!\[([^\]]*)\]\([^)]*\)/g, "$1")
+        .replace(/\[([^\]]+)\]\([^)]*\)/g, "$1")
+        .replace(/^\s{0,3}#{1,6}\s+/gm, "")
+        .replace(/[>*_~\`#]/g, " ")
         .replace(/<[^>]*>/g, " ")
-        .replace(/\\s+/g, " ")
+        .replace(/\s+/g, " ")
         .trim()
         .slice(0, 155);
       const description = plainDescription || "An article by Nour Oumousse.";
