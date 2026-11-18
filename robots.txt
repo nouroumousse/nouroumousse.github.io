@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://nouroumousse.github.io/sitemap.xml
