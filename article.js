@@ -6,11 +6,40 @@
   const subtitleElement = document.getElementById("article-subtitle");
   const dateElement = document.getElementById("article-date");
   const contentElement = document.getElementById("article-content");
+  const copyLinkButton = document.getElementById("copy-article-link");
+  const copyLinkStatus = document.getElementById("copy-article-status");
 
   const repository = "nouroumousse/nouroumousse.github.io";
   const params = new URLSearchParams(window.location.search);
   const filename = params.get("file") || "";
   const tick = String.fromCharCode(96);
+
+  const copyArticleLink = async () => {
+    const shareUrl = window.location.href.split("#")[0];
+    try {
+      if (navigator.clipboard && window.isSecureContext) {
+        await navigator.clipboard.writeText(shareUrl);
+      } else {
+        const field = document.createElement("textarea");
+        field.value = shareUrl;
+        field.setAttribute("readonly", "");
+        field.style.position = "absolute";
+        field.style.left = "-9999px";
+        document.body.appendChild(field);
+        field.select();
+        const copied = document.execCommand("copy");
+        field.remove();
+        if (!copied) throw new Error("Copy command was unavailable");
+      }
+      if (copyLinkStatus) copyLinkStatus.textContent = "link copied ✓";
+      if (copyLinkButton) copyLinkButton.textContent = "copied ✓";
+    } catch (error) {
+      console.error("Unable to copy article link:", error);
+      if (copyLinkStatus) copyLinkStatus.textContent = "Copy failed — select the page URL to share.";
+    }
+  };
+
+  if (copyLinkButton) copyLinkButton.addEventListener("click", copyArticleLink);
 
   const showError = (message) => {
     state.textContent = message;
