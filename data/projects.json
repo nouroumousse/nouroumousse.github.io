@@ -1,12 +1,5 @@
 [
   {
-    "title": "App Icons Collection",
-    "image": "/media/appicons.png",
-    "category": "APP ICONS . BEHANCE",
-    "link": "https://www.behance.net/gallery/221996957/App-Icons-Collection",
-    "visible": true
-  },
-  {
     "title": "Rewilding India",
     "image": "/media/rewilding.png",
     "category": "BRAND IDENTITY ",
@@ -67,6 +60,21 @@
     "year": "2024",
     "link": "https://hub.gocnary.com/",
     "order": 7,
+    "visible": true
+  },
+  {
+    "title": "App Icons Collection",
+    "image": "/media/appicons.png",
+    "category": "APP ICONS . BEHANCE",
+    "link": "https://www.behance.net/gallery/221996957/App-Icons-Collection",
+    "order": 8,
+    "visible": true
+  },
+  {
+    "title": "Flora Symbols",
+    "image": "/media/flora-symbols1.png",
+    "category": "VISUAL DESIGN . BEHANCE",
+    "link": "https://www.behance.net/gallery/116982533/Flora-Symbols",
     "visible": true
   }
 ]
