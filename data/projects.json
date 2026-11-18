@@ -35,11 +35,10 @@
     "visible": true
   },
   {
-    "title": "Culture Booster",
-    "image": "/media/culture.png",
-    "category": "BRAND IDENTITY",
-    "year": "2021",
-    "link": "https://culturebooster.com",
+    "title": "Flora Symbols",
+    "image": "/media/flora-symbols1.png",
+    "category": "VISUAL DESIGN . BEHANCE",
+    "link": "https://www.behance.net/gallery/116982533/Flora-Symbols",
     "order": 5,
     "visible": true
   },
@@ -71,10 +70,11 @@
     "visible": true
   },
   {
-    "title": "Flora Symbols",
-    "image": "/media/flora-symbols1.png",
-    "category": "VISUAL DESIGN . BEHANCE",
-    "link": "https://www.behance.net/gallery/116982533/Flora-Symbols",
+    "title": "Culture Booster",
+    "image": "/media/culture.png",
+    "category": "BRAND IDENTITY",
+    "year": "2021",
+    "link": "https://culturebooster.com",
     "order": 9,
     "visible": true
   }
