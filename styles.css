@@ -1071,3 +1071,25 @@ body.community-page main#top > section:not(:last-child) {
 @media (max-width: 900px) {
   .theme-toggle { width: 30px; height: 30px; flex-basis: 30px; }
 }
+
+
+/* Music and appearance controls sit together in the header. */
+.site-header > .theme-toggle,
+.site-header > .music-toggle {
+  margin: 0;
+  flex: 0 0 34px;
+}
+.site-header > .status {
+  gap: 0.45rem;
+}
+.site-header > .status > .dot { order: 0; }
+.site-header > .status > .status-label { order: 1; }
+.site-header > .status > .music-toggle { display: none; }
+@media (max-width: 900px) {
+  .site-header > .theme-toggle,
+  .site-header > .music-toggle {
+    width: 30px;
+    height: 30px;
+    flex-basis: 30px;
+  }
+}
