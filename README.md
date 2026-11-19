@@ -58,3 +58,5 @@ python3 -m http.server 8080
 | `main.js` | Copy-email button, scroll reveal animations, footer year |
 
 To edit projects/experience, just change the markup in `index.html`.
+
+<!-- push test: harmless comment, safe to delete -->
