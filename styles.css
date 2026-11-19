@@ -1093,3 +1093,60 @@ body.community-page main#top > section:not(:last-child) {
     flex-basis: 30px;
   }
 }
+
+
+/* Fixed floating preference controls, shared by every page. */
+.floating-controls {
+  position: fixed;
+  right: max(1.5rem, env(safe-area-inset-right));
+  bottom: max(1.5rem, env(safe-area-inset-bottom));
+  z-index: 1000;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.55rem;
+  padding: 0.55rem;
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  background: var(--surface);
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.28);
+}
+.floating-controls .theme-toggle,
+.floating-controls .music-toggle {
+  width: 38px;
+  height: 38px;
+  flex: 0 0 38px;
+  margin: 0;
+  color: var(--text);
+  border-color: var(--line);
+  background: transparent;
+}
+.floating-controls .theme-toggle:hover,
+.floating-controls .music-toggle:hover,
+.floating-controls .theme-toggle:focus-visible,
+.floating-controls .music-toggle:focus-visible {
+  color: var(--accent);
+  border-color: var(--accent);
+}
+:root[data-theme="light"] .floating-controls {
+  background: rgba(255,255,255,.96);
+  box-shadow: 0 8px 30px rgba(30,35,20,.14);
+}
+:root[data-theme="light"] .floating-controls .theme-toggle,
+:root[data-theme="light"] .floating-controls .music-toggle {
+  color: #34382b;
+  background: transparent;
+}
+@media (max-width: 600px) {
+  .floating-controls {
+    right: max(1rem, env(safe-area-inset-right));
+    bottom: max(1rem, env(safe-area-inset-bottom));
+    padding: 0.4rem;
+    gap: 0.35rem;
+  }
+  .floating-controls .theme-toggle,
+  .floating-controls .music-toggle {
+    width: 36px;
+    height: 36px;
+    flex-basis: 36px;
+  }
+}
