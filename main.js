@@ -211,3 +211,31 @@ if (!prefersReduced && "IntersectionObserver" in window) {
     if (context && context.state !== "closed") context.close();
   });
 })();
+
+
+// Persistent site-wide light/dark theme switch.
+(() => {
+  const root = document.documentElement;
+  const toggle = document.querySelector(".theme-toggle");
+  if (!toggle) return;
+
+  let savedTheme = null;
+  try { savedTheme = localStorage.getItem("nour-theme"); } catch {}
+  const initialTheme = savedTheme === "light" ? "light" : "dark";
+
+  function applyTheme(theme) {
+    root.dataset.theme = theme;
+    const light = theme === "light";
+    toggle.setAttribute("aria-pressed", String(light));
+    toggle.setAttribute("aria-label", light ? "Switch to dark mode" : "Switch to light mode");
+    toggle.title = light ? "Switch to dark mode" : "Switch to light mode";
+    toggle.querySelector("span").textContent = light ? "☾" : "☼";
+  }
+
+  applyTheme(initialTheme);
+  toggle.addEventListener("click", () => {
+    const nextTheme = root.dataset.theme === "light" ? "dark" : "light";
+    applyTheme(nextTheme);
+    try { localStorage.setItem("nour-theme", nextTheme); } catch {}
+  });
+})();
