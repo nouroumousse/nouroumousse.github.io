@@ -1157,3 +1157,12 @@ body.community-page main#top > section:not(:last-child) {
     flex-basis: 36px;
   }
 }
+
+
+/* Light theme: Copy Email sits on the darker green accent, so its text stays white.
+   Needs the #copy-btn selector to outrank the dark-text rules above. */
+:root[data-theme="light"] .contact-box .contact-actions > #copy-btn,
+:root[data-theme="light"] .contact-box .contact-actions > #copy-btn:hover,
+:root[data-theme="light"] .contact-box .contact-actions > #copy-btn:focus-visible {
+  color: #ffffff !important;
+}
