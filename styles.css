@@ -290,8 +290,15 @@ section { padding: clamp(4rem, 9vw, 7rem) 0; border-bottom: none; }
   .testimonial-card { min-height: 300px; padding: 1.2rem; }
 }
 @media (prefers-reduced-motion: reduce) {
-  .testimonial-track { animation: none; }
-  .testimonial-marquee { overflow-x: auto; }
+  .testimonial-track { animation: none; width: auto; }
+  .testimonial-marquee {
+    overflow: visible;
+    -webkit-mask-image: none;
+    mask-image: none;
+  }
+  .testimonial-group { flex-wrap: wrap; justify-content: center; }
+  .testimonial-group[aria-hidden="true"] { display: none; }
+  .testimonial-card { width: min(360px, 100%); }
 }
 
 
