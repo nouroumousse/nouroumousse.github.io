@@ -51,9 +51,9 @@ if (!prefersReduced && "IntersectionObserver" in window) {
 }
 
 
-// Four original, procedurally generated 10-second music scenes.
-// Starts only after visitor opt-in. The melodies are original and use broad genre
-// characteristics rather than recreating any existing soundtrack or song.
+// Original 30-second 1950s-inspired small-combo jazz loop.
+// Web Audio only: warm sax-like lead, walking upright bass, brushed snare,
+// ride-cymbal ticks and soft piano chords. Starts only after visitor opt-in.
 (() => {
   const toggle = document.querySelector(".music-toggle");
   if (!toggle) return;
@@ -61,152 +61,150 @@ if (!prefersReduced && "IntersectionObserver" in window) {
   let context = null;
   let master = null;
   let timer = null;
-  let trackIndex = 0;
   let active = false;
-  let reverbBus = null;
-  let echoBus = null;
 
-  // Track 1: preserve the original wistful, weightless space-ambient harmony.
-  const spaceProgression = [
-    { notes: [146.83, 174.61, 220.00, 261.63, 329.63], bass: 73.42 },
-    { notes: [116.54, 146.83, 174.61, 220.00, 261.63], bass: 58.27 },
-    { notes: [87.31, 130.81, 174.61, 196.00, 261.63], bass: 43.65 },
-    { notes: [130.81, 164.81, 196.00, 220.00, 293.66], bass: 65.41 }
-  ];
+  const bpm = 116;
+  const beat = 60 / bpm;
+  const bar = beat * 4;
+  const total = 30;
 
-  function makeReverb(ctx) {
-    const convolver = ctx.createConvolver();
-    const length = ctx.sampleRate * 4.5;
-    const impulse = ctx.createBuffer(2, length, ctx.sampleRate);
-    for (let channel = 0; channel < 2; channel++) {
-      const data = impulse.getChannelData(channel);
-      for (let i = 0; i < length; i++) {
-        data[i] = (Math.random() * 2 - 1) * Math.pow(1 - i / length, 3.2);
-      }
-    }
-    convolver.buffer = impulse;
-    return convolver;
+  function envelope(gain, start, peak, attack, hold, release) {
+    gain.gain.setValueAtTime(0.0001, start);
+    gain.gain.exponentialRampToValueAtTime(Math.max(peak, 0.0002), start + attack);
+    gain.gain.setValueAtTime(Math.max(peak, 0.0002), start + attack + hold);
+    gain.gain.exponentialRampToValueAtTime(0.0001, start + attack + hold + release);
   }
 
-  function voice(frequency, start, duration, volume, type, destination, options = {}) {
+  function saxNote(freq, start, duration, level = 0.055) {
+    const voiceGain = context.createGain();
+    const filter = context.createBiquadFilter();
+    filter.type = "lowpass";
+    filter.frequency.setValueAtTime(1900, start);
+    filter.Q.value = 0.8;
+    voiceGain.connect(filter);
+    filter.connect(master);
+    envelope(voiceGain, start, level, 0.055, duration * 0.58, duration * 0.34);
+
+    // A soft, slightly nasal harmonic stack gives the lead a reed-like tone.
+    [1, 2, 3, 4].forEach((harmonic, index) => {
+      const osc = context.createOscillator();
+      const partial = context.createGain();
+      osc.type = "sine";
+      osc.frequency.setValueAtTime(freq * harmonic, start);
+      partial.gain.value = [1, 0.34, 0.16, 0.055][index];
+      osc.connect(partial);
+      partial.connect(voiceGain);
+      osc.start(start);
+      osc.stop(start + duration + 0.05);
+    });
+
+    const vibrato = context.createOscillator();
+    const vibratoDepth = context.createGain();
+    vibrato.type = "sine";
+    vibrato.frequency.value = 5.2;
+    vibratoDepth.gain.setValueAtTime(0, start);
+    vibratoDepth.gain.linearRampToValueAtTime(3.2, start + 0.18);
+    vibrato.connect(vibratoDepth);
+    // Tiny pitch movement on the fundamental adds a breathy, played feel.
+    const pitch = context.createOscillator();
+    pitch.frequency.setValueAtTime(freq, start);
+    vibratoDepth.connect(pitch.detune);
+    pitch.connect(voiceGain);
+    pitch.start(start);
+    pitch.stop(start + duration + 0.05);
+    vibrato.start(start);
+    vibrato.stop(start + duration + 0.05);
+  }
+
+  function bassNote(freq, start, duration) {
     const osc = context.createOscillator();
     const gain = context.createGain();
     const filter = context.createBiquadFilter();
-    osc.type = type;
-    osc.frequency.setValueAtTime(frequency, start);
-    if (options.detune) osc.detune.setValueAtTime(options.detune, start);
-    if (options.slideTo) {
-      osc.frequency.setValueAtTime(frequency, start);
-      osc.frequency.exponentialRampToValueAtTime(options.slideTo, start + Math.min(0.22, duration * 0.35));
-    }
+    osc.type = "triangle";
+    osc.frequency.setValueAtTime(freq, start);
     filter.type = "lowpass";
-    filter.frequency.setValueAtTime(options.cutoff || 1800, start);
-    filter.Q.value = options.resonance || 0.35;
-    const attack = Math.min(options.attack || 0.08, duration * 0.45);
-    gain.gain.setValueAtTime(0.0001, start);
-    gain.gain.exponentialRampToValueAtTime(Math.max(volume, 0.0002), start + attack);
-    gain.gain.setValueAtTime(Math.max(volume, 0.0002), start + duration * 0.72);
-    gain.gain.exponentialRampToValueAtTime(0.0001, start + duration);
+    filter.frequency.value = 320;
     osc.connect(filter);
     filter.connect(gain);
-    gain.connect(destination);
+    gain.connect(master);
+    envelope(gain, start, 0.13, 0.012, duration * 0.48, duration * 0.42);
     osc.start(start);
     osc.stop(start + duration + 0.04);
   }
 
-  function playSpace(now) {
-    const chord = spaceProgression[Math.floor(trackIndex / 4) % spaceProgression.length];
-    chord.notes.forEach((note, index) => {
-      const level = index === 0 ? 0.038 : 0.025;
-      voice(note, now, 9.6, level, "triangle", reverbBus, { cutoff: 1050, attack: 2.1 });
-      voice(note * 2, now, 9.4, level * 0.22, "sine", reverbBus, { detune: index % 2 ? -7 : 7, cutoff: 1900, attack: 2.8 });
-    });
-    voice(chord.bass, now, 9.5, 0.105, "sine", master, { cutoff: 180, attack: 2.4 });
-    const pattern = [chord.notes[3], chord.notes[4], chord.notes[2] * 2, chord.notes[1] * 2,
-      chord.notes[4], chord.notes[2] * 2, chord.notes[3] * 2, chord.notes[1] * 2];
-    pattern.forEach((note, index) => {
-      voice(note, now + index * 1.08, 1.7, 0.027, "sine", echoBus, { cutoff: 2600, attack: 0.035 });
-    });
-    voice(chord.notes[4] * 4, now + 4.2, 4.2, 0.006, "sine", reverbBus, { cutoff: 4200, attack: 1.5 });
-  }
-
-  // Track 2: ancient-epic cinematic atmosphere — broad low strings, brass-like
-  // harmonics and a rising original motif.
-  function playEpic(now) {
-    const chords = [
-      [110, 164.81, 220, 261.63],
-      [98, 146.83, 196, 246.94],
-      [130.81, 196, 261.63, 329.63],
-      [87.31, 130.81, 174.61, 220]
-    ];
-    const chord = chords[Math.floor(trackIndex / 4) % chords.length];
-    chord.forEach((n, i) => {
-      voice(n, now, 9.5, 0.035, "sawtooth", reverbBus, { cutoff: 720 + i * 160, attack: 1.4 });
-      voice(n * 2, now, 9.2, 0.012, "triangle", reverbBus, { detune: i % 2 ? -5 : 5, cutoff: 1700, attack: 1.8 });
-    });
-    voice(chord[0] / 2, now, 9.5, 0.13, "sine", master, { cutoff: 150, attack: 1.8 });
-    const motif = [chord[2], chord[3], chord[2] * 1.5, chord[1] * 2, chord[2] * 1.5, chord[3] * 2];
-    motif.forEach((n, i) => {
-      voice(n, now + 1.0 + i * 1.35, 1.25, 0.035, "sawtooth", echoBus, { cutoff: 2400, attack: 0.18 });
-    });
-    [0, 3.2, 6.4].forEach((t) => {
-      voice(chord[0] / 2, now + t, 0.55, 0.045, "triangle", master, { cutoff: 300, attack: 0.08 });
+  function pianoChord(notes, start) {
+    notes.forEach((freq) => {
+      const osc = context.createOscillator();
+      const gain = context.createGain();
+      osc.type = "triangle";
+      osc.frequency.value = freq;
+      osc.connect(gain);
+      gain.connect(master);
+      envelope(gain, start, 0.018, 0.008, 0.12, 0.48);
+      osc.start(start);
+      osc.stop(start + 0.68);
     });
   }
 
-  // Track 3: bright, high-register blues-rock lead with a clean, plucked edge.
-  // It uses an original phrase and does not quote a guitar solo.
-  function playGuitar(now) {
-    const bassNotes = [110, 130.81, 146.83, 130.81];
-    const scale = [440, 523.25, 587.33, 659.25, 783.99, 880, 783.99, 659.25,
-      587.33, 523.25, 493.88, 523.25, 659.25, 783.99, 880, 1046.5];
-    bassNotes.forEach((n, i) => {
-      voice(n, now + i * 2.35, 2.25, 0.075, "triangle", master, { cutoff: 420, attack: 0.025 });
-      voice(n / 2, now + i * 2.35, 2.2, 0.065, "sine", master, { cutoff: 180, attack: 0.04 });
-    });
-    scale.forEach((n, i) => {
-      const when = now + 0.18 + i * 0.58;
-      const bend = i === 4 || i === 13;
-      voice(n, when, 0.48, 0.052, "sawtooth", echoBus, {
-        cutoff: 3600, attack: 0.012, detune: bend ? -9 : 0,
-        slideTo: bend ? n * 1.045 : undefined
-      });
-      voice(n * 2, when, 0.34, 0.012, "triangle", reverbBus, { cutoff: 5200, attack: 0.01, detune: i % 2 ? 4 : -4 });
-    });
+  function noiseHit(start, duration, level, highpass, lowpass = 9000) {
+    const length = Math.ceil(context.sampleRate * duration);
+    const buffer = context.createBuffer(1, length, context.sampleRate);
+    const data = buffer.getChannelData(0);
+    for (let i = 0; i < length; i++) {
+      const fade = 1 - i / length;
+      data[i] = (Math.random() * 2 - 1) * fade;
+    }
+    const source = context.createBufferSource();
+    const filter = context.createBiquadFilter();
+    const gain = context.createGain();
+    source.buffer = buffer;
+    filter.type = "highpass";
+    filter.frequency.value = highpass;
+    filter.connect(gain);
+    gain.connect(master);
+    gain.gain.setValueAtTime(level, start);
+    gain.gain.exponentialRampToValueAtTime(0.0001, start + duration);
+    source.connect(filter);
+    source.start(start);
   }
 
-  // Track 4: gentle, whimsical pastoral chamber sound — bell-like piano tones,
-  // warm harmony and a lilting original melody.
-  function playWhimsy(now) {
-    const chords = [
-      [261.63, 329.63, 392, 493.88],
-      [220, 261.63, 329.63, 440],
-      [196, 246.94, 293.66, 392],
-      [174.61, 220, 261.63, 349.23]
-    ];
-    const chord = chords[Math.floor(trackIndex / 4) % chords.length];
-    chord.forEach((n, i) => {
-      voice(n / 2, now, 9.3, 0.027, "triangle", reverbBus, { cutoff: 1400, attack: 1.1 });
-      voice(n, now, 8.9, 0.012, "sine", reverbBus, { cutoff: 3200, attack: 1.4, detune: i % 2 ? 3 : -3 });
-    });
-    const melody = [chord[2], chord[3], chord[1] * 2, chord[2] * 2,
-      chord[3], chord[2] * 2, chord[1] * 2, chord[0] * 2,
-      chord[2], chord[3], chord[1] * 2, chord[2] * 2];
-    melody.forEach((n, i) => {
-      const when = now + i * 0.76;
-      voice(n, when, 0.62, 0.038, "sine", echoBus, { cutoff: 4200, attack: 0.018 });
-      if (i % 3 === 0) voice(n / 2, when, 0.85, 0.018, "triangle", reverbBus, { cutoff: 2200, attack: 0.08 });
-    });
-    voice(chord[0] / 2, now, 9.2, 0.065, "sine", master, { cutoff: 240, attack: 1.4 });
-  }
-
-  const tracks = [playSpace, playEpic, playGuitar, playWhimsy];
-
-  function playNextTrack() {
+  function playThirtySeconds() {
     if (!active || !context || context.state !== "running") return;
-    const now = context.currentTime + 0.08;
-    tracks[trackIndex](now);
-    trackIndex = (trackIndex + 1) % tracks.length;
+    const start = context.currentTime + 0.08;
+    const progression = [
+      { bass: 110, chord: [261.63, 329.63, 392, 466.16], scale: [523.25, 587.33, 659.25, 783.99, 698.46, 659.25, 587.33, 523.25] },
+      { bass: 146.83, chord: [293.66, 349.23, 440, 523.25], scale: [587.33, 659.25, 783.99, 880, 783.99, 698.46, 659.25, 587.33] },
+      { bass: 98, chord: [246.94, 293.66, 369.99, 440], scale: [493.88, 587.33, 659.25, 739.99, 698.46, 659.25, 587.33, 493.88] },
+      { bass: 130.81, chord: [261.63, 329.63, 392, 493.88], scale: [523.25, 659.25, 783.99, 880, 783.99, 659.25, 587.33, 523.25] }
+    ];
+
+    // 15 bars at 116 BPM = just over 31 seconds; last bar is shortened to 30s.
+    for (let barIndex = 0; barIndex < 15; barIndex++) {
+      const chord = progression[barIndex % progression.length];
+      const barStart = start + barIndex * bar;
+      pianoChord(chord.chord, barStart + beat * 0.02);
+      pianoChord(chord.chord, barStart + beat * 2.02);
+
+      for (let beatIndex = 0; beatIndex < 4; beatIndex++) {
+        const when = barStart + beatIndex * beat;
+        const bassFreq = chord.bass * [1, 1.5, 1.25, 1.5][beatIndex];
+        bassNote(bassFreq, when, beat * 0.72);
+        // Ride cymbal keeps a light swing pulse; softer offbeat brush accents.
+        noiseHit(when, 0.075, beatIndex === 0 ? 0.014 : 0.009, 5200);
+        noiseHit(when + beat * 0.5, 0.055, 0.0035, 1800, 6500);
+      }
+
+      // Original melodic phrase with rests and occasional syncopation.
+      const phrase = [
+        [0.18, 0, 0.72], [0.92, 2, 0.48], [1.48, 3, 0.62],
+        [2.42, 4, 0.42], [2.96, 3, 0.5], [3.48, 1, 0.42]
+      ];
+      phrase.forEach(([offset, noteIndex, length], phraseIndex) => {
+        const note = chord.scale[noteIndex];
+        const octave = (barIndex % 3 === 2 && phraseIndex === 2) ? 2 : 1;
+        saxNote(note * octave, barStart + beat * offset, beat * length, 0.048);
+      });
+    }
   }
 
   async function stopMusic() {
@@ -216,8 +214,6 @@ if (!prefersReduced && "IntersectionObserver" in window) {
     const oldContext = context;
     context = null;
     master = null;
-    reverbBus = null;
-    echoBus = null;
     if (oldContext && oldContext.state !== "closed") await oldContext.close();
     toggle.setAttribute("aria-pressed", "false");
     toggle.setAttribute("aria-label", "Turn background music on");
@@ -232,32 +228,19 @@ if (!prefersReduced && "IntersectionObserver" in window) {
     if (context.state !== "running") throw new Error("Audio could not be started");
 
     master = context.createGain();
-    master.gain.value = 0.72;
-    master.connect(context.destination);
-
-    const reverb = makeReverb(context);
-    const reverbLevel = context.createGain();
-    reverbLevel.gain.value = 0.24;
-    reverb.connect(reverbLevel);
-    reverbLevel.connect(master);
-    reverbBus = reverb;
-
-    const delay = context.createDelay(1.5);
-    delay.delayTime.value = 0.42;
-    const feedback = context.createGain();
-    feedback.gain.value = 0.24;
-    const echoLevel = context.createGain();
-    echoLevel.gain.value = 0.34;
-    delay.connect(feedback);
-    feedback.connect(delay);
-    delay.connect(echoLevel);
-    echoLevel.connect(master);
-    echoBus = delay;
+    master.gain.value = 0.62;
+    const compressor = context.createDynamicsCompressor();
+    compressor.threshold.value = -20;
+    compressor.knee.value = 18;
+    compressor.ratio.value = 3;
+    compressor.attack.value = 0.008;
+    compressor.release.value = 0.22;
+    master.connect(compressor);
+    compressor.connect(context.destination);
 
     active = true;
-    trackIndex = 0;
-    playNextTrack();
-    timer = window.setInterval(playNextTrack, 10000);
+    playThirtySeconds();
+    timer = window.setInterval(playThirtySeconds, total * 1000);
     toggle.setAttribute("aria-pressed", "true");
     toggle.setAttribute("aria-label", "Turn background music off");
     toggle.title = "Turn background music off";
