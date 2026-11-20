@@ -1768,3 +1768,31 @@ body.community-page main#top > section:not(:last-child) {
 .bookmark-featured-card.is-dragging .bookmark-drag-handle { cursor:grabbing; }
 .bookmark-featured-card a, .bookmark-featured-card button { cursor:pointer; }
 .bookmark-featured-image { -webkit-user-drag:none; }
+
+/* Give bookmark titles and their taxonomy a deliberate visual separation. */
+.bookmark-entry-content h3 {
+  margin:0;
+  max-width:980px;
+  line-height:1.18;
+  text-wrap:pretty;
+}
+.bookmark-entry .bookmark-entry-tags {
+  margin-top:1.15rem;
+  padding-top:.9rem;
+  gap:.55rem;
+  border-top:1px solid color-mix(in srgb,var(--line) 72%,transparent);
+}
+.bookmark-entry .bookmark-tag {
+  padding:.38rem .72rem;
+  font-size:.62rem;
+  line-height:1.2;
+}
+.bookmark-entry .bookmark-meta {
+  margin-bottom:.7rem;
+}
+@media (max-width:700px) {
+  .bookmark-entry .bookmark-entry-tags {
+    margin-top:1rem;
+    padding-top:.75rem;
+  }
+}
