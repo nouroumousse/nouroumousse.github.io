@@ -110,6 +110,7 @@
     content.append(meta, link, description);
     if (bookmark.tags.length) content.append(tagRow);
     const imageUrl = safeImageUrl(bookmark.image);
+    let previewImage = null;
     if (imageUrl) {
       const image = document.createElement("img");
       image.className = "bookmark-image";
@@ -117,9 +118,10 @@
       image.alt = "";
       image.loading = "lazy";
       image.decoding = "async";
-      card.append(image);
+      previewImage = image;
     }
     card.append(number, content);
+    if (previewImage) card.append(previewImage);
     if (destination) {
       const open = document.createElement("a");
       open.className = "bookmark-open mono";
