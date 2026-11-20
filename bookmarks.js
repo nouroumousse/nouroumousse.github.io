@@ -270,9 +270,10 @@
       if (!response.ok) throw new Error("Could not load bookmarks.json (" + response.status + ")");
       const data = await response.json();
       if (!Array.isArray(data)) throw new Error("Bookmarks data must be a JSON array");
-      bookmarks = data.filter(item => item && item.visible !== false && safeExternalUrl(item.url))
-        .sort((a,b) => new Date(b.date || 0) - new Date(a.date || 0)
-          || String(a.title || "").localeCompare(String(b.title || "")));
+      // Pages CMS keeps collection entries in submission order (new entries are appended).
+      // Reverse that order so the most recently submitted bookmark is always first,
+      // even when several entries share the same saved date.
+      bookmarks = data.filter(item => item && item.visible !== false && safeExternalUrl(item.url)).reverse();
       buildTagColors();
       renderFeatured();
       renderFilters();
