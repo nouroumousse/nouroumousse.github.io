@@ -1166,3 +1166,200 @@ body.community-page main#top > section:not(:last-child) {
 :root[data-theme="light"] .contact-box .contact-actions > #copy-btn:focus-visible {
   color: #ffffff !important;
 }
+
+
+/* Floating, draggable project-card canvas */
+.hero-preview-workspace .floating-workspace {
+  position: relative;
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  align-items: start;
+  gap: clamp(1.4rem, 3vw, 3rem);
+  padding: clamp(1.25rem, 3vw, 2.5rem) clamp(.25rem, 1vw, .75rem) 3rem;
+  isolation: isolate;
+}
+.hero-preview-workspace .floating-project {
+  --drag-x: 0px;
+  --drag-y: 0px;
+  position: relative;
+  z-index: 1;
+  width: 100%;
+  max-width: var(--card-width, 340px);
+  justify-self: center;
+  overflow: hidden;
+  border: 1px solid rgba(255,255,255,.14);
+  border-radius: 13px;
+  background: #171918;
+  box-shadow: 0 18px 45px rgba(0,0,0,.32), 0 2px 8px rgba(0,0,0,.18);
+  transform: translate3d(var(--drag-x),var(--drag-y),0) rotate(var(--tilt,0deg));
+  translate: 0 0;
+  animation: project-card-float 6.5s ease-in-out infinite;
+  animation-delay: var(--float-delay, 0s);
+  transition: box-shadow .25s ease, border-color .25s ease;
+  will-change: transform, translate;
+}
+.hero-preview-workspace .floating-project:nth-child(2),
+.hero-preview-workspace .floating-project:nth-child(5) { margin-top: 2.4rem; }
+.hero-preview-workspace .floating-project:nth-child(3),
+.hero-preview-workspace .floating-project:nth-child(6) { margin-top: .8rem; }
+.hero-preview-workspace .floating-project.is-dragging {
+  z-index: 20;
+  animation-play-state: paused;
+  transition: none;
+  border-color: rgba(212,255,63,.7);
+  box-shadow: 0 28px 70px rgba(0,0,0,.48), 0 0 0 1px rgba(212,255,63,.16);
+  cursor: grabbing;
+}
+.hero-preview-workspace .project-drag-handle {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: .7rem;
+  min-height: 34px;
+  padding: .45rem .75rem;
+  color: rgba(245,245,235,.66);
+  background: #202421;
+  border-bottom: 1px solid rgba(255,255,255,.08);
+  font-size: .59rem;
+  letter-spacing: .1em;
+  cursor: grab;
+  user-select: none;
+  touch-action: none;
+}
+.hero-preview-workspace .project-drag-handle span:nth-child(2) {
+  margin-right: auto;
+}
+.hero-preview-workspace .project-drag-handle span:last-child {
+  color: #d4ff3f;
+}
+.hero-preview-workspace .floating-project-image {
+  display: block;
+  width: 100%;
+  aspect-ratio: 1.22 / 1;
+  object-fit: cover;
+  pointer-events: none;
+  user-select: none;
+}
+.hero-preview-workspace .floating-project-info {
+  padding: 1rem 1.05rem 1.05rem;
+}
+.hero-preview-workspace .floating-project-info > p {
+  margin: 0 0 .55rem;
+  color: #a4ad9a;
+  font-size: .59rem;
+  line-height: 1.5;
+  letter-spacing: .07em;
+}
+.hero-preview-workspace .floating-project-info h3 {
+  color: #f4f3eb;
+  font-size: clamp(1.05rem, 1.4vw, 1.35rem);
+  line-height: 1.22;
+  font-weight: 500;
+  letter-spacing: -.035em;
+}
+.hero-preview-workspace .floating-project-bottom {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 1rem;
+  margin-top: 1rem;
+  color: #90988d;
+  font-size: .61rem;
+  letter-spacing: .08em;
+}
+.hero-preview-workspace .floating-open {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 82px;
+  min-height: 32px;
+  padding: .45rem .75rem;
+  border: 1px solid rgba(212,255,63,.55);
+  border-radius: 3px;
+  color: #d4ff3f;
+  text-decoration: none;
+  font-size: .65rem;
+  letter-spacing: .06em;
+  transition: background .2s, color .2s, border-color .2s;
+}
+.hero-preview-workspace .floating-open:hover,
+.hero-preview-workspace .floating-open:focus-visible {
+  color: #11140d;
+  background: #d4ff3f;
+  border-color: #d4ff3f;
+}
+.hero-preview-workspace .workspace-hint {
+  margin: -.6rem 0 1rem;
+  color: var(--muted);
+  font-size: .62rem;
+  letter-spacing: .1em;
+  text-align: center;
+}
+@keyframes project-card-float {
+  0%,100% { translate: 0 0; }
+  50% { translate: 0 -9px; }
+}
+@media (max-width: 900px) {
+  .hero-preview-workspace .floating-workspace { grid-template-columns: repeat(2,minmax(0,1fr)); }
+}
+@media (max-width: 600px) {
+  .hero-preview-workspace .floating-workspace {
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
+    padding: 1rem .25rem 2rem;
+  }
+  .hero-preview-workspace .floating-project,
+  .hero-preview-workspace .floating-project:nth-child(n) {
+    width: min(100%, 390px);
+    max-width: none;
+    margin-top: 0;
+  }
+  .hero-preview-workspace .project-drag-handle { min-height: 40px; }
+  .hero-preview-workspace .workspace-hint { line-height: 1.6; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .hero-preview-workspace .floating-project { animation: none; }
+}
+
+
+/* Pointer dragging is available across the full card surface, not only its label bar. */
+.hero-preview-workspace .floating-project {
+  touch-action: none;
+  cursor: grab;
+}
+.hero-preview-workspace .floating-project.is-dragging {
+  cursor: grabbing;
+}
+.hero-preview-workspace .floating-project a,
+.hero-preview-workspace .floating-project button {
+  cursor: pointer;
+}
+.hero-preview-workspace .floating-project-image {
+  -webkit-user-drag: none;
+}
+
+
+
+
+/* Homepage hero featured project card, mirroring the work-page card interaction. */
+@media (min-width: 1050px) {
+  body:not(.work-page) main > .hero {
+    display:grid; grid-template-columns:minmax(0,1.1fr) minmax(300px,.9fr);
+    column-gap:clamp(2rem,5vw,6rem); align-items:center;
+    min-height:min(760px,calc(100vh - 62px));
+    padding-top:clamp(3rem,6vw,5rem); padding-bottom:4rem;
+  }
+  body:not(.work-page) main > .hero > .kicker,
+  body:not(.work-page) main > .hero > h1,
+  body:not(.work-page) main > .hero > .lede,
+  body:not(.work-page) main > .hero > .hero-actions { grid-column:1; }
+  body:not(.work-page) main > .hero > .hero-preview-wrap {
+    grid-column:2; grid-row:1 / span 4; align-self:center;
+  }
+}
+.hero-preview-wrap { min-width:0; position:relative; }
+.hero-preview-workspace { position:relative; display:grid; place-items:center; min-height:440px; padding:1rem; isolation:isolate; }
+.hero-preview-workspace .floating-project { width:min(100%,360px); max-width:360px; }
+.hero-preview-hint { margin:-.25rem 0 0; color:var(--muted); font-size:.62rem; letter-spacing:.1em; text-align:center; }
+@media (max-width:1049px) { .hero-preview-wrap { max-width:390px; margin:2rem auto 0; } .hero-preview-workspace { min-height:390px; } }
+@media (max-width:600px) { .hero-preview-workspace { min-height:360px; padding:.5rem; } }
