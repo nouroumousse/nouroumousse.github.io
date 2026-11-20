@@ -1,44 +1,14 @@
-// Pages CMS-managed bookmarks. Each visible Markdown entry in /bookmarks becomes a bookmark.
+// Pages CMS stores bookmarks in data/bookmarks.json. This static JSON avoids
+// GitHub API rate limits and is published atomically with the site.
 (() => {
   const list = document.getElementById("bookmark-list");
   if (!list) return;
 
-  const repository = "nouroumousse/nouroumousse.github.io";
-  const apiUrl = `https://api.github.com/repos/${repository}/contents/bookmarks?ref=main`;
   const searchInput = document.getElementById("bookmark-search");
   const categoriesEl = document.getElementById("bookmark-categories");
-  const tagsEl = document.getElementById("bookmark-tags");
   const countEl = document.getElementById("bookmark-count");
-
   let bookmarks = [];
   let activeTag = "";
-
-  const unquote = value => value.replace(/^["']|["']$/g, "").trim();
-  const parseEntry = (file, markdown) => {
-    const match = markdown.match(/^---\s*\r?\n([\s\S]*?)\r?\n---\s*(?:\r?\n|$)/);
-    const frontmatter = match ? match[1] : "";
-    const read = key => {
-      const field = frontmatter.match(new RegExp("^" + key + "\\s*:\\s*(.*?)\\s*$", "m"));
-      return field ? unquote(field[1]) : "";
-    };
-    const readList = key => {
-      const field = frontmatter.match(new RegExp("^" + key + "\\s*:\\s*\\r?\\n((?:[ \\t]+-.*(?:\\r?\\n|$))*)", "m"));
-      if (!field) return [];
-      return [...field[1].matchAll(/^\s+-\s*(.*?)\s*$/gm)].map(item => unquote(item[1])).filter(Boolean);
-    };
-    const date = read("date") || file.name.match(/\d{4}-\d{2}-\d{2}/)?.[0] || "";
-    const timestamp = date ? new Date(date + "T00:00:00Z").getTime() : 0;
-    return {
-      title: read("title") || file.name.replace(/\.md$/i, "").replace(/[-_]/g, " "),
-      url: read("url"),
-      tags: [...new Set([...readList("tags"), ...(read("category") ? [read("category")] : [])])],
-      date,
-      timestamp: Number.isNaN(timestamp) ? 0 : timestamp,
-      image: read("image"),
-      featured: read("featured").toLowerCase() === "true",
-      visible: read("visible").toLowerCase() !== "false"
-    };
-  };
 
   const safeExternalUrl = value => {
     try {
@@ -69,6 +39,7 @@
     button.setAttribute("aria-pressed", String(active));
     button.addEventListener("click", () => {
       activeTag = activeTag === tag ? "" : tag;
+      renderFilters();
       render();
     });
     return button;
@@ -85,26 +56,25 @@
     meta.className = "bookmark-meta mono";
     meta.textContent = [formatDate(bookmark.date), bookmark.featured ? "FEATURED" : ""].filter(Boolean).join("  /  ");
     const heading = document.createElement("h3");
-    const link = document.createElement("a");
+    heading.textContent = bookmark.title || "Untitled bookmark";
     const destination = safeExternalUrl(bookmark.url);
-    heading.textContent = bookmark.title;
     if (destination) {
+      const link = document.createElement("a");
       link.href = destination;
       link.target = "_blank";
       link.rel = "noopener noreferrer";
       link.append(heading);
+      content.append(meta, link);
     } else {
       heading.classList.add("bookmark-invalid-link");
-      link.append(heading);
-      link.removeAttribute("href");
+      content.append(meta, heading);
     }
     const tagRow = document.createElement("div");
     tagRow.className = "bookmark-entry-tags";
-    bookmark.tags.forEach(tag => tagRow.append(makeTag(tag, activeTag === tag)));
-    content.append(meta, link);
-    if (bookmark.tags.length) content.append(tagRow);
+    (Array.isArray(bookmark.tags) ? bookmark.tags : []).forEach(tag => tagRow.append(makeTag(String(tag), activeTag === tag)));
+    if (tagRow.childElementCount) content.append(tagRow);
+    card.append(number, content);
     const imageUrl = safeImageUrl(bookmark.image);
-    let previewImage = null;
     if (imageUrl) {
       const image = document.createElement("img");
       image.className = "bookmark-image";
@@ -112,10 +82,8 @@
       image.alt = "";
       image.loading = "lazy";
       image.decoding = "async";
-      previewImage = image;
+      card.append(image);
     }
-    card.append(number, content);
-    if (previewImage) card.append(previewImage);
     if (destination) {
       const open = document.createElement("a");
       open.className = "bookmark-open mono";
@@ -123,18 +91,17 @@
       open.target = "_blank";
       open.rel = "noopener noreferrer";
       open.textContent = "VISIT ↗";
-      open.setAttribute("aria-label", "Visit " + bookmark.title);
+      open.setAttribute("aria-label", "Visit " + (bookmark.title || "bookmark"));
       card.append(open);
     }
     return card;
   };
-
   const render = () => {
     const query = (searchInput.value || "").trim().toLowerCase();
     const filtered = bookmarks.filter(item => {
-      const tagMatch = !activeTag || item.tags.some(tag => tag.toLowerCase() === activeTag.toLowerCase());
-      const searchable = [item.title, ...item.tags].join(" ").toLowerCase();
-      return tagMatch && searchable.includes(query);
+      const tags = Array.isArray(item.tags) ? item.tags : [];
+      const tagMatch = !activeTag || tags.some(tag => String(tag).toLowerCase() === activeTag.toLowerCase());
+      return tagMatch && [item.title, ...tags].join(" ").toLowerCase().includes(query);
     });
     countEl.textContent = filtered.length + (filtered.length === 1 ? " bookmark" : " bookmarks");
     list.replaceChildren();
@@ -147,32 +114,27 @@
     }
     filtered.forEach((item, index) => list.append(makeCard(item, index)));
   };
-
   const renderFilters = () => {
-    const categories = [...new Set(bookmarks.flatMap(item => item.tags))].sort((a,b) => a.localeCompare(b));
+    const tags = [...new Set(bookmarks.flatMap(item => Array.isArray(item.tags) ? item.tags.map(String) : []))]
+      .sort((a,b) => a.localeCompare(b));
     categoriesEl.replaceChildren();
     const all = document.createElement("button");
     all.type = "button";
     all.className = "bookmark-filter" + (!activeTag ? " is-active" : "");
-    all.dataset.category = "all";
     all.textContent = "All";
     all.setAttribute("aria-pressed", String(!activeTag));
     all.addEventListener("click", () => { activeTag = ""; renderFilters(); render(); });
     categoriesEl.append(all);
-    categories.forEach(category => {
+    tags.forEach(tag => {
       const button = document.createElement("button");
       button.type = "button";
-      button.className = "bookmark-filter" + (activeTag === category ? " is-active" : "");
-      button.dataset.category = category;
-      button.textContent = category;
-      button.setAttribute("aria-pressed", String(activeTag === category));
-      button.addEventListener("click", () => { activeTag = activeTag === category ? "" : category; renderFilters(); render(); });
+      button.className = "bookmark-filter" + (activeTag === tag ? " is-active" : "");
+      button.textContent = tag;
+      button.setAttribute("aria-pressed", String(activeTag === tag));
+      button.addEventListener("click", () => { activeTag = activeTag === tag ? "" : tag; renderFilters(); render(); });
       categoriesEl.append(button);
     });
-    tagsEl.replaceChildren();
   };
-
-  searchInput.addEventListener("input", render);
   const showError = () => {
     list.replaceChildren();
     const message = document.createElement("p");
@@ -183,24 +145,22 @@
     list.setAttribute("aria-busy", "false");
   };
 
+  searchInput.addEventListener("input", render);
   (async () => {
     try {
-      const response = await fetch(apiUrl, { headers: { Accept: "application/vnd.github+json" } });
-      if (!response.ok) throw new Error("GitHub returned " + response.status);
-      const files = await response.json();
-      const markdownFiles = files.filter(file => file.type === "file" && file.name.toLowerCase().endsWith(".md"));
-      const entries = await Promise.all(markdownFiles.map(async file => {
-        const response = await fetch(file.download_url);
-        if (!response.ok) throw new Error("Could not read " + file.name);
-        return parseEntry(file, await response.text());
-      }));
-      bookmarks = entries.filter(item => item.visible && safeExternalUrl(item.url))
-        .sort((a,b) => Number(b.featured) - Number(a.featured) || b.timestamp - a.timestamp || a.title.localeCompare(b.title));
+      const response = await fetch("data/bookmarks.json?v=20261120-2", { cache: "no-store" });
+      if (!response.ok) throw new Error("Could not load bookmarks.json (" + response.status + ")");
+      const data = await response.json();
+      if (!Array.isArray(data)) throw new Error("Bookmarks data must be a JSON array");
+      bookmarks = data.filter(item => item && item.visible !== false && safeExternalUrl(item.url))
+        .sort((a,b) => Number(b.featured === true) - Number(a.featured === true)
+          || new Date(b.date || 0) - new Date(a.date || 0)
+          || String(a.title || "").localeCompare(String(b.title || "")));
       renderFilters();
       render();
       list.setAttribute("aria-busy", "false");
     } catch (error) {
-      console.error("Unable to load Pages CMS bookmarks:", error);
+      console.error("Unable to load bookmarks:", error);
       showError();
     }
   })();
