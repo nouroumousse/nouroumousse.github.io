@@ -100,9 +100,20 @@
     const destination = safeExternalUrl(featured.url);
     const panel = document.createElement("article");
     panel.className = "bookmark-featured-card";
+
+    const topbar = document.createElement("div");
+    topbar.className = "bookmark-featured-topbar mono";
+    const topLabel = document.createElement("span");
+    topLabel.textContent = "PERSONAL COLLECTION";
+    const topIndex = document.createElement("span");
+    topIndex.textContent = "FEATURED / 01";
+    topbar.append(topLabel, topIndex);
+
+    const copy = document.createElement("div");
+    copy.className = "bookmark-featured-copy";
     const eyebrow = document.createElement("p");
     eyebrow.className = "bookmark-featured-eyebrow mono";
-    eyebrow.textContent = "FEATURED BOOKMARK";
+    eyebrow.textContent = "CURRENTLY SAVED";
     const heading = document.createElement("h2");
     heading.textContent = featured.title || "Untitled bookmark";
     const meta = document.createElement("p");
@@ -111,11 +122,24 @@
     const tags = document.createElement("div");
     tags.className = "bookmark-entry-tags";
     (Array.isArray(featured.tags) ? featured.tags : []).forEach(tag => tags.append(makeTag(String(tag), activeTag === tag)));
-    const copy = document.createElement("div");
-    copy.className = "bookmark-featured-copy";
     copy.append(eyebrow, heading, meta);
     if (tags.childElementCount) copy.append(tags);
-    panel.append(copy);
+
+    const footer = document.createElement("div");
+    footer.className = "bookmark-featured-footer";
+    const footerLabel = document.createElement("span");
+    footerLabel.className = "mono";
+    footerLabel.textContent = "A FIND WORTH KEEPING";
+    footer.append(footerLabel);
+    if (destination) {
+      const open = document.createElement("a");
+      open.className = "bookmark-open btn btn-primary mono";
+      open.href = destination;
+      open.target = "_blank";
+      open.rel = "noopener noreferrer";
+      open.textContent = "visit website ↗";
+      footer.append(open);
+    }
     const imageUrl = safeImageUrl(featured.image);
     if (imageUrl) {
       const image = document.createElement("img");
@@ -126,15 +150,7 @@
       image.decoding = "async";
       panel.append(image);
     }
-    if (destination) {
-      const open = document.createElement("a");
-      open.className = "bookmark-open mono";
-      open.href = destination;
-      open.target = "_blank";
-      open.rel = "noopener noreferrer";
-      open.textContent = "Visit website ↗";
-      panel.append(open);
-    }
+    panel.append(topbar, copy, footer);
     featuredEl.append(panel);
   };
   const render = () => {
