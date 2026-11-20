@@ -225,20 +225,30 @@
     list.setAttribute("aria-busy", "false");
   };
 
-  // Homepage-style pointer dragging for the featured bookmark card.
+  // Match the homepage floating project card's pointer-drag behaviour.
   let drag = null;
   let dragZ = 10;
   const cssNumber = (element, property) => parseFloat(getComputedStyle(element).getPropertyValue(property)) || 0;
+
   featuredEl.addEventListener("pointerdown", event => {
-    if ((event.button !== undefined && event.button !== 0) || event.target.closest("a, button")) return;
+    if ((event.button !== undefined && event.button !== 0) || event.target.closest("a,button")) return;
     const card = event.target.closest(".bookmark-featured-card");
     if (!card) return;
-    drag = { card, pointerId: event.pointerId, startX: event.clientX, startY: event.clientY, originX: cssNumber(card, "--drag-x"), originY: cssNumber(card, "--drag-y"), moved: false };
+    drag = {
+      card,
+      pointerId: event.pointerId,
+      startX: event.clientX,
+      startY: event.clientY,
+      originX: cssNumber(card, "--drag-x"),
+      originY: cssNumber(card, "--drag-y"),
+      moved: false
+    };
     card.classList.add("is-dragging");
     card.style.zIndex = String(++dragZ);
     try { featuredEl.setPointerCapture(event.pointerId); } catch (_) {}
     event.preventDefault();
   });
+
   featuredEl.addEventListener("pointermove", event => {
     if (!drag || drag.pointerId !== event.pointerId) return;
     const dx = event.clientX - drag.startX;
@@ -247,21 +257,32 @@
     drag.card.style.setProperty("--drag-x", (drag.originX + dx) + "px");
     drag.card.style.setProperty("--drag-y", (drag.originY + dy) + "px");
   });
+
   const finishDrag = event => {
     if (!drag || drag.pointerId !== event.pointerId) return;
-    const card = drag.card;
-    const moved = drag.moved;
+    const { card, moved } = drag;
     drag = null;
     card.classList.remove("is-dragging");
-    if (moved) { card.dataset.justDragged = "true"; setTimeout(() => delete card.dataset.justDragged, 180); }
-    try { if (featuredEl.hasPointerCapture(event.pointerId)) featuredEl.releasePointerCapture(event.pointerId); } catch (_) {}
+    if (moved) {
+      card.dataset.justDragged = "true";
+      setTimeout(() => delete card.dataset.justDragged, 180);
+    }
+    try {
+      if (featuredEl.hasPointerCapture(event.pointerId)) featuredEl.releasePointerCapture(event.pointerId);
+    } catch (_) {}
   };
   ["pointerup", "pointercancel", "lostpointercapture"].forEach(name => featuredEl.addEventListener(name, finishDrag));
+
   featuredEl.addEventListener("click", event => {
     const card = event.target.closest(".bookmark-featured-card");
-    if (card && card.dataset.justDragged === "true" && !event.target.closest("a, button")) { event.preventDefault(); event.stopPropagation(); }
+    if (card && card.dataset.justDragged === "true" && !event.target.closest("a,button")) {
+      event.preventDefault();
+      event.stopPropagation();
+    }
   });
-  featuredEl.addEventListener("dragstart", event => { if (event.target.closest(".bookmark-featured-card")) event.preventDefault(); });
+  featuredEl.addEventListener("dragstart", event => {
+    if (event.target.closest(".bookmark-featured-card")) event.preventDefault();
+  });
 
   searchInput.addEventListener("input", render);
   (async () => {
