@@ -7,6 +7,7 @@
   const searchInput = document.getElementById("bookmark-search");
   const categoriesEl = document.getElementById("bookmark-categories");
   const countEl = document.getElementById("bookmark-count");
+  const featuredEl = document.getElementById("bookmark-featured");
   let bookmarks = [];
   let activeTag = "";
 
@@ -52,7 +53,7 @@
   };
   const makeCard = (bookmark, index) => {
     const card = document.createElement("article");
-    card.className = "bookmark-entry" + (bookmark.featured ? " is-featured" : "");
+    card.className = "bookmark-entry";
     const number = document.createElement("span");
     number.className = "bookmark-number mono";
     number.textContent = String(index + 1).padStart(2, "0");
@@ -60,7 +61,7 @@
     content.className = "bookmark-entry-content";
     const meta = document.createElement("p");
     meta.className = "bookmark-meta mono";
-    meta.textContent = [formatDate(bookmark.date), bookmark.featured ? "FEATURED" : ""].filter(Boolean).join("  /  ");
+    meta.textContent = formatDate(bookmark.date);
     const heading = document.createElement("h3");
     heading.textContent = bookmark.title || "Untitled bookmark";
     const destination = safeExternalUrl(bookmark.url);
@@ -92,9 +93,53 @@
     }
     return card;
   };
+  const renderFeatured = () => {
+    featuredEl.replaceChildren();
+    const featured = bookmarks.find(item => item.featured === true);
+    if (!featured) return;
+    const destination = safeExternalUrl(featured.url);
+    const panel = document.createElement("article");
+    panel.className = "bookmark-featured-card";
+    const eyebrow = document.createElement("p");
+    eyebrow.className = "bookmark-featured-eyebrow mono";
+    eyebrow.textContent = "FEATURED BOOKMARK";
+    const heading = document.createElement("h2");
+    heading.textContent = featured.title || "Untitled bookmark";
+    const meta = document.createElement("p");
+    meta.className = "bookmark-featured-date mono";
+    meta.textContent = formatDate(featured.date);
+    const tags = document.createElement("div");
+    tags.className = "bookmark-entry-tags";
+    (Array.isArray(featured.tags) ? featured.tags : []).forEach(tag => tags.append(makeTag(String(tag), activeTag === tag)));
+    const copy = document.createElement("div");
+    copy.className = "bookmark-featured-copy";
+    copy.append(eyebrow, heading, meta);
+    if (tags.childElementCount) copy.append(tags);
+    panel.append(copy);
+    const imageUrl = safeImageUrl(featured.image);
+    if (imageUrl) {
+      const image = document.createElement("img");
+      image.className = "bookmark-featured-image";
+      image.src = imageUrl;
+      image.alt = "";
+      image.loading = "eager";
+      image.decoding = "async";
+      panel.append(image);
+    }
+    if (destination) {
+      const open = document.createElement("a");
+      open.className = "bookmark-open mono";
+      open.href = destination;
+      open.target = "_blank";
+      open.rel = "noopener noreferrer";
+      open.textContent = "Visit website ↗";
+      panel.append(open);
+    }
+    featuredEl.append(panel);
+  };
   const render = () => {
     const query = (searchInput.value || "").trim().toLowerCase();
-    const filtered = bookmarks.filter(item => {
+    const filtered = bookmarks.filter(item => item !== bookmarks.find(bookmark => bookmark.featured === true)).filter(item => {
       const tags = Array.isArray(item.tags) ? item.tags : [];
       const tagMatch = !activeTag || tags.some(tag => String(tag).toLowerCase() === activeTag.toLowerCase());
       return tagMatch && [item.title, ...tags].join(" ").toLowerCase().includes(query);
@@ -149,9 +194,9 @@
       const data = await response.json();
       if (!Array.isArray(data)) throw new Error("Bookmarks data must be a JSON array");
       bookmarks = data.filter(item => item && item.visible !== false && safeExternalUrl(item.url))
-        .sort((a,b) => Number(b.featured === true) - Number(a.featured === true)
-          || new Date(b.date || 0) - new Date(a.date || 0)
+        .sort((a,b) => new Date(b.date || 0) - new Date(a.date || 0)
           || String(a.title || "").localeCompare(String(b.title || "")));
+      renderFeatured();
       renderFilters();
       render();
       list.setAttribute("aria-busy", "false");
