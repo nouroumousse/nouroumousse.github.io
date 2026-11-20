@@ -40,5 +40,15 @@
     "date": "2026-11-20",
     "featured": false,
     "visible": true
+  },
+  {
+    "title": "Good Websites - Brian Lovin",
+    "url": "https://brianlovin.com/sites",
+    "tags": [
+      "website"
+    ],
+    "date": "2026-11-20",
+    "featured": false,
+    "visible": true
   }
 ]
