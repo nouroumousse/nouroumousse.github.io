@@ -7,8 +7,17 @@
       "Video"
     ],
     "date": "2026-11-20",
-    "image": "",
     "featured": true,
+    "visible": true
+  },
+  {
+    "title": "Neal dot Fun",
+    "url": "https://neal.fun/",
+    "tags": [
+      "website"
+    ],
+    "date": "2026-11-20",
+    "featured": false,
     "visible": true
   }
 ]
