@@ -2243,3 +2243,28 @@ body.community-page main#top > section:not(:last-child) {
 @media (prefers-reduced-motion:reduce) {
   .bookmark-featured-card { animation:none; }
 }
+
+
+/* Keep the pointer offset in every card state. The old hover transform
+   replaced the drag transform, making the card snap back on release. */
+.bookmark-featured-card,
+.bookmark-featured-card:hover,
+.bookmark-featured-card.is-dragging,
+.bookmark-featured-card.is-dragging:hover {
+  transform:translate3d(var(--drag-x,0px),var(--drag-y,0px),0) rotate(var(--bookmark-card-rotation,-2deg));
+}
+.bookmark-featured-card:hover {
+  --bookmark-card-rotation:0deg;
+}
+.bookmark-featured-card.is-dragging,
+.bookmark-featured-card.is-dragging:hover {
+  --bookmark-card-rotation:-2deg;
+  animation-play-state:paused;
+  transition:none;
+}
+.bookmark-featured-card {
+  touch-action:pan-y;
+}
+.bookmark-featured-card img {
+  -webkit-user-drag:none;
+}
