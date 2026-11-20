@@ -1835,3 +1835,21 @@ body.community-page main#top > section:not(:last-child) {
   background:#557600 !important;
   border-color:#557600 !important;
 }
+
+
+/* Match the homepage floating-project CTA in light mode: quiet outline by
+   default, then the site's established olive accent with white hover text. */
+:root[data-theme="light"] .bookmark-featured-card .bookmark-open,
+:root[data-theme="light"] .bookmark-featured-card .bookmark-open.btn-primary {
+  color:var(--accent) !important;
+  background:transparent !important;
+  border:1px solid rgba(102,133,0,.55) !important;
+  box-shadow:none !important;
+}
+:root[data-theme="light"] .bookmark-featured-card .bookmark-open:hover,
+:root[data-theme="light"] .bookmark-featured-card .bookmark-open:focus-visible,
+:root[data-theme="light"] .bookmark-featured-card .bookmark-open.btn-primary:hover {
+  color:#ffffff !important;
+  background:var(--accent) !important;
+  border-color:var(--accent) !important;
+}
