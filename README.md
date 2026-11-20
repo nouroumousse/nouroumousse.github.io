@@ -1,62 +1,56 @@
 # Nour Oumousse — Portfolio
 
-A minimal, techy portfolio built with **plain HTML, CSS and vanilla JS** — no frameworks, no build step. This means it can be deployed directly to **GitHub Pages** by pushing these files to your repo.
+A lightweight portfolio built with semantic HTML, CSS and vanilla JavaScript. It has no framework, package manager or build step and is published directly with GitHub Pages.
 
-## Deploy to GitHub Pages
+## Project structure
 
-1. Create a repository named `username.github.io` (recommended), or any repo name.
-2. Push these three/four files to the repo's root (`index.html`, `styles.css`, `main.js`, `README.md`).
-3. Go to **Settings → Pages → Source** and select branch `main` / folder `/ (root)`.
-4. Your site will be live at `https://username.github.io/` (or `https://username.github.io/repo-name/`).
-
-That's it — no `npm install`, no `dist/` folder, no CI required.
-
-## Optional: GitHub Actions auto-deploy (for non-user repos)
-
-If you prefer Actions, add `.github/workflows/deploy.yml`:
-
-```yaml
-name: Deploy
-on:
-  push:
-    branches: [main]
-permissions:
-  contents: read
-  pages: write
-  id-token: write
-jobs:
-  deploy:
-    environment:
-      name: github-pages
-      url: ${{ steps.deployment.outputs.page_url }}
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v4
-      - uses: actions/configure-pages@v4
-      - uses: actions/upload-pages-artifact@v3
-        with:
-          path: .   # upload repo root directly — nothing to build
-      - id: deployment
-        uses: actions/deploy-pages@v3
+```text
+/
+├── index.html, work.html, blog.html, article.html, bookmarks.html
+├── css/
+│   └── styles.css
+├── js/
+│   ├── main.js
+│   ├── work.js
+│   ├── experience.js
+│   ├── recent-jams.js
+│   ├── hero-preview.js
+│   ├── blog.js
+│   ├── blog-quote.js
+│   ├── article.js
+│   └── bookmarks.js
+├── data/                 # Pages CMS-managed JSON collections
+├── docs/                 # Pages CMS blog articles
+├── media/                # Uploaded images, artwork and audio
+├── assets/               # Small local SVG assets
+├── .pages.yml            # Pages CMS collection definitions
+├── robots.txt
+└── sitemap.xml
 ```
+
+## Editing content with Pages CMS
+
+The CMS configuration lives in `.pages.yml`. Keep these paths intact:
+
+- Projects: `data/projects.json`
+- Experience: `data/experience.json`
+- Bookmarks: `data/bookmarks.json`
+- Recent Jams: `data/recent-jams.json`
+- Articles: `docs/`
+- Uploaded media: `media/`
+
+The site reads those files directly. No build or deployment step is required after a CMS commit; GitHub Pages serves the updated files.
 
 ## Local preview
 
-Any static server works, e.g.:
+Run a local static server from the repository root:
 
 ```bash
 python3 -m http.server 8080
-# then open http://localhost:8080
 ```
 
-## Structure
+Then open `http://localhost:8080`.
 
-| File | Purpose |
-|---|---|
-| `index.html` | All content: hero, work, experience, education, contact |
-| `styles.css` | Design system (dark, engineering grid, acid-lime accent) |
-| `main.js` | Copy-email button, scroll reveal animations, footer year |
+## Deployment
 
-To edit projects/experience, just change the markup in `index.html`.
-
-<!-- push test: harmless comment, safe to delete -->
+GitHub Pages should publish the `main` branch from the repository root. Keep the HTML entry pages at the root so the existing page URLs and CMS links remain stable.
