@@ -111,43 +111,74 @@
       workspace.innerHTML = '<p class="recent-jams-empty mono">RECENT JAMS COULD NOT BE LOADED RIGHT NOW.</p>';
     });
 
+  // Use window-level Pointer Events so dragging continues even when the
+  // pointer leaves the small handle or the card itself.
   let drag = null;
-  let zIndex = 5;
+  let zIndex = 20;
+
   const onDown = event => {
     const handle = event.target.closest(".jam-card-handle");
     const card = handle && handle.closest(".jam-card");
-    if (!card || (event.button !== undefined && event.button !== 0)) return;
-    drag = { card, pointerId: event.pointerId, x: event.clientX, y: event.clientY,
-      ox: parseFloat(card.style.getPropertyValue("--jam-x")) || 0,
-      oy: parseFloat(card.style.getPropertyValue("--jam-y")) || 0 };
+    if (!card || (event.pointerType === "mouse" && event.button !== 0)) return;
+
+    drag = {
+      card,
+      handle,
+      pointerId: event.pointerId,
+      startX: event.clientX,
+      startY: event.clientY,
+      originX: parseFloat(card.style.getPropertyValue("--jam-x")) || 0,
+      originY: parseFloat(card.style.getPropertyValue("--jam-y")) || 0
+    };
+
     card.classList.add("is-dragging");
     card.style.zIndex = String(++zIndex);
-    try { handle.setPointerCapture(event.pointerId); } catch {}
+    handle.classList.add("is-grabbed");
     event.preventDefault();
+
+    // Capture keeps touch and pen drags alive outside the handle.
+    try { handle.setPointerCapture(event.pointerId); } catch {}
   };
+
   const onMove = event => {
     if (!drag || drag.pointerId !== event.pointerId) return;
-    drag.card.style.setProperty("--jam-x", (drag.ox + event.clientX - drag.x) + "px");
-    drag.card.style.setProperty("--jam-y", (drag.oy + event.clientY - drag.y) + "px");
+    const dx = event.clientX - drag.startX;
+    const dy = event.clientY - drag.startY;
+    drag.card.style.setProperty("--jam-x", (drag.originX + dx) + "px");
+    drag.card.style.setProperty("--jam-y", (drag.originY + dy) + "px");
+    event.preventDefault();
   };
-  const onUp = event => {
-    if (!drag || drag.pointerId !== event.pointerId) return;
-    drag.card.classList.remove("is-dragging");
+
+  const finishDrag = event => {
+    if (!drag || (event.pointerId !== undefined && drag.pointerId !== event.pointerId)) return;
+    const active = drag;
     drag = null;
+    active.card.classList.remove("is-dragging");
+    active.handle.classList.remove("is-grabbed");
+    try {
+      if (active.handle.hasPointerCapture(active.pointerId)) {
+        active.handle.releasePointerCapture(active.pointerId);
+      }
+    } catch {}
   };
+
   workspace.addEventListener("pointerdown", onDown);
-  workspace.addEventListener("pointermove", onMove);
-  ["pointerup", "pointercancel", "lostpointercapture"].forEach(type => workspace.addEventListener(type, onUp));
+  window.addEventListener("pointermove", onMove, { passive: false });
+  window.addEventListener("pointerup", finishDrag);
+  window.addEventListener("pointercancel", finishDrag);
+  workspace.addEventListener("lostpointercapture", finishDrag);
+
   workspace.addEventListener("keydown", event => {
     const handle = event.target.closest(".jam-card-handle");
     if (!handle || !["ArrowUp", "ArrowDown", "ArrowLeft", "ArrowRight"].includes(event.key)) return;
     event.preventDefault();
     const card = handle.closest(".jam-card");
-    const dx = event.key === "ArrowLeft" ? -12 : event.key === "ArrowRight" ? 12 : 0;
-    const dy = event.key === "ArrowUp" ? -12 : event.key === "ArrowDown" ? 12 : 0;
+    const dx = event.key === "ArrowLeft" ? -16 : event.key === "ArrowRight" ? 16 : 0;
+    const dy = event.key === "ArrowUp" ? -16 : event.key === "ArrowDown" ? 16 : 0;
     card.style.setProperty("--jam-x", ((parseFloat(card.style.getPropertyValue("--jam-x")) || 0) + dx) + "px");
     card.style.setProperty("--jam-y", ((parseFloat(card.style.getPropertyValue("--jam-y")) || 0) + dy) + "px");
   });
+
   workspace.addEventListener("dragstart", event => {
     if (event.target.closest(".jam-card")) event.preventDefault();
   });
