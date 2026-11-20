@@ -51,3 +51,65 @@ content:
         label: Visible on website
         type: boolean
         default: true
+
+  - name: bookmarks
+    label: Bookmarks
+    type: collection
+    path: bookmarks
+    format: yaml-frontmatter
+    filename: "{primary}.md"
+    view:
+      fields: [title, category, date, featured, visible]
+      primary: title
+      sort: [date, title]
+      default:
+        sort: date
+        order: desc
+    fields:
+      - name: title
+        label: Title
+        type: string
+        required: true
+      - name: url
+        label: Website URL
+        type: string
+        required: true
+        description: Full link including https://
+      - name: description
+        label: Short description
+        type: text
+        required: true
+      - name: category
+        label: Category
+        type: select
+        options:
+          values:
+            - Websites
+            - Design
+            - Reading
+            - Culture
+            - Photography
+            - Tools
+            - Inspiration
+            - Other
+      - name: tags
+        label: Tags
+        type: string
+        list: true
+        description: Add as many descriptive tags as you need.
+      - name: date
+        label: Date saved
+        type: date
+        required: true
+      - name: image
+        label: Preview image
+        type: image
+        description: Optional image uploaded to the site's media folder.
+      - name: featured
+        label: Featured bookmark
+        type: boolean
+        default: false
+      - name: visible
+        label: Show on website
+        type: boolean
+        default: true
