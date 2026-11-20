@@ -1939,12 +1939,12 @@ body.community-page main#top > section:not(:last-child) {
   position:relative;
   margin:0 0 2.5rem 1rem;
   max-width:15ch;
-  color:#282b22;
-  font-family:Georgia,"Times New Roman",serif;
+  color:#e8e8ea;
+  font-family:var(--font-display);
   font-size:clamp(1.65rem,3vw,2.25rem);
-  font-weight:700;
+  font-weight:600;
   line-height:1.28;
-  letter-spacing:-.035em;
+  letter-spacing:-.045em;
 }
 .blog-quote-footer {
   display:flex;
@@ -1968,4 +1968,56 @@ body.community-page main#top > section:not(:last-child) {
 }
 @media (prefers-reduced-motion:reduce) {
   .blog-quote-card { animation:none; }
+}
+
+
+/* Dark-mode textbook paper: retain the notebook details without the light
+   paper becoming a bright, disconnected object on the dark portfolio. */
+.blog-quote-card {
+  background:#17191a;
+  color:var(--text);
+  border-color:#343831;
+  box-shadow:0 24px 55px rgba(0,0,0,.42),0 3px 9px rgba(0,0,0,.24);
+}
+.blog-quote-handle {
+  color:#a0a493;
+  background:#202321;
+  border-bottom-color:#353a30;
+}
+.blog-quote-handle span:last-child { color:var(--accent); }
+.blog-quote-paper {
+  background-color:#191c1b;
+  background-image:repeating-linear-gradient(to bottom,transparent 0,transparent 31px,rgba(211,224,190,.075) 32px,transparent 33px);
+}
+.blog-quote-paper::before { background:rgba(212,255,63,.25); }
+.blog-quote-kicker { color:#a2aa8c; }
+.blog-quote-paper blockquote { color:#e8e8ea; }
+.blog-quote-footer {
+  color:#9ba18d;
+  border-top-color:rgba(211,224,190,.17);
+}
+
+/* Light theme keeps the original warm paper treatment, using site typography. */
+:root[data-theme="light"] .blog-quote-card {
+  background:#f2f0e6;
+  color:#25271f;
+  border-color:rgba(91,96,69,.24);
+  box-shadow:0 24px 55px rgba(0,0,0,.14),0 3px 9px rgba(0,0,0,.06);
+}
+:root[data-theme="light"] .blog-quote-handle {
+  color:#69705d;
+  background:#e8e6d9;
+  border-bottom-color:rgba(77,84,58,.18);
+}
+:root[data-theme="light"] .blog-quote-handle span:last-child { color:#718b19; }
+:root[data-theme="light"] .blog-quote-paper {
+  background-color:#f4f2e8;
+  background-image:repeating-linear-gradient(to bottom,transparent 0,transparent 31px,rgba(91,112,83,.12) 32px,transparent 33px);
+}
+:root[data-theme="light"] .blog-quote-paper::before { background:rgba(180,92,76,.35); }
+:root[data-theme="light"] .blog-quote-kicker { color:#78805f; }
+:root[data-theme="light"] .blog-quote-paper blockquote { color:#282b22; }
+:root[data-theme="light"] .blog-quote-footer {
+  color:#7b806e;
+  border-top-color:rgba(77,84,58,.2);
 }
