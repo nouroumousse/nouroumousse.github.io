@@ -1363,3 +1363,36 @@ body.community-page main#top > section:not(:last-child) {
 .hero-preview-hint { margin:-.25rem 0 0; color:var(--muted); font-size:.62rem; letter-spacing:.1em; text-align:center; }
 @media (max-width:1049px) { .hero-preview-wrap { max-width:390px; margin:2rem auto 0; } .hero-preview-workspace { min-height:390px; } }
 @media (max-width:600px) { .hero-preview-workspace { min-height:360px; padding:.5rem; } }
+
+
+/* Homepage featured card follows the active site theme, just like Work cards. */
+:root[data-theme="light"] .hero-preview-workspace .floating-project {
+  background: #ffffff;
+  border-color: #d9ddd2;
+  box-shadow: 0 18px 45px rgba(35, 42, 24, 0.12), 0 2px 8px rgba(35, 42, 24, 0.06);
+}
+:root[data-theme="light"] .hero-preview-workspace .project-drag-handle {
+  color: #62685a;
+  background: #edf0e8;
+  border-bottom-color: #dfe3d8;
+}
+:root[data-theme="light"] .hero-preview-workspace .project-drag-handle span:last-child {
+  color: var(--accent);
+}
+:root[data-theme="light"] .hero-preview-workspace .floating-project-info > p,
+:root[data-theme="light"] .hero-preview-workspace .floating-project-bottom {
+  color: #73796a;
+}
+:root[data-theme="light"] .hero-preview-workspace .floating-project-info h3 {
+  color: #252820;
+}
+:root[data-theme="light"] .hero-preview-workspace .floating-open {
+  color: var(--accent);
+  border-color: rgba(102, 133, 0, 0.55);
+}
+:root[data-theme="light"] .hero-preview-workspace .floating-open:hover,
+:root[data-theme="light"] .hero-preview-workspace .floating-open:focus-visible {
+  color: #ffffff;
+  background: var(--accent);
+  border-color: var(--accent);
+}
