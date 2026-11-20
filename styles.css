@@ -1567,3 +1567,146 @@ body.community-page main#top > section:not(:last-child) {
   .bookmark-featured-card { grid-template-columns:1fr; gap:1.2rem; }
   .bookmark-featured-image { max-height:200px; }
 }
+
+
+/* Bookmarks hero: same two-column rhythm as the homepage, with a floating card. */
+@media (min-width:1050px) {
+  .bookmarks-page main > .hero {
+    display:grid;
+    grid-template-columns:minmax(0,1.1fr) minmax(300px,.9fr);
+    column-gap:clamp(2rem,5vw,6rem);
+    align-items:center;
+    min-height:min(760px,calc(100vh - 62px));
+    padding-top:clamp(3rem,6vw,5rem);
+    padding-bottom:4rem;
+  }
+  .bookmarks-page main > .hero > .kicker,
+  .bookmarks-page main > .hero > h1,
+  .bookmarks-page main > .hero > .lede { grid-column:1; }
+  .bookmarks-page main > .hero > .bookmark-featured-slot {
+    grid-column:2;
+    grid-row:1 / span 3;
+    align-self:center;
+    width:100%;
+    max-width:440px;
+    justify-self:center;
+    margin:0;
+    perspective:1200px;
+  }
+}
+.bookmark-featured-card {
+  position:relative;
+  display:flex;
+  flex-direction:column;
+  gap:1.1rem;
+  width:100%;
+  padding:1.15rem;
+  overflow:hidden;
+  border:1px solid rgba(255,255,255,.13);
+  border-radius:13px;
+  background:linear-gradient(145deg,#1b1e1b 0%,#111311 100%);
+  color:#e8e8ea;
+  box-shadow:0 24px 65px rgba(0,0,0,.38),0 5px 15px rgba(0,0,0,.18);
+  transform:rotate(1.4deg) translateY(0);
+  animation:bookmark-card-float 7s ease-in-out infinite;
+  transition:transform .3s ease,box-shadow .3s ease,border-color .3s ease;
+}
+.bookmark-featured-card:hover {
+  transform:rotate(0deg) translateY(-7px);
+  border-color:rgba(212,255,63,.45);
+  box-shadow:0 32px 75px rgba(0,0,0,.46),0 0 0 1px rgba(212,255,63,.08);
+}
+.bookmark-featured-topbar {
+  display:flex;
+  justify-content:space-between;
+  gap:.7rem;
+  padding:.2rem .1rem .85rem;
+  border-bottom:1px solid rgba(255,255,255,.1);
+  color:#8d958a;
+  font-size:.58rem;
+  letter-spacing:.1em;
+}
+.bookmark-featured-topbar span:last-child { color:#d4ff3f; }
+.bookmark-featured-copy { min-width:0; padding:.15rem .1rem; }
+.bookmark-featured-eyebrow {
+  margin:0 0 .7rem;
+  color:#d4ff3f;
+  font-size:.62rem;
+  letter-spacing:.12em;
+}
+.bookmark-featured-card h2 {
+  max-width:100%;
+  margin:0 0 .8rem;
+  color:#f0f1ed;
+  font-size:clamp(1.35rem,2vw,1.8rem);
+  line-height:1.18;
+  letter-spacing:-.045em;
+  font-weight:600;
+  overflow-wrap:anywhere;
+}
+.bookmark-featured-date {
+  margin:0 0 .9rem;
+  color:#969c92;
+  font-size:.62rem;
+  letter-spacing:.08em;
+}
+.bookmark-featured-footer {
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:1rem;
+  padding-top:.9rem;
+  border-top:1px solid rgba(255,255,255,.1);
+}
+.bookmark-featured-footer > span {
+  color:#8d958a;
+  font-size:.56rem;
+  letter-spacing:.08em;
+}
+.bookmark-featured-card .bookmark-open {
+  margin:0;
+  min-height:36px;
+  padding:.55rem .85rem;
+  font-size:.62rem;
+  border-radius:4px;
+}
+.bookmark-featured-image {
+  order:2;
+  display:block;
+  width:100%;
+  max-height:190px;
+  aspect-ratio:16/9;
+  object-fit:cover;
+  border:1px solid rgba(255,255,255,.12);
+  border-radius:7px;
+}
+.bookmark-featured-card:has(.bookmark-featured-image) .bookmark-featured-image { order:1; }
+@keyframes bookmark-card-float {
+  0%,100% { translate:0 0; }
+  50% { translate:0 -8px; }
+}
+:root[data-theme="light"] .bookmark-featured-card {
+  background:linear-gradient(145deg,#fff 0%,#f3f5ee 100%);
+  color:#252820;
+  border-color:#d9ddd2;
+  box-shadow:0 24px 60px rgba(35,42,24,.13),0 4px 12px rgba(35,42,24,.06);
+}
+:root[data-theme="light"] .bookmark-featured-topbar,
+:root[data-theme="light"] .bookmark-featured-footer { border-color:#e1e5dc; }
+:root[data-theme="light"] .bookmark-featured-topbar,
+:root[data-theme="light"] .bookmark-featured-footer > span,
+:root[data-theme="light"] .bookmark-featured-date { color:#73796a; }
+:root[data-theme="light"] .bookmark-featured-card h2 { color:#252820; }
+@media (max-width:1049px) {
+  .bookmarks-page main > .hero { display:flex; flex-direction:column; align-items:stretch; }
+  .bookmarks-page main > .hero > .bookmark-featured-slot { width:min(100%,440px); margin:1rem auto 3rem; }
+  .bookmark-featured-card { transform:rotate(.7deg); }
+}
+@media (max-width:600px) {
+  .bookmarks-page main > .hero > .bookmark-featured-slot { width:100%; }
+  .bookmark-featured-card { padding:1rem; }
+  .bookmark-featured-footer { align-items:flex-start; flex-direction:column; }
+}
+@media (prefers-reduced-motion:reduce) {
+  .bookmark-featured-card { animation:none; }
+}
