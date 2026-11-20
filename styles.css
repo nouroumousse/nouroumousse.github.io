@@ -1780,7 +1780,6 @@ body.community-page main#top > section:not(:last-child) {
   margin-top:1.15rem;
   padding-top:.9rem;
   gap:.55rem;
-  border-top:1px solid color-mix(in srgb,var(--line) 72%,transparent);
 }
 .bookmark-entry .bookmark-tag {
   padding:.38rem .72rem;
