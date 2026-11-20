@@ -32,16 +32,36 @@
       day: "numeric", month: "short", year: "numeric", timeZone: "UTC"
     }).format(parsed);
   };
-  const tagColorClass = tag => {
-    const palette = ["tag-tone-coral","tag-tone-amber","tag-tone-mint","tag-tone-blue","tag-tone-violet","tag-tone-pink","tag-tone-cyan","tag-tone-lime"];
-    let hash = 0;
-    for (const char of String(tag).toLowerCase()) hash = (hash * 31 + char.charCodeAt(0)) | 0;
-    return palette[(hash >>> 0) % palette.length];
+  const tagColors = new Map();
+  const buildTagColors = () => {
+    tagColors.clear();
+    const tags = [...new Set(bookmarks.flatMap(item => Array.isArray(item.tags) ? item.tags.map(tag => String(tag).trim()).filter(Boolean) : []))]
+      .sort((a, b) => a.localeCompare(b, undefined, { sensitivity: "base" }));
+    const usedHues = [];
+    tags.forEach(tag => {
+      let hash = 2166136261;
+      for (const char of tag.toLowerCase()) {
+        hash ^= char.charCodeAt(0);
+        hash = Math.imul(hash, 16777619);
+      }
+      let hue = (hash >>> 0) % 360;
+      // Resolve hue collisions against all tags in the current collection.
+      while (usedHues.some(existing => Math.abs(existing - hue) < 13 || 360 - Math.abs(existing - hue) < 13)) {
+        hue = (hue + 23) % 360;
+      }
+      usedHues.push(hue);
+      tagColors.set(tag.toLowerCase(), hue);
+    });
+  };
+  const applyTagColor = (element, tag) => {
+    const hue = tagColors.get(String(tag).toLowerCase()) ?? 72;
+    element.style.setProperty("--bookmark-tag-hue", String(hue));
   };
   const makeTag = (tag, active = false) => {
     const button = document.createElement("button");
     button.type = "button";
-    button.className = "bookmark-tag " + tagColorClass(tag) + (active ? " is-active" : "");
+    button.className = "bookmark-tag" + (active ? " is-active" : "");
+    applyTagColor(button, tag);
     button.textContent = tag;
     button.setAttribute("aria-pressed", String(active));
     button.addEventListener("click", () => {
@@ -185,7 +205,8 @@
     tags.forEach(tag => {
       const button = document.createElement("button");
       button.type = "button";
-      button.className = "bookmark-filter " + tagColorClass(tag) + (activeTag === tag ? " is-active" : "");
+      button.className = "bookmark-filter" + (activeTag === tag ? " is-active" : "");
+      applyTagColor(button, tag);
       button.textContent = tag;
       button.setAttribute("aria-pressed", String(activeTag === tag));
       button.addEventListener("click", () => { activeTag = activeTag === tag ? "" : tag; renderFilters(); render(); });
@@ -212,6 +233,7 @@
       bookmarks = data.filter(item => item && item.visible !== false && safeExternalUrl(item.url))
         .sort((a,b) => new Date(b.date || 0) - new Date(a.date || 0)
           || String(a.title || "").localeCompare(String(b.title || "")));
+      buildTagColors();
       renderFeatured();
       renderFilters();
       render();
