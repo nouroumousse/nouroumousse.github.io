@@ -50,5 +50,15 @@
     "date": "2026-11-20",
     "featured": false,
     "visible": true
+  },
+  {
+    "title": "Stock and Flow",
+    "url": "https://snarkmarket.com/2010/4890/",
+    "tags": [
+      "article"
+    ],
+    "date": "2026-11-20",
+    "featured": false,
+    "visible": true
   }
 ]
