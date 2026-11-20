@@ -76,7 +76,7 @@
     card.className = "bookmark-entry";
     const number = document.createElement("span");
     number.className = "bookmark-number mono";
-    number.textContent = String(index + 1).padStart(2, "0");
+    number.textContent = String(bookmarks.length - bookmarks.indexOf(bookmark)).padStart(2, "0");
     const content = document.createElement("div");
     content.className = "bookmark-entry-content";
     const meta = document.createElement("p");
