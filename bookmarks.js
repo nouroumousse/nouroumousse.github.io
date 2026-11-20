@@ -225,10 +225,12 @@
     list.setAttribute("aria-busy", "false");
   };
 
-  // Match the homepage floating project card's pointer-drag behaviour.
+  // This is the same pointer-capture drag controller used by the homepage
+  // floating project card. Keep the drag offset on the card across pointerup.
   let drag = null;
   let dragZ = 10;
-  const cssNumber = (element, property) => parseFloat(getComputedStyle(element).getPropertyValue(property)) || 0;
+  const cssNumber = (card, property) =>
+    parseFloat(getComputedStyle(card).getPropertyValue(property)) || 0;
 
   featuredEl.addEventListener("pointerdown", event => {
     if ((event.button !== undefined && event.button !== 0) || event.target.closest("a,button")) return;
@@ -236,11 +238,11 @@
     if (!card) return;
     drag = {
       card,
-      pointerId: event.pointerId,
-      startX: event.clientX,
-      startY: event.clientY,
-      originX: cssNumber(card, "--drag-x"),
-      originY: cssNumber(card, "--drag-y"),
+      id: event.pointerId,
+      x: event.clientX,
+      y: event.clientY,
+      ox: cssNumber(card, "--drag-x"),
+      oy: cssNumber(card, "--drag-y"),
       moved: false
     };
     card.classList.add("is-dragging");
@@ -250,28 +252,30 @@
   });
 
   featuredEl.addEventListener("pointermove", event => {
-    if (!drag || drag.pointerId !== event.pointerId) return;
-    const dx = event.clientX - drag.startX;
-    const dy = event.clientY - drag.startY;
+    if (!drag || drag.id !== event.pointerId) return;
+    const dx = event.clientX - drag.x;
+    const dy = event.clientY - drag.y;
     if (Math.abs(dx) + Math.abs(dy) > 3) drag.moved = true;
-    drag.card.style.setProperty("--drag-x", (drag.originX + dx) + "px");
-    drag.card.style.setProperty("--drag-y", (drag.originY + dy) + "px");
+    drag.card.style.setProperty("--drag-x", (drag.ox + dx) + "px");
+    drag.card.style.setProperty("--drag-y", (drag.oy + dy) + "px");
   });
 
   const finishDrag = event => {
-    if (!drag || drag.pointerId !== event.pointerId) return;
+    if (!drag || drag.id !== event.pointerId) return;
     const { card, moved } = drag;
     drag = null;
     card.classList.remove("is-dragging");
     if (moved) {
       card.dataset.justDragged = "true";
-      setTimeout(() => delete card.dataset.justDragged, 180);
+      window.setTimeout(() => delete card.dataset.justDragged, 180);
     }
     try {
       if (featuredEl.hasPointerCapture(event.pointerId)) featuredEl.releasePointerCapture(event.pointerId);
     } catch (_) {}
   };
-  ["pointerup", "pointercancel", "lostpointercapture"].forEach(name => featuredEl.addEventListener(name, finishDrag));
+  ["pointerup", "pointercancel", "lostpointercapture"].forEach(name =>
+    featuredEl.addEventListener(name, finishDrag)
+  );
 
   featuredEl.addEventListener("click", event => {
     const card = event.target.closest(".bookmark-featured-card");
