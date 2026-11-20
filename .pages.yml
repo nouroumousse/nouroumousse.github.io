@@ -54,17 +54,10 @@ content:
 
   - name: bookmarks
     label: Bookmarks
-    type: collection
-    path: bookmarks
-    format: yaml-frontmatter
-    filename: "{primary}.md"
-    view:
-      fields: [title, tags, date, featured, visible]
-      primary: title
-      sort: [date, title]
-      default:
-        sort: date
-        order: desc
+    type: file
+    path: data/bookmarks.json
+    format: json
+    list: true
     fields:
       - name: title
         label: Title
@@ -74,12 +67,11 @@ content:
         label: Website URL
         type: string
         required: true
-        description: Full link including https://
       - name: tags
         label: Tags
         type: string
         list: true
-        description: Add as many descriptive tags as you need.
+        description: Each tag automatically becomes a category filter on the website.
       - name: date
         label: Date saved
         type: date
@@ -87,7 +79,6 @@ content:
       - name: image
         label: Preview image
         type: image
-        description: Optional image uploaded to the site's media folder.
       - name: featured
         label: Featured bookmark
         type: boolean
