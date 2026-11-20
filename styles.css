@@ -1760,3 +1760,11 @@ body.community-page main#top > section:not(:last-child) {
 :root[data-theme="light"] .bookmark-open.btn-primary:hover {
   color:#ffffff !important;
 }
+
+/* Homepage-style full-card dragging for the featured bookmark. */
+.bookmark-featured-card { --drag-x:0px; --drag-y:0px; touch-action:none; cursor:grab; transform:translate3d(var(--drag-x),var(--drag-y),0) rotate(var(--tilt,1.4deg)); will-change:transform,translate; user-select:none; }
+.bookmark-featured-card.is-dragging { z-index:20; animation-play-state:paused; transition:none; cursor:grabbing; border-color:rgba(212,255,63,.7); box-shadow:0 28px 70px rgba(0,0,0,.48),0 0 0 1px rgba(212,255,63,.16); }
+.bookmark-drag-handle { cursor:grab; user-select:none; touch-action:none; }
+.bookmark-featured-card.is-dragging .bookmark-drag-handle { cursor:grabbing; }
+.bookmark-featured-card a, .bookmark-featured-card button { cursor:pointer; }
+.bookmark-featured-image { -webkit-user-drag:none; }
