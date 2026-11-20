@@ -1752,3 +1752,11 @@ body.community-page main#top > section:not(:last-child) {
 :root[data-theme="light"] .bookmark-open.btn-primary:hover {
   color:#202516 !important;
 }
+
+
+/* Light theme: invert the bookmark CTA text on hover for a clearer interaction. */
+:root[data-theme="light"] .bookmark-open:hover,
+:root[data-theme="light"] .bookmark-open:focus-visible,
+:root[data-theme="light"] .bookmark-open.btn-primary:hover {
+  color:#ffffff !important;
+}
