@@ -31,10 +31,16 @@
       day: "numeric", month: "short", year: "numeric", timeZone: "UTC"
     }).format(parsed);
   };
+  const tagColorClass = tag => {
+    const palette = ["tag-tone-coral","tag-tone-amber","tag-tone-mint","tag-tone-blue","tag-tone-violet","tag-tone-pink","tag-tone-cyan","tag-tone-lime"];
+    let hash = 0;
+    for (const char of String(tag).toLowerCase()) hash = (hash * 31 + char.charCodeAt(0)) | 0;
+    return palette[(hash >>> 0) % palette.length];
+  };
   const makeTag = (tag, active = false) => {
     const button = document.createElement("button");
     button.type = "button";
-    button.className = "bookmark-tag" + (active ? " is-active" : "");
+    button.className = "bookmark-tag " + tagColorClass(tag) + (active ? " is-active" : "");
     button.textContent = tag;
     button.setAttribute("aria-pressed", String(active));
     button.addEventListener("click", () => {
@@ -58,17 +64,7 @@
     const heading = document.createElement("h3");
     heading.textContent = bookmark.title || "Untitled bookmark";
     const destination = safeExternalUrl(bookmark.url);
-    if (destination) {
-      const link = document.createElement("a");
-      link.href = destination;
-      link.target = "_blank";
-      link.rel = "noopener noreferrer";
-      link.append(heading);
-      content.append(meta, link);
-    } else {
-      heading.classList.add("bookmark-invalid-link");
-      content.append(meta, heading);
-    }
+    content.append(meta, heading);
     const tagRow = document.createElement("div");
     tagRow.className = "bookmark-entry-tags";
     (Array.isArray(bookmark.tags) ? bookmark.tags : []).forEach(tag => tagRow.append(makeTag(String(tag), activeTag === tag)));
@@ -90,7 +86,7 @@
       open.href = destination;
       open.target = "_blank";
       open.rel = "noopener noreferrer";
-      open.textContent = "VISIT ↗";
+      open.textContent = "Visit website ↗";
       open.setAttribute("aria-label", "Visit " + (bookmark.title || "bookmark"));
       card.append(open);
     }
@@ -128,7 +124,7 @@
     tags.forEach(tag => {
       const button = document.createElement("button");
       button.type = "button";
-      button.className = "bookmark-filter" + (activeTag === tag ? " is-active" : "");
+      button.className = "bookmark-filter " + tagColorClass(tag) + (activeTag === tag ? " is-active" : "");
       button.textContent = tag;
       button.setAttribute("aria-pressed", String(activeTag === tag));
       button.addEventListener("click", () => { activeTag = activeTag === tag ? "" : tag; renderFilters(); render(); });
