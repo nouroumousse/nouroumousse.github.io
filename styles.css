@@ -1710,3 +1710,45 @@ body.community-page main#top > section:not(:last-child) {
 @media (prefers-reduced-motion:reduce) {
   .bookmark-featured-card { animation:none; }
 }
+
+
+/* Unlimited deterministic tag hues: each distinct tag receives its own color. */
+.bookmark-filter[style*="--bookmark-tag-hue"],
+.bookmark-tag[style*="--bookmark-tag-hue"] {
+  color:hsl(var(--bookmark-tag-hue) 82% 72%);
+  border-color:hsl(var(--bookmark-tag-hue) 75% 65% / .48);
+  background:hsl(var(--bookmark-tag-hue) 78% 55% / .11);
+}
+.bookmark-filter[style*="--bookmark-tag-hue"]:hover,
+.bookmark-tag[style*="--bookmark-tag-hue"]:hover,
+.bookmark-filter[style*="--bookmark-tag-hue"].is-active,
+.bookmark-tag[style*="--bookmark-tag-hue"].is-active {
+  color:hsl(var(--bookmark-tag-hue) 88% 78%);
+  border-color:hsl(var(--bookmark-tag-hue) 82% 68%);
+  background:hsl(var(--bookmark-tag-hue) 78% 55% / .19);
+}
+:root[data-theme="light"] .bookmark-filter[style*="--bookmark-tag-hue"],
+:root[data-theme="light"] .bookmark-tag[style*="--bookmark-tag-hue"] {
+  color:hsl(var(--bookmark-tag-hue) 72% 34%);
+  border-color:hsl(var(--bookmark-tag-hue) 62% 43% / .5);
+  background:hsl(var(--bookmark-tag-hue) 70% 45% / .09);
+}
+:root[data-theme="light"] .bookmark-filter[style*="--bookmark-tag-hue"]:hover,
+:root[data-theme="light"] .bookmark-tag[style*="--bookmark-tag-hue"]:hover,
+:root[data-theme="light"] .bookmark-filter[style*="--bookmark-tag-hue"].is-active,
+:root[data-theme="light"] .bookmark-tag[style*="--bookmark-tag-hue"].is-active {
+  color:hsl(var(--bookmark-tag-hue) 78% 27%);
+  border-color:hsl(var(--bookmark-tag-hue) 68% 38%);
+  background:hsl(var(--bookmark-tag-hue) 72% 45% / .14);
+}
+/* The global light-theme .btn-primary rule uses white text; bookmark buttons
+   need dark text on the lime background for accessible contrast. */
+:root[data-theme="light"] .bookmark-open,
+:root[data-theme="light"] .bookmark-open.btn-primary {
+  color:#202516 !important;
+}
+:root[data-theme="light"] .bookmark-open:hover,
+:root[data-theme="light"] .bookmark-open:focus-visible,
+:root[data-theme="light"] .bookmark-open.btn-primary:hover {
+  color:#202516 !important;
+}
