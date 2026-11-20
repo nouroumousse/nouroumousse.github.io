@@ -45,10 +45,24 @@
 
 
 <main id="top">
-  <section class="hero" aria-label="Blog introduction">
-    <p class="kicker mono">// Writing &amp; ideas</p>
-    <h1>Thoughts in<br />progress<span class="accent">_</span></h1>
-    <p class="lede">Articles, notes and ideas on design, branding, creativity and independent practice.</p>
+  <section class="hero blog-hero" aria-label="Blog introduction">
+    <div class="blog-hero-copy">
+      <p class="kicker mono">// Writing &amp; ideas</p>
+      <h1>Thoughts in<br />progress<span class="accent">_</span></h1>
+      <p class="lede">Articles, notes and ideas on design, branding, creativity and independent practice.</p>
+    </div>
+    <div class="blog-quote-stage" id="blog-quote-stage" aria-label="Draggable quote card">
+      <article class="blog-quote-card" id="blog-quote-card">
+        <div class="blog-quote-handle mono" id="blog-quote-handle" title="Click and drag to move">
+          <span>↕</span><span>MOVE CARD</span><span>FIELD NOTES / 01</span>
+        </div>
+        <div class="blog-quote-paper">
+          <span class="blog-quote-kicker mono">A NOTE TO SELF</span>
+          <blockquote>“Strive to know, don't settle for beliefs.”</blockquote>
+          <div class="blog-quote-footer mono"><span>QUESTION · LEARN · UNDERSTAND</span><span>NO. 001</span></div>
+        </div>
+      </article>
+    </div>
   </section>
 
   <section id="articles" aria-labelledby="articles-title">
@@ -70,5 +84,6 @@
 
 <script src="main.js?v=single-repository-mp3-player-20261119" defer></script>
 <script src="blog.js?v=title-subtitle-list-20261119" defer></script>
+<script src="blog-quote.js?v=textbook-quote-card-20261120" defer></script>
 </body>
 </html>
