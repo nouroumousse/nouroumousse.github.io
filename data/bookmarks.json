@@ -30,5 +30,15 @@
     "date": "2026-11-20",
     "featured": false,
     "visible": true
+  },
+  {
+    "title": "Vampire Hunter D: Bloodlust",
+    "url": "https://www.imdb.com/title/tt0216651/?ref_=rt_t_8",
+    "tags": [
+      "movie"
+    ],
+    "date": "2026-11-20",
+    "featured": false,
+    "visible": true
   }
 ]
