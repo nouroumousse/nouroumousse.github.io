@@ -63,45 +63,122 @@
     return card;
   };
   const makeJam = (item, number) => {
-    const kind = String(item.kind || "find").toUpperCase();
+    const kind = String(item.kind || "book").toUpperCase();
     const card = makeBase(kind, number, 2);
+    card.classList.add("hero-jam-card", "jam-card--" + kind.toLowerCase());
     const visual = document.createElement("div");
-    visual.className = "hero-rotating-visual";
+    visual.className = "jam-card-visual hero-jam-visual";
     if (safe(item.image)) {
       const image = document.createElement("img");
       image.src = safe(item.image);
       image.alt = "";
       image.draggable = false;
+      image.decoding = "async";
       visual.append(image);
+      card.classList.add("has-artwork");
     } else {
       const motif = document.createElement("span");
+      motif.className = "jam-card-motif";
       motif.textContent = kind === "SONG" ? "♫" : kind === "MOVIE" ? "▶" : "Aa";
       visual.append(motif);
     }
-    const info = document.createElement("div");
-    info.className = "floating-project-info";
-    const category = document.createElement("p");
-    category.className = "mono";
-    category.textContent = kind + (item.creator ? " · " + item.creator : "");
+    const stamp = document.createElement("span");
+    stamp.className = "jam-card-stamp mono";
+    stamp.textContent = kind === "BOOK" ? "THE READING LIST" : kind === "SONG" ? "NOW PLAYING" : "THE WATCHLIST";
+    visual.append(stamp);
+
+    const body = document.createElement("div");
+    body.className = "jam-card-body";
+    const eyebrow = document.createElement("p");
+    eyebrow.className = "jam-card-kind mono";
+    eyebrow.textContent = kind.toLowerCase();
     const title = document.createElement("h3");
-    title.textContent = item.title || "Recent find";
-    const bottom = document.createElement("div");
-    bottom.className = "floating-project-bottom";
+    title.textContent = item.title || "Untitled";
+    body.append(eyebrow, title);
+    if (item.creator) {
+      const creator = document.createElement("p");
+      creator.className = "jam-card-creator";
+      creator.textContent = item.creator;
+      body.append(creator);
+    }
+    if (item.detail) {
+      const detail = document.createElement("p");
+      detail.className = "jam-card-detail";
+      detail.textContent = item.detail;
+      body.append(detail);
+    }
+
+    const footer = document.createElement("div");
+    footer.className = "jam-card-footer mono";
     const year = document.createElement("span");
-    year.className = "mono";
-    year.textContent = item.year || "RECENT JAM";
-    bottom.append(year);
+    year.textContent = item.year || "A RECENT FIND";
+    footer.append(year);
     if (safe(item.link)) {
       const link = document.createElement("a");
-      link.className = "floating-open mono";
+      link.className = "jam-card-link";
       link.href = safe(item.link);
       link.target = "_blank";
-      link.rel = "noopener";
-      link.textContent = "open ↗";
-      bottom.append(link);
+      link.rel = "noopener noreferrer";
+      link.textContent = "OPEN ↗";
+      footer.append(link);
     }
-    info.append(category, title, bottom);
-    card.append(visual, info);
+    card.append(visual, body, footer);
+    return card;
+  };
+
+  const makeBookmark = (item, number) => {
+    const card = makeBase("BOOKMARK", number, -2);
+    card.classList.add("hero-bookmark-card");
+    const copy = document.createElement("div");
+    copy.className = "hero-bookmark-copy";
+    const eyebrow = document.createElement("p");
+    eyebrow.className = "bookmark-featured-eyebrow mono";
+    eyebrow.textContent = "CURRENTLY SAVED";
+    const heading = document.createElement("h3");
+    heading.textContent = item.title || "Untitled bookmark";
+    const date = document.createElement("p");
+    date.className = "hero-bookmark-date mono";
+    if (item.date) {
+      const parsed = new Date(item.date + "T00:00:00Z");
+      date.textContent = Number.isNaN(parsed.getTime()) ? "" : new Intl.DateTimeFormat("en", {
+        day:"numeric", month:"short", year:"numeric", timeZone:"UTC"
+      }).format(parsed);
+    }
+    const tags = document.createElement("div");
+    tags.className = "hero-bookmark-tags";
+    (Array.isArray(item.tags) ? item.tags : []).forEach(tag => {
+      const chip = document.createElement("span");
+      chip.className = "bookmark-tag";
+      chip.textContent = String(tag);
+      tags.append(chip);
+    });
+    copy.append(eyebrow, heading, date);
+    if (tags.childElementCount) copy.append(tags);
+    const footer = document.createElement("div");
+    footer.className = "hero-bookmark-footer";
+    const label = document.createElement("span");
+    label.className = "mono";
+    label.textContent = "A FIND WORTH KEEPING";
+    footer.append(label);
+    if (safe(item.url)) {
+      const link = document.createElement("a");
+      link.className = "floating-open mono";
+      link.href = safe(item.url);
+      link.target = "_blank";
+      link.rel = "noopener noreferrer";
+      link.textContent = "visit website ↗";
+      footer.append(link);
+    }
+    card.append(copy, footer);
+    if (safe(item.image)) {
+      const image = document.createElement("img");
+      image.className = "hero-bookmark-image";
+      image.src = safe(item.image);
+      image.alt = "";
+      image.draggable = false;
+      image.decoding = "async";
+      card.append(image);
+    }
     return card;
   };
   const makeQuote = number => {
@@ -144,8 +221,9 @@
 
   Promise.all([
     fetch("data/projects.json", { cache: "no-store" }).then(r => r.ok ? r.json() : []),
-    fetch("data/recent-jams.json", { cache: "no-store" }).then(r => r.ok ? r.json() : [])
-  ]).then(([projects, jams]) => {
+    fetch("data/recent-jams.json", { cache: "no-store" }).then(r => r.ok ? r.json() : []),
+    fetch("data/bookmarks.json", { cache: "no-store" }).then(r => r.ok ? r.json() : [])
+  ]).then(([projects, jams, bookmarks]) => {
     const projectCards = (Array.isArray(projects) ? projects : [])
       .filter(x => x && x.visible !== false && x.title && safe(x.image))
       .sort((a,b) => (Number(a.order)||0) - (Number(b.order)||0))
@@ -154,7 +232,10 @@
       .filter(x => x && x.visible !== false && x.title)
       .sort((a,b) => (Number(a.order)||999) - (Number(b.order)||999))
       .map((item,i) => makeJam(item, i+1));
-    cards = [...projectCards, ...jamCards, makeQuote(1)];
+    const featuredBookmark = (Array.isArray(bookmarks) ? bookmarks : [])
+      .find(item => item && item.visible !== false && item.featured === true);
+    const bookmarkCards = featuredBookmark ? [makeBookmark(featuredBookmark, 1)] : [];
+    cards = [...projectCards, ...jamCards, ...bookmarkCards, makeQuote(1)];
     if (cards.length) render(0);
   }).catch(error => console.warn("Hero card collection could not load:", error));
 
