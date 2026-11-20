@@ -59,7 +59,7 @@ content:
     format: yaml-frontmatter
     filename: "{primary}.md"
     view:
-      fields: [title, category, date, featured, visible]
+      fields: [title, tags, date, featured, visible]
       primary: title
       sort: [date, title]
       default:
@@ -75,23 +75,6 @@ content:
         type: string
         required: true
         description: Full link including https://
-      - name: description
-        label: Short description
-        type: text
-        required: true
-      - name: category
-        label: Category
-        type: select
-        options:
-          values:
-            - Websites
-            - Design
-            - Reading
-            - Culture
-            - Photography
-            - Tools
-            - Inspiration
-            - Other
       - name: tags
         label: Tags
         type: string
