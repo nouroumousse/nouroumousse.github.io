@@ -1,17 +1,23 @@
 [
   {
     "kind": "book",
-    "title": "A book worth keeping",
-    "creator": "Add author",
-    "detail": "A good read to return to.",
+    "title": "Sum: Forty Tales from the Afterlives",
+    "creator": "David Eagleman",
+    "detail": "What if.. in the afterlife!",
+    "year": "2009",
+    "image": "/media/4948826.jpg",
+    "link": "https://www.goodreads.com/en/book/show/4948826-sum",
     "order": 1,
     "visible": true
   },
   {
     "kind": "song",
-    "title": "A song on repeat",
-    "creator": "Add artist",
-    "detail": "Something worth listening to again.",
+    "title": "Sunkissed",
+    "creator": "Sunrise Academy",
+    "detail": "Feels like a nostalgic future.",
+    "year": "2025",
+    "image": "/media/sunkissed.jpg",
+    "link": "https://open.spotify.com/track/3AGTJWVefnEcrhpiqa8bJy?autoplay_ok=1",
     "order": 2,
     "visible": true
   },
