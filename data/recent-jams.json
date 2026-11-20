@@ -4,9 +4,6 @@
     "title": "A book worth keeping",
     "creator": "Add author",
     "detail": "A good read to return to.",
-    "year": "",
-    "image": "",
-    "link": "",
     "order": 1,
     "visible": true
   },
@@ -15,20 +12,17 @@
     "title": "A song on repeat",
     "creator": "Add artist",
     "detail": "Something worth listening to again.",
-    "year": "",
-    "image": "",
-    "link": "",
     "order": 2,
     "visible": true
   },
   {
     "kind": "movie",
-    "title": "A film to remember",
-    "creator": "Add director",
-    "detail": "One for the watchlist.",
-    "year": "",
-    "image": "",
-    "link": "",
+    "title": "Vampire Hunter D: Bloodlust",
+    "creator": "Yoshiaki Kawajiri",
+    "detail": "a lost era of aesthetically pleasing stories",
+    "year": "2000",
+    "image": "/media/screenshot-2026-11-20-at-222556.png",
+    "link": "https://www.imdb.com/title/tt0216651/?ref_=mv_close",
     "order": 3,
     "visible": true
   }
