@@ -2268,3 +2268,47 @@ body.community-page main#top > section:not(:last-child) {
 .bookmark-featured-card img {
   -webkit-user-drag:none;
 }
+
+
+/* Homepage hero card switcher */
+.hero-next-card {
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  gap:.55rem;
+  margin:.45rem auto 0;
+  padding:.42rem .75rem;
+  border:1px solid var(--line);
+  border-radius:999px;
+  background:var(--surface);
+  color:var(--muted);
+  font:500 .62rem/1.2 var(--font-mono);
+  letter-spacing:.06em;
+  cursor:pointer;
+  transition:color .2s,border-color .2s,background .2s,transform .2s;
+}
+.hero-next-card:hover,.hero-next-card:focus-visible {
+  color:var(--text);
+  border-color:var(--accent);
+  background:var(--surface-2,var(--surface));
+}
+.hero-next-card:active { transform:translateY(1px); }
+.hero-next-card:disabled { opacity:.45; cursor:default; }
+.hero-rotating-card { cursor:grab; }
+.hero-rotating-card.is-dragging { cursor:grabbing; }
+.hero-rotating-visual {
+  display:grid;
+  place-items:center;
+  min-height:205px;
+  max-height:235px;
+  overflow:hidden;
+  background:var(--surface);
+}
+.hero-rotating-visual img { width:100%;height:220px;object-fit:cover;display:block;pointer-events:none; }
+.hero-rotating-visual span { font:700 5rem/1 var(--font-display);color:var(--accent); }
+.hero-quote-rotating .blog-quote-paper { min-height:300px; }
+.hero-quote-rotating .blog-quote-paper blockquote { color:#25271f; }
+:root[data-theme="dark"] .hero-quote-rotating .blog-quote-paper blockquote { color:#e8e8ea; }
+@media (max-width:600px) {
+  .hero-next-card { margin-top:.55rem; }
+}
