@@ -155,7 +155,7 @@
   };
   const render = () => {
     const query = (searchInput.value || "").trim().toLowerCase();
-    const filtered = bookmarks.filter(item => item !== bookmarks.find(bookmark => bookmark.featured === true)).filter(item => {
+    const filtered = bookmarks.filter(item => {
       const tags = Array.isArray(item.tags) ? item.tags : [];
       const tagMatch = !activeTag || tags.some(tag => String(tag).toLowerCase() === activeTag.toLowerCase());
       return tagMatch && [item.title, ...tags].join(" ").toLowerCase().includes(query);
