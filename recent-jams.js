@@ -111,39 +111,38 @@
       workspace.innerHTML = '<p class="recent-jams-empty mono">RECENT JAMS COULD NOT BE LOADED RIGHT NOW.</p>';
     });
 
-  // Use window-level Pointer Events so dragging continues even when the
-  // pointer leaves the small handle or the card itself.
+  // Drag from anywhere on a card. A small movement threshold preserves
+  // normal clicks on the external link.
   let drag = null;
   let zIndex = 20;
+  const DRAG_THRESHOLD = 5;
 
   const onDown = event => {
-    const handle = event.target.closest(".jam-card-handle");
-    const card = handle && handle.closest(".jam-card");
-    if (!card || (event.pointerType === "mouse" && event.button !== 0)) return;
-
+    const card = event.target.closest(".jam-card");
+    if (!card || !workspace.contains(card) || (event.pointerType === "mouse" && event.button !== 0)) return;
     drag = {
       card,
-      handle,
       pointerId: event.pointerId,
       startX: event.clientX,
       startY: event.clientY,
       originX: parseFloat(card.style.getPropertyValue("--jam-x")) || 0,
-      originY: parseFloat(card.style.getPropertyValue("--jam-y")) || 0
+      originY: parseFloat(card.style.getPropertyValue("--jam-y")) || 0,
+      active: false
     };
-
-    card.classList.add("is-dragging");
-    card.style.zIndex = String(++zIndex);
-    handle.classList.add("is-grabbed");
-    event.preventDefault();
-
-    // Capture keeps touch and pen drags alive outside the handle.
-    try { handle.setPointerCapture(event.pointerId); } catch {}
+    try { card.setPointerCapture(event.pointerId); } catch {}
   };
 
   const onMove = event => {
     if (!drag || drag.pointerId !== event.pointerId) return;
     const dx = event.clientX - drag.startX;
     const dy = event.clientY - drag.startY;
+    if (!drag.active && Math.hypot(dx, dy) < DRAG_THRESHOLD) return;
+
+    if (!drag.active) {
+      drag.active = true;
+      drag.card.classList.add("is-dragging");
+      drag.card.style.zIndex = String(++zIndex);
+    }
     drag.card.style.setProperty("--jam-x", (drag.originX + dx) + "px");
     drag.card.style.setProperty("--jam-y", (drag.originY + dy) + "px");
     event.preventDefault();
@@ -153,11 +152,17 @@
     if (!drag || (event.pointerId !== undefined && drag.pointerId !== event.pointerId)) return;
     const active = drag;
     drag = null;
-    active.card.classList.remove("is-dragging");
-    active.handle.classList.remove("is-grabbed");
+    if (active.active) {
+      active.card.classList.remove("is-dragging");
+      // Prevent the click generated at the end of an actual drag, not a tap.
+      active.card.addEventListener("click", e => {
+        e.preventDefault();
+        e.stopPropagation();
+      }, { capture: true, once: true });
+    }
     try {
-      if (active.handle.hasPointerCapture(active.pointerId)) {
-        active.handle.releasePointerCapture(active.pointerId);
+      if (active.card.hasPointerCapture(active.pointerId)) {
+        active.card.releasePointerCapture(active.pointerId);
       }
     } catch {}
   };
