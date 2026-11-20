@@ -1795,3 +1795,43 @@ body.community-page main#top > section:not(:last-child) {
     padding-top:.75rem;
   }
 }
+
+
+/* Light-mode contrast pass for the floating featured bookmark. */
+:root[data-theme="light"] .bookmark-featured-card {
+  color:#20251a;
+  background:linear-gradient(145deg,#ffffff 0%,#f7f9f1 100%);
+  border-color:#d6ddc9;
+}
+:root[data-theme="light"] .bookmark-featured-card .bookmark-featured-topbar,
+:root[data-theme="light"] .bookmark-featured-card .bookmark-featured-footer > span {
+  color:#59634c;
+}
+:root[data-theme="light"] .bookmark-featured-card .bookmark-featured-topbar span:last-child,
+:root[data-theme="light"] .bookmark-featured-card .bookmark-featured-eyebrow {
+  color:#557600;
+}
+:root[data-theme="light"] .bookmark-featured-card h2 {
+  color:#20251a;
+}
+:root[data-theme="light"] .bookmark-featured-card .bookmark-featured-date {
+  color:#59634c;
+}
+:root[data-theme="light"] .bookmark-featured-card .bookmark-tag {
+  filter:saturate(1.15);
+  font-weight:500;
+}
+:root[data-theme="light"] .bookmark-featured-card .bookmark-open,
+:root[data-theme="light"] .bookmark-featured-card .bookmark-open.btn-primary {
+  color:#20251a !important;
+  background:#d4ff3f !important;
+  border:1px solid #91b51c !important;
+  box-shadow:0 8px 20px rgba(73,103,0,.12);
+}
+:root[data-theme="light"] .bookmark-featured-card .bookmark-open:hover,
+:root[data-theme="light"] .bookmark-featured-card .bookmark-open:focus-visible,
+:root[data-theme="light"] .bookmark-featured-card .bookmark-open.btn-primary:hover {
+  color:#ffffff !important;
+  background:#557600 !important;
+  border-color:#557600 !important;
+}
