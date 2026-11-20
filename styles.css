@@ -2175,3 +2175,20 @@ body.community-page main#top > section:not(:last-child) {
 @media (prefers-reduced-motion: reduce) {
   .jam-card { animation:none; }
 }
+
+
+/* Recent Jams drag interaction reliability */
+#recent-jams-workspace { overflow: visible; }
+#recent-jams-workspace .jam-card-handle {
+  cursor: grab;
+  touch-action: none;
+  -webkit-user-select: none;
+  user-select: none;
+}
+#recent-jams-workspace .jam-card-handle.is-grabbed,
+#recent-jams-workspace .jam-card.is-dragging .jam-card-handle { cursor: grabbing; }
+#recent-jams-workspace .jam-card.is-dragging { animation: none; }
+#recent-jams-workspace .jam-card-handle * {
+  pointer-events: none;
+  -webkit-user-drag: none;
+}
