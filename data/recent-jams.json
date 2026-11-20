@@ -1,0 +1,35 @@
+[
+  {
+    "kind": "book",
+    "title": "A book worth keeping",
+    "creator": "Add author",
+    "detail": "A good read to return to.",
+    "year": "",
+    "image": "",
+    "link": "",
+    "order": 1,
+    "visible": true
+  },
+  {
+    "kind": "song",
+    "title": "A song on repeat",
+    "creator": "Add artist",
+    "detail": "Something worth listening to again.",
+    "year": "",
+    "image": "",
+    "link": "",
+    "order": 2,
+    "visible": true
+  },
+  {
+    "kind": "movie",
+    "title": "A film to remember",
+    "creator": "Add director",
+    "detail": "One for the watchlist.",
+    "year": "",
+    "image": "",
+    "link": "",
+    "order": 3,
+    "visible": true
+  }
+]
