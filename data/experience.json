@@ -1,0 +1,66 @@
+[
+  {
+    "role": "Brand Designer",
+    "date": "Oct 2020 — Present",
+    "organization": "OD LLC",
+    "description": "Designed distinctive branding assets to help startups establish a strong market presence, increasing brand recognition and user engagement. Worked on rebranding legacy brands while preserving their core image. Contracted to clients including African Conservation Foundation, Today's Budget App, Ponder, Quokkie, Tellhop, Rewilding India and Culture Booster.",
+    "order": 1,
+    "visible": true
+  },
+  {
+    "role": "Design & Marketing Instructor",
+    "date": "May 2026 — Aug 2026",
+    "organization": "Warmdaz Social Innovation Incubator",
+    "description": "Designed the brand identity for the programme and worked as a Design & Marketing Instructor. The programme, supported by Fondation de France and Migrations & Développement, teaches digital skills to rural youth.",
+    "order": 2,
+    "visible": true
+  },
+  {
+    "role": "Art Director",
+    "date": "Aug 2023 — Dec 2023",
+    "organization": "EBrands & Partners",
+    "description": "Led and mentored a team of graphic and motion designers, improving the quality and consistency of creative output. Recruited designers, assigned tasks, reviewed work and provided regular feedback to keep projects on brief and on schedule. Created assets for an Apple Vision Pro app.",
+    "order": 3,
+    "visible": true
+  },
+  {
+    "role": "Brand Designer",
+    "date": "Jan 2023 — Apr 2023",
+    "organization": "Tellhop",
+    "description": "Designed the new brand identity for Tellhop.",
+    "order": 4,
+    "visible": true
+  },
+  {
+    "role": "Brand Designer",
+    "date": "Jan 2021 — Nov 2021",
+    "organization": "Culture Booster",
+    "description": "Worked on the brand identity of Culture Booster and various other parts of its visual communication.",
+    "order": 5,
+    "visible": true
+  },
+  {
+    "role": "Brand Designer",
+    "date": "May 2020 — Oct 2020",
+    "organization": "African Conservation Foundation",
+    "description": "Designed the new brand identity for the Rewilding India organisation.",
+    "order": 6,
+    "visible": true
+  },
+  {
+    "role": "Brand Designer",
+    "date": "Jun 2016 — Oct 2020",
+    "organization": "Today's Budget",
+    "description": "Designed the new brand identity for the Today's Budget app.",
+    "order": 7,
+    "visible": true
+  },
+  {
+    "role": "Self-employed Illustrator & Brand Designer",
+    "date": "Jun 2016 — Oct 2020",
+    "organization": "Independent",
+    "description": "Built a personal brand and an active presence in the design community. Delivered brand identity projects for a range of clients, with a specialisation in Android adaptive and iOS app icon design.",
+    "order": 8,
+    "visible": true
+  }
+]
