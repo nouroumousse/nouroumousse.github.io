@@ -2192,3 +2192,21 @@ body.community-page main#top > section:not(:last-child) {
   pointer-events: none;
   -webkit-user-drag: none;
 }
+
+
+/* Drag the whole Recent Jams card surface, not only its header */
+#recent-jams-workspace .jam-card {
+  cursor: grab;
+  touch-action: none;
+  -webkit-user-select: none;
+  user-select: none;
+}
+#recent-jams-workspace .jam-card.is-dragging { cursor: grabbing; }
+#recent-jams-workspace .jam-card a {
+  cursor: pointer;
+  -webkit-user-drag: none;
+}
+#recent-jams-workspace .jam-card img {
+  -webkit-user-drag: none;
+  pointer-events: none;
+}
