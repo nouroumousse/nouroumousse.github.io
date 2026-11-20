@@ -227,6 +227,7 @@
     const projectCards = (Array.isArray(projects) ? projects : [])
       .filter(x => x && x.visible !== false && x.title && safe(x.image))
       .sort((a,b) => (Number(a.order)||0) - (Number(b.order)||0))
+      .slice(0, 1)
       .map((item,i) => makeProject(item,i+1));
     const jamCards = (Array.isArray(jams) ? jams : [])
       .filter(x => x && x.visible !== false && x.title)
