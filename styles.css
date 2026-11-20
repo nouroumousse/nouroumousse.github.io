@@ -2312,3 +2312,99 @@ body.community-page main#top > section:not(:last-child) {
 @media (max-width:600px) {
   .hero-next-card { margin-top:.55rem; }
 }
+
+
+/* Hero versions of Recent Jams preserve the full card content hierarchy. */
+.hero-jam-card { display:flex; flex-direction:column; }
+.hero-jam-visual {
+  position:relative;
+  display:grid;
+  place-items:center;
+  min-height:190px;
+  max-height:220px;
+  overflow:hidden;
+  background:var(--surface);
+}
+.hero-jam-visual img {
+  display:block;
+  width:100%;
+  height:210px;
+  object-fit:cover;
+  pointer-events:none;
+}
+.hero-jam-visual .jam-card-stamp {
+  position:absolute;
+  right:.8rem;
+  bottom:.7rem;
+  z-index:1;
+}
+.hero-jam-card .jam-card-body { padding:1rem 1.1rem .8rem; }
+.hero-jam-card .jam-card-kind {
+  margin:0 0 .45rem;
+  color:var(--accent);
+  font-size:.58rem;
+  letter-spacing:.12em;
+  text-transform:uppercase;
+}
+.hero-jam-card .jam-card-body h3 {
+  margin:0;
+  color:var(--text);
+  font-size:1.35rem;
+  line-height:1.12;
+  letter-spacing:-.04em;
+}
+.hero-jam-card .jam-card-creator,
+.hero-jam-card .jam-card-detail {
+  margin:.45rem 0 0;
+  color:var(--muted);
+  font-size:.78rem;
+  line-height:1.5;
+}
+.hero-jam-card .jam-card-footer {
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  gap:.75rem;
+  margin-top:auto;
+  padding:.8rem 1.1rem;
+  border-top:1px solid var(--line);
+  color:var(--muted);
+  font-size:.58rem;
+  letter-spacing:.08em;
+}
+.hero-jam-card .jam-card-link {
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  min-height:34px;
+  padding:.45rem .7rem;
+  border:1px solid var(--line);
+  border-radius:4px;
+  color:var(--text);
+  text-decoration:none;
+  transition:background .2s,border-color .2s,color .2s;
+}
+.hero-jam-card .jam-card-link:hover { background:var(--accent);border-color:var(--accent);color:#171914; }
+
+.hero-bookmark-card { display:flex;flex-direction:column;gap:1rem;padding:1rem 1.1rem 1.1rem; }
+.hero-bookmark-copy { min-width:0; }
+.hero-bookmark-copy h3 {
+  margin:0 0 .7rem;
+  color:var(--text);
+  font-size:clamp(1.35rem,2vw,1.8rem);
+  line-height:1.18;
+  letter-spacing:-.045em;
+  overflow-wrap:anywhere;
+}
+.hero-bookmark-date { margin:0 0 .8rem;color:var(--muted);font-size:.62rem;letter-spacing:.08em; }
+.hero-bookmark-tags { display:flex;flex-wrap:wrap;gap:.45rem; }
+.hero-bookmark-tags .bookmark-tag { pointer-events:none; }
+.hero-bookmark-footer {
+  display:flex;align-items:center;justify-content:space-between;gap:.8rem;
+  padding-top:.8rem;border-top:1px solid var(--line);
+}
+.hero-bookmark-footer > span { color:var(--muted);font-size:.56rem;letter-spacing:.08em; }
+.hero-bookmark-image {
+  display:block;width:100%;max-height:170px;aspect-ratio:16/9;object-fit:cover;
+  border:1px solid var(--line);border-radius:6px;pointer-events:none;
+}
