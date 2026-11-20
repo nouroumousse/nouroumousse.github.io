@@ -16,11 +16,19 @@
     "visible": true
   },
   {
+    "role": "Brand Designer",
+    "date": "May 2024 — Sep 2024",
+    "organization": "Today's Budget",
+    "description": "Designed the new brand identity for the Today's Budget app.",
+    "order": 3,
+    "visible": true
+  },
+  {
     "role": "Art Director",
     "date": "Aug 2023 — Dec 2023",
     "organization": "EBrands & Partners",
     "description": "Led and mentored a team of graphic and motion designers, improving the quality and consistency of creative output. Recruited designers, assigned tasks, reviewed work and provided regular feedback to keep projects on brief and on schedule. Created assets for an Apple Vision Pro app.",
-    "order": 3,
+    "order": 4,
     "visible": true
   },
   {
@@ -28,7 +36,7 @@
     "date": "Jan 2023 — Apr 2023",
     "organization": "Tellhop",
     "description": "Designed the new brand identity for Tellhop.",
-    "order": 4,
+    "order": 5,
     "visible": true
   },
   {
@@ -36,7 +44,7 @@
     "date": "Jan 2021 — Nov 2021",
     "organization": "Culture Booster",
     "description": "Worked on the brand identity of Culture Booster and various other parts of its visual communication.",
-    "order": 5,
+    "order": 6,
     "visible": true
   },
   {
@@ -44,14 +52,6 @@
     "date": "May 2020 — Oct 2020",
     "organization": "African Conservation Foundation",
     "description": "Designed the new brand identity for the Rewilding India organisation.",
-    "order": 6,
-    "visible": true
-  },
-  {
-    "role": "Brand Designer",
-    "date": "May 2024 — Sep 2024",
-    "organization": "Today's Budget",
-    "description": "Designed the new brand identity for the Today's Budget app.",
     "order": 7,
     "visible": true
   },
