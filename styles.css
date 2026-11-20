@@ -2408,3 +2408,9 @@ body.community-page main#top > section:not(:last-child) {
   display:block;width:100%;max-height:170px;aspect-ratio:16/9;object-fit:cover;
   border:1px solid var(--line);border-radius:6px;pointer-events:none;
 }
+
+/* Keep the rotating bookmark card's eyebrow as legible as the page's
+   original featured bookmark in light mode. */
+:root[data-theme="light"] .hero-bookmark-card .bookmark-featured-eyebrow {
+  color:#557600;
+}
