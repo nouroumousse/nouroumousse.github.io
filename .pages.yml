@@ -116,3 +116,46 @@ content:
         label: Show on website
         type: boolean
         default: true
+
+  - name: recent_jams
+    label: Recent Jams
+    type: file
+    path: data/recent-jams.json
+    format: json
+    list: true
+    fields:
+      - name: kind
+        label: Card type
+        type: string
+        required: true
+        description: Use book, song or movie to choose the card design.
+      - name: title
+        label: Title
+        type: string
+        required: true
+      - name: creator
+        label: Author / Artist / Director
+        type: string
+      - name: detail
+        label: Note
+        type: text
+      - name: year
+        label: Year
+        type: string
+      - name: image
+        label: Cover / Artwork
+        type: image
+        options:
+          path: recent-jams
+          extensions: [jpg, jpeg, png, webp, avif]
+          rename: safe
+      - name: link
+        label: Link
+        type: string
+      - name: order
+        label: Display order
+        type: number
+      - name: visible
+        label: Show on website
+        type: boolean
+        default: true
