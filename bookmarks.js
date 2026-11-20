@@ -11,7 +11,6 @@
   const countEl = document.getElementById("bookmark-count");
 
   let bookmarks = [];
-  let activeCategory = "all";
   let activeTag = "";
 
   const unquote = value => value.replace(/^["']|["']$/g, "").trim();
@@ -32,9 +31,7 @@
     return {
       title: read("title") || file.name.replace(/\.md$/i, "").replace(/[-_]/g, " "),
       url: read("url"),
-      description: read("description"),
-      category: read("category") || "Other",
-      tags: readList("tags"),
+      tags: [...new Set([...readList("tags"), ...(read("category") ? [read("category")] : [])])],
       date,
       timestamp: Number.isNaN(timestamp) ? 0 : timestamp,
       image: read("image"),
@@ -86,7 +83,7 @@
     content.className = "bookmark-entry-content";
     const meta = document.createElement("p");
     meta.className = "bookmark-meta mono";
-    meta.textContent = [bookmark.category, formatDate(bookmark.date), bookmark.featured ? "FEATURED" : ""].filter(Boolean).join("  /  ");
+    meta.textContent = [formatDate(bookmark.date), bookmark.featured ? "FEATURED" : ""].filter(Boolean).join("  /  ");
     const heading = document.createElement("h3");
     const link = document.createElement("a");
     const destination = safeExternalUrl(bookmark.url);
@@ -101,13 +98,10 @@
       link.append(heading);
       link.removeAttribute("href");
     }
-    const description = document.createElement("p");
-    description.className = "bookmark-description";
-    description.textContent = bookmark.description;
     const tagRow = document.createElement("div");
     tagRow.className = "bookmark-entry-tags";
     bookmark.tags.forEach(tag => tagRow.append(makeTag(tag, activeTag === tag)));
-    content.append(meta, link, description);
+    content.append(meta, link);
     if (bookmark.tags.length) content.append(tagRow);
     const imageUrl = safeImageUrl(bookmark.image);
     let previewImage = null;
@@ -138,10 +132,9 @@
   const render = () => {
     const query = (searchInput.value || "").trim().toLowerCase();
     const filtered = bookmarks.filter(item => {
-      const categoryMatch = activeCategory === "all" || item.category === activeCategory;
       const tagMatch = !activeTag || item.tags.some(tag => tag.toLowerCase() === activeTag.toLowerCase());
-      const searchable = [item.title, item.description, item.category, ...item.tags].join(" ").toLowerCase();
-      return categoryMatch && tagMatch && searchable.includes(query);
+      const searchable = [item.title, ...item.tags].join(" ").toLowerCase();
+      return tagMatch && searchable.includes(query);
     });
     countEl.textContent = filtered.length + (filtered.length === 1 ? " bookmark" : " bookmarks");
     list.replaceChildren();
@@ -156,35 +149,27 @@
   };
 
   const renderFilters = () => {
-    const categories = [...new Set(bookmarks.map(item => item.category).filter(Boolean))].sort((a,b) => a.localeCompare(b));
+    const categories = [...new Set(bookmarks.flatMap(item => item.tags))].sort((a,b) => a.localeCompare(b));
     categoriesEl.replaceChildren();
     const all = document.createElement("button");
     all.type = "button";
-    all.className = "bookmark-filter" + (activeCategory === "all" ? " is-active" : "");
+    all.className = "bookmark-filter" + (!activeTag ? " is-active" : "");
     all.dataset.category = "all";
     all.textContent = "All";
-    all.setAttribute("aria-pressed", String(activeCategory === "all"));
-    all.addEventListener("click", () => { activeCategory = "all"; renderFilters(); render(); });
+    all.setAttribute("aria-pressed", String(!activeTag));
+    all.addEventListener("click", () => { activeTag = ""; renderFilters(); render(); });
     categoriesEl.append(all);
     categories.forEach(category => {
       const button = document.createElement("button");
       button.type = "button";
-      button.className = "bookmark-filter" + (activeCategory === category ? " is-active" : "");
+      button.className = "bookmark-filter" + (activeTag === category ? " is-active" : "");
       button.dataset.category = category;
       button.textContent = category;
-      button.setAttribute("aria-pressed", String(activeCategory === category));
-      button.addEventListener("click", () => { activeCategory = category; renderFilters(); render(); });
+      button.setAttribute("aria-pressed", String(activeTag === category));
+      button.addEventListener("click", () => { activeTag = activeTag === category ? "" : category; renderFilters(); render(); });
       categoriesEl.append(button);
     });
-    const allTags = [...new Set(bookmarks.flatMap(item => item.tags))].sort((a,b) => a.localeCompare(b));
     tagsEl.replaceChildren();
-    if (allTags.length) {
-      const label = document.createElement("span");
-      label.className = "bookmark-tags-label mono";
-      label.textContent = "TAGS";
-      tagsEl.append(label);
-      allTags.forEach(tag => tagsEl.append(makeTag(tag, activeTag === tag)));
-    }
   };
 
   searchInput.addEventListener("input", render);
