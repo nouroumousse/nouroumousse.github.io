@@ -2210,3 +2210,36 @@ body.community-page main#top > section:not(:last-child) {
   -webkit-user-drag: none;
   pointer-events: none;
 }
+
+
+/* Bring the featured bookmark's movement in line with homepage project cards. */
+.bookmark-featured-card {
+  --drag-x:0px;
+  --drag-y:0px;
+  transform:translate3d(var(--drag-x),var(--drag-y),0) rotate(-2deg);
+  animation:bookmark-featured-float 6.5s ease-in-out infinite;
+  will-change:transform;
+  transition:box-shadow .25s ease,border-color .25s ease;
+  cursor:grab;
+}
+@keyframes bookmark-featured-float {
+  0%,100% { translate:0 0; }
+  50% { translate:0 -9px; }
+}
+.bookmark-featured-card.is-dragging {
+  z-index:20;
+  animation-play-state:paused;
+  transition:none;
+  border-color:rgba(212,255,63,.7);
+  box-shadow:0 28px 70px rgba(0,0,0,.48),0 0 0 1px rgba(212,255,63,.16);
+  cursor:grabbing;
+}
+.bookmark-featured-card .bookmark-featured-topbar {
+  cursor:grab;
+  touch-action:none;
+}
+.bookmark-featured-card.is-dragging .bookmark-featured-topbar { cursor:grabbing; }
+.bookmark-featured-card img { pointer-events:none; user-select:none; }
+@media (prefers-reduced-motion:reduce) {
+  .bookmark-featured-card { animation:none; }
+}
