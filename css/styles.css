@@ -2816,3 +2816,111 @@ button { -webkit-tap-highlight-color: transparent; }
 :root[data-theme="dusk"] .floating-project {
   box-shadow: 0 18px 42px rgba(10,14,19,.28);
 }
+
+
+/* ---------- Dusk theme polish: remove accidental panels and prevent overflow ---------- */
+/* Timeline rows are editorial list items, not filled cards. Keep them transparent
+   and constrain the text column so long descriptions wrap inside the page. */
+:root[data-theme="dusk"] .timeline li {
+  display: grid;
+  grid-template-columns: minmax(145px, 190px) minmax(0, 1fr);
+  gap: clamp(1rem, 3vw, 2rem);
+  width: 100%;
+  min-width: 0;
+  background: transparent !important;
+  border-color: #53606d;
+}
+:root[data-theme="dusk"] .timeline li > * { min-width: 0; }
+:root[data-theme="dusk"] .timeline li p,
+:root[data-theme="dusk"] .timeline li h3 {
+  max-width: 100%;
+  overflow-wrap: anywhere;
+}
+:root[data-theme="dusk"] .timeline li p:last-child {
+  max-width: 65ch;
+  color: #cbd3db;
+}
+@media (max-width: 640px) {
+  :root[data-theme="dusk"] .timeline li {
+    grid-template-columns: minmax(0, 1fr);
+    gap: .4rem;
+  }
+}
+
+/* Bookmark archive rows stay clean; only individual tags receive their own
+   color treatment, never a full-width colored strip behind the tag group. */
+:root[data-theme="dusk"] .bookmark-entry {
+  display: grid;
+  grid-template-columns: 42px minmax(0, 1fr) auto;
+  gap: 1rem;
+  min-width: 0;
+  background: transparent;
+  border-color: #53606d;
+}
+:root[data-theme="dusk"] .bookmark-entry-content,
+:root[data-theme="dusk"] .bookmark-entry-tags {
+  min-width: 0;
+  background: transparent !important;
+  border-color: transparent;
+}
+:root[data-theme="dusk"] .bookmark-entry-tags {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: .55rem;
+}
+:root[data-theme="dusk"] .bookmark-entry .bookmark-tag,
+:root[data-theme="dusk"] .bookmark-filter {
+  color: var(--tag-ink, #f3f1ec);
+  background: var(--tag-wash, #39434e);
+  border-color: var(--tag-edge, #65717d);
+}
+:root[data-theme="dusk"] .bookmark-entry-content h3,
+:root[data-theme="dusk"] .bookmark-entry-content > a { color: #f3f1ec; }
+:root[data-theme="dusk"] .bookmark-meta,
+:root[data-theme="dusk"] .bookmark-description { color: #c2cbd3; }
+:root[data-theme="dusk"] .bookmark-open {
+  color: #f3f1ec;
+  border-color: #71808d;
+  background: #303944;
+}
+:root[data-theme="dusk"] .bookmark-open:hover {
+  color: #252b33;
+  background: #f0bd72;
+  border-color: #f0bd72;
+}
+@media (max-width: 700px) {
+  :root[data-theme="dusk"] .bookmark-entry {
+    grid-template-columns: 30px minmax(0, 1fr);
+    gap: .7rem;
+  }
+}
+
+/* The draggable featured bookmark is a distinct card, not a black cut-out.
+   Give every nested label an explicit readable color on the Dusk surface. */
+:root[data-theme="dusk"] .bookmark-featured-card {
+  color: #f3f1ec;
+  background: linear-gradient(145deg, #35414c 0%, #29323c 100%);
+  border: 1px solid #687785;
+  box-shadow: 0 18px 42px rgba(10,14,19,.28);
+}
+:root[data-theme="dusk"] .bookmark-featured-card .bookmark-featured-topbar,
+:root[data-theme="dusk"] .bookmark-featured-card .bookmark-featured-footer {
+  color: #e0e5e9;
+  background: #202830;
+  border-color: #53606d;
+}
+:root[data-theme="dusk"] .bookmark-featured-card .bookmark-featured-topbar span:last-child,
+:root[data-theme="dusk"] .bookmark-featured-card .bookmark-featured-eyebrow,
+:root[data-theme="dusk"] .bookmark-featured-card .bookmark-featured-date {
+  color: #f0bd72;
+}
+:root[data-theme="dusk"] .bookmark-featured-card h2 { color: #fffdf8; }
+:root[data-theme="dusk"] .bookmark-featured-card .bookmark-tag {
+  filter: none;
+}
+:root[data-theme="dusk"] .bookmark-featured-card .bookmark-open.btn-primary {
+  color: #29251f !important;
+  background: #f0bd72 !important;
+  border-color: #f0bd72 !important;
+}
