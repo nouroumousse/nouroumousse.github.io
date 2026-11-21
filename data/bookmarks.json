@@ -71,5 +71,16 @@
     "date": "2026-11-21",
     "featured": false,
     "visible": true
+  },
+  {
+    "title": "Brilliant interactive explanations by Bartosz Ciechanowski",
+    "url": "https://ciechanow.ski/archives/",
+    "tags": [
+      "website",
+      "science"
+    ],
+    "date": "2026-11-21",
+    "featured": false,
+    "visible": true
   }
 ]
