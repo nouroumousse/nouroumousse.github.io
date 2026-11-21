@@ -2514,3 +2514,148 @@ button { -webkit-tap-highlight-color: transparent; }
   text-decoration: none;
 }
 .article-original-link:hover { color: var(--accent); border-color: var(--accent); }
+
+
+/* ---------- Keep hero feature cards beside their copy at narrow widths ---------- */
+/* The hero switches to a compact two-column layout instead of stacking the
+   featured interaction below the introduction. The text remains first. */
+@media (min-width: 360px) and (max-width: 1049px) {
+  body:not(.work-page):not(.blog-page):not(.bookmarks-page) main > .hero {
+    display: grid;
+    grid-template-columns: minmax(0, 1.05fr) minmax(0, .9fr);
+    column-gap: clamp(.65rem, 2.4vw, 1.4rem);
+    align-items: center;
+    min-height: 0;
+    padding-top: clamp(2.5rem, 7vw, 4rem);
+    padding-bottom: 3rem;
+  }
+  body:not(.work-page):not(.blog-page):not(.bookmarks-page) main > .hero > .kicker,
+  body:not(.work-page):not(.blog-page):not(.bookmarks-page) main > .hero > h1,
+  body:not(.work-page):not(.blog-page):not(.bookmarks-page) main > .hero > .lede,
+  body:not(.work-page):not(.blog-page):not(.bookmarks-page) main > .hero > .hero-actions {
+    grid-column: 1;
+    min-width: 0;
+  }
+  body:not(.work-page):not(.blog-page):not(.bookmarks-page) main > .hero > .hero-preview-wrap {
+    grid-column: 2;
+    grid-row: 1 / span 4;
+    width: 100%;
+    max-width: none;
+    min-width: 0;
+    margin: 0;
+  }
+  .hero-preview-workspace {
+    min-height: clamp(190px, 42vw, 330px);
+    padding: .2rem;
+  }
+  .hero-preview-workspace .floating-project {
+    width: 100%;
+    max-width: 100%;
+  }
+  .hero-preview-hint { font-size: clamp(.46rem, 1.25vw, .6rem); }
+  .hero-next-card { font-size: clamp(.55rem, 1.4vw, .68rem); }
+
+  .blog-page .blog-hero {
+    grid-template-columns: minmax(0, 1.05fr) minmax(0, .9fr);
+    column-gap: clamp(.65rem, 2.4vw, 1.4rem);
+    row-gap: 0;
+    align-items: center;
+    min-height: 0;
+    padding-top: clamp(2.5rem, 7vw, 4rem);
+    padding-bottom: 3rem;
+  }
+  .blog-hero-copy { grid-column: 1; min-width: 0; }
+  .blog-quote-stage {
+    grid-column: 2;
+    grid-row: 1;
+    min-width: 0;
+    min-height: clamp(190px, 38vw, 300px);
+    height: 100%;
+  }
+  .blog-quote-card { width: 100%; max-width: 390px; }
+  .blog-quote-handle { gap: .35rem; padding-inline: .55rem; font-size: .5rem; }
+  .blog-quote-paper { padding: 1rem .65rem; }
+  .blog-quote-kicker { margin: 0 0 1rem .45rem; font-size: .48rem; }
+  .blog-quote-paper blockquote {
+    margin: 0 0 1.2rem .5rem;
+    font-size: clamp(.95rem, 2.5vw, 1.5rem);
+  }
+  .blog-quote-footer { margin-left: .5rem; padding-top: .6rem; font-size: .4rem; }
+
+  .bookmarks-page main > .hero {
+    display: grid;
+    grid-template-columns: minmax(0, 1.05fr) minmax(0, .9fr);
+    column-gap: clamp(.65rem, 2.4vw, 1.4rem);
+    align-items: center;
+    min-height: 0;
+    padding-top: clamp(2.5rem, 7vw, 4rem);
+    padding-bottom: 3rem;
+  }
+  .bookmarks-page main > .hero > .kicker,
+  .bookmarks-page main > .hero > h1,
+  .bookmarks-page main > .hero > .lede { grid-column: 1; min-width: 0; }
+  .bookmarks-page main > .hero > .bookmark-featured-slot {
+    grid-column: 2;
+    grid-row: 1 / span 3;
+    align-self: center;
+    justify-self: stretch;
+    width: 100%;
+    max-width: none;
+    min-width: 0;
+    margin: 0;
+    perspective: 800px;
+  }
+  .bookmark-featured-card { padding: clamp(.55rem, 1.8vw, 1rem); gap: .65rem; }
+  .bookmark-featured-image { max-height: 110px; }
+  .bookmark-featured-card h2 { font-size: clamp(.85rem, 2.3vw, 1.2rem); }
+  .bookmark-featured-footer { gap: .4rem; }
+}
+
+@media (max-width: 600px) {
+  body:not(.work-page):not(.blog-page):not(.bookmarks-page) main > .hero h1,
+  .blog-page .blog-hero h1,
+  .bookmarks-page main > .hero h1 {
+    font-size: clamp(1.55rem, 5.8vw, 2.25rem);
+    line-height: 1.08;
+    letter-spacing: -.045em;
+    overflow-wrap: anywhere;
+  }
+  body:not(.work-page):not(.blog-page):not(.bookmarks-page) main > .hero .lede,
+  .blog-page .blog-hero .lede,
+  .bookmarks-page main > .hero .lede {
+    font-size: clamp(.72rem, 2.6vw, .9rem);
+    line-height: 1.5;
+    margin-bottom: .8rem;
+    overflow-wrap: anywhere;
+  }
+  body:not(.work-page):not(.blog-page):not(.bookmarks-page) main > .hero .kicker,
+  .blog-page .blog-hero .kicker,
+  .bookmarks-page main > .hero .kicker {
+    font-size: clamp(.55rem, 2vw, .72rem);
+    margin-bottom: .65rem;
+  }
+  body:not(.work-page):not(.blog-page):not(.bookmarks-page) main > .hero .hero-actions {
+    gap: .4rem;
+    margin-bottom: .5rem;
+  }
+  body:not(.work-page):not(.blog-page):not(.bookmarks-page) main > .hero .hero-actions .btn {
+    padding: .45rem .55rem;
+    font-size: .58rem;
+  }
+}
+
+@media (max-width: 359px) {
+  /* Extremely narrow devices still retain the requested side-by-side layout. */
+  body:not(.work-page):not(.blog-page):not(.bookmarks-page) main > .hero,
+  .blog-page .blog-hero,
+  .bookmarks-page main > .hero {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(0, .82fr);
+    column-gap: .5rem;
+    align-items: center;
+  }
+  .hero-preview-workspace { min-height: 165px; }
+  .blog-quote-stage { min-height: 165px; }
+  .bookmark-featured-card { padding: .45rem; }
+  .blog-quote-footer { display: none; }
+}
