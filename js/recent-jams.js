@@ -129,7 +129,6 @@
       originY: parseFloat(card.style.getPropertyValue("--jam-y")) || 0,
       active: false
     };
-    try { card.setPointerCapture(event.pointerId); } catch {}
   };
 
   const onMove = event => {
@@ -160,18 +159,12 @@
         e.stopPropagation();
       }, { capture: true, once: true });
     }
-    try {
-      if (active.card.hasPointerCapture(active.pointerId)) {
-        active.card.releasePointerCapture(active.pointerId);
-      }
-    } catch {}
   };
 
   workspace.addEventListener("pointerdown", onDown);
   window.addEventListener("pointermove", onMove, { passive: false });
   window.addEventListener("pointerup", finishDrag);
   window.addEventListener("pointercancel", finishDrag);
-  workspace.addEventListener("lostpointercapture", finishDrag);
 
   workspace.addEventListener("keydown", event => {
     const handle = event.target.closest(".jam-card-handle");
