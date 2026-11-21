@@ -2924,3 +2924,58 @@ button { -webkit-tap-highlight-color: transparent; }
   background: #f0bd72 !important;
   border-color: #f0bd72 !important;
 }
+
+
+/* ---------- Dusk bookmark color correction ---------- */
+/* Keep the featured card on one coherent surface. Header/footer are subtle
+   inset rails; the tag container itself must never become a full-width slab. */
+:root[data-theme="dusk"] .bookmark-featured-card {
+  background: linear-gradient(145deg, #303b46 0%, #27313b 100%);
+  color: #f5f3ee;
+  border-color: #687785;
+}
+:root[data-theme="dusk"] .bookmark-featured-card .bookmark-featured-topbar,
+:root[data-theme="dusk"] .bookmark-featured-card .bookmark-featured-footer {
+  background: rgba(18, 25, 32, .48);
+  color: #e3e8ec;
+  border-color: #596775;
+}
+:root[data-theme="dusk"] .bookmark-featured-card .bookmark-featured-footer > span {
+  color: #c5cdd4;
+}
+:root[data-theme="dusk"] .bookmark-featured-card .bookmark-entry-tags,
+:root[data-theme="dusk"] .bookmark-entry .bookmark-entry-tags {
+  background: transparent !important;
+  border: 0;
+  padding: 0;
+}
+/* Restore each tag's own deterministic hue on Dusk, including the featured
+   bookmark. Explicit foregrounds stay light enough against the translucent
+   colored fills; borders remain visible without washing out the palette. */
+:root[data-theme="dusk"] .bookmark-filter[style*="--bookmark-tag-hue"],
+:root[data-theme="dusk"] .bookmark-tag[style*="--bookmark-tag-hue"] {
+  color: hsl(var(--bookmark-tag-hue) 78% 82%);
+  border-color: hsl(var(--bookmark-tag-hue) 68% 66% / .72);
+  background: hsl(var(--bookmark-tag-hue) 62% 48% / .22);
+}
+:root[data-theme="dusk"] .bookmark-filter[style*="--bookmark-tag-hue"]:hover,
+:root[data-theme="dusk"] .bookmark-tag[style*="--bookmark-tag-hue"]:hover,
+:root[data-theme="dusk"] .bookmark-filter[style*="--bookmark-tag-hue"].is-active,
+:root[data-theme="dusk"] .bookmark-tag[style*="--bookmark-tag-hue"].is-active {
+  color: #fffaf1;
+  border-color: hsl(var(--bookmark-tag-hue) 78% 76%);
+  background: hsl(var(--bookmark-tag-hue) 62% 48% / .36);
+}
+/* The generic active-filter amber state applies only to the uncolored All
+   control. Colored category filters retain their individual tag colors. */
+:root[data-theme="dusk"] .bookmark-filter:not([style*="--bookmark-tag-hue"])[aria-pressed="true"],
+:root[data-theme="dusk"] .bookmark-filter:not([style*="--bookmark-tag-hue"]).is-active {
+  color: #29251f;
+  background: #f0bd72;
+  border-color: #f0bd72;
+}
+:root[data-theme="dusk"] .bookmark-featured-card .bookmark-open.btn-primary {
+  color: #29251f !important;
+  background: #f0bd72 !important;
+  border-color: #f0bd72 !important;
+}
