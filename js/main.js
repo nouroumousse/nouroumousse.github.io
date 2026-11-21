@@ -105,12 +105,12 @@ if (!prefersReduced && "IntersectionObserver" in window) {
 
   let savedTheme = null;
   try { savedTheme = localStorage.getItem("nour-theme"); } catch {}
-  const initialTheme = ["dark", "light", "sage"].includes(savedTheme) ? savedTheme : "dark";
-  const themes = ["dark", "light", "sage"];
+  const initialTheme = savedTheme === "sage" ? "dusk" : (["dark", "light", "dusk"].includes(savedTheme) ? savedTheme : "dark");
+  const themes = ["dark", "light", "dusk"];
   const labels = {
     dark: { next: "light", icon: "☾" },
-    light: { next: "sage", icon: "☼" },
-    sage: { next: "dark", icon: "◐" }
+    light: { next: "dusk", icon: "☼" },
+    dusk: { next: "dark", icon: "◐" }
   };
 
   function applyTheme(theme) {
