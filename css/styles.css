@@ -2684,3 +2684,104 @@ button { -webkit-tap-highlight-color: transparent; }
 @media (prefers-reduced-motion: reduce) {
   .floating-controls .music-toggle[aria-pressed="true"] span { animation: none; }
 }
+
+
+/* ---------- soft sage theme: a calm middle ground between dark and light ---------- */
+:root[data-theme="sage"] {
+  color-scheme: light;
+  --bg: #e8ebe3;
+  --surface: #f1f3ed;
+  --line: #cbd2c5;
+  --text: #30382f;
+  --muted: #687366;
+  --accent: #647b48;
+}
+:root[data-theme="sage"] body {
+  background-color: var(--bg);
+}
+:root[data-theme="sage"] .site-header {
+  background: rgba(232, 235, 227, .9);
+}
+:root[data-theme="sage"] .theme-toggle {
+  color: #354332;
+  background: rgba(255,255,255,.38);
+  border-color: #c2cbb9;
+}
+:root[data-theme="sage"] .btn-primary,
+:root[data-theme="sage"] .btn-copy {
+  color: #f8f8f2;
+  background: #647b48;
+  border-color: #647b48;
+}
+:root[data-theme="sage"] .music-toggle[aria-pressed="true"] {
+  color: #263322;
+  background: #c5d5ae;
+  border-color: #91a77a;
+  box-shadow: 0 0 12px rgba(100,123,72,.18);
+}
+:root[data-theme="sage"] .floating-controls {
+  background: rgba(232,235,227,.9);
+  border-color: #cbd2c5;
+}
+:root[data-theme="sage"] .floating-controls .theme-toggle,
+:root[data-theme="sage"] .floating-controls .music-toggle {
+  color: #354332;
+  border-color: #c2cbb9;
+}
+:root[data-theme="sage"] .floating-controls .music-toggle[aria-pressed="true"] {
+  background: #c5d5ae;
+  border-color: #91a77a;
+}
+:root[data-theme="sage"] .floating-project,
+:root[data-theme="sage"] .bookmark-featured-card {
+  color: #30382f;
+  background: #f3f5ef;
+  border-color: #cbd2c5;
+  box-shadow: 0 16px 38px rgba(45,57,39,.1);
+}
+:root[data-theme="sage"] .project-drag-handle,
+:root[data-theme="sage"] .bookmark-featured-topbar,
+:root[data-theme="sage"] .bookmark-featured-footer {
+  color: #687366;
+  background: #e3e8dd;
+  border-color: #cbd2c5;
+}
+:root[data-theme="sage"] .floating-project-info h3,
+:root[data-theme="sage"] .bookmark-featured-card h2 {
+  color: #30382f;
+}
+:root[data-theme="sage"] .floating-project-info > p,
+:root[data-theme="sage"] .floating-project-bottom,
+:root[data-theme="sage"] .bookmark-featured-date {
+  color: #687366;
+}
+:root[data-theme="sage"] .blog-quote-paper {
+  color: #30382f;
+  background: #f3f1e8;
+  border-color: #d5d1c3;
+}
+:root[data-theme="sage"] .blog-quote-paper blockquote,
+:root[data-theme="sage"] .blog-quote-paper h2 {
+  color: #30382f;
+}
+:root[data-theme="sage"] .blog-quote-handle {
+  color: #687366;
+  background: #e1e5da;
+  border-color: #cbd2c5;
+}
+:root[data-theme="sage"] .bookmark-search-wrap input {
+  color: #30382f;
+  background: #f7f8f3;
+  border-color: #cbd2c5;
+}
+:root[data-theme="sage"] .bookmark-filter,
+:root[data-theme="sage"] .bookmark-tag {
+  color: #56634d;
+  border-color: #c4ceba;
+  background: #eef1e9;
+}
+:root[data-theme="sage"] .contact-box {
+  background: #e0e5da;
+  border-color: #cbd2c5;
+}
+:root[data-theme="sage"] a { text-decoration-color: rgba(100,123,72,.45); }
