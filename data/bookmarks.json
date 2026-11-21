@@ -82,5 +82,16 @@
     "date": "2026-11-21",
     "featured": false,
     "visible": true
+  },
+  {
+    "title": "Online Android built in Rust",
+    "url": "https://winedroid.soham.sh/demo/",
+    "tags": [
+      "tool",
+      "website"
+    ],
+    "date": "2026-11-21",
+    "featured": false,
+    "visible": true
   }
 ]
