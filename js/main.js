@@ -97,7 +97,7 @@ if (!prefersReduced && "IntersectionObserver" in window) {
 })();
 
 
-// Persistent site-wide light/dark theme switch.
+// Persistent site-wide three-theme switch. Dusk is the default for new visitors.
 (() => {
   const root = document.documentElement;
   const toggle = document.querySelector(".theme-toggle");
@@ -105,7 +105,7 @@ if (!prefersReduced && "IntersectionObserver" in window) {
 
   let savedTheme = null;
   try { savedTheme = localStorage.getItem("nour-theme"); } catch {}
-  const initialTheme = savedTheme === "sage" ? "dusk" : (["dark", "light", "dusk"].includes(savedTheme) ? savedTheme : "dark");
+  const initialTheme = ["dark", "light", "dusk"].includes(savedTheme) ? savedTheme : "dusk";
   const themes = ["dark", "light", "dusk"];
   const labels = {
     dark: { next: "light", icon: "☾" },
