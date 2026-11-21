@@ -5,6 +5,7 @@ import html
 import json
 import re
 import urllib.request
+import urllib.parse
 import xml.etree.ElementTree as ET
 from datetime import datetime, timezone
 from pathlib import Path
@@ -47,30 +48,54 @@ def parse_date(value):
 
 
 def fetch_feed(feed):
-    # Substack returns 403 to GitHub-hosted runner IPs. Fetch through a
-    # lightweight public RSS proxy, with a direct request as a fallback.
-    candidates = [
-        "https://proxy.cors.dev/" + feed["url"],
-        feed["url"],
-    ]
+    # GitHub-hosted runners can be blocked by Substack. Try RSS-to-JSON first.
+    api_url = "https://api.rss2json.com/v1/api.json?rss_url=" + urllib.parse.quote(feed["url"], safe="")
+    request = urllib.request.Request(api_url, headers={"User-Agent": "NourOumoussePortfolio/1.0"})
+    try:
+        with urllib.request.urlopen(request, timeout=45) as response:
+            payload = json.loads(response.read().decode("utf-8"))
+        if payload.get("status") != "ok":
+            raise RuntimeError(payload.get("message", "RSS conversion service returned an error"))
+        posts = []
+        for item in payload.get("items", []):
+            title = item.get("title", "")
+            url = item.get("link", "")
+            guid = item.get("guid") or url
+            body = item.get("content") or item.get("description") or ""
+            summary = item.get("description") or body
+            if not title or not url:
+                continue
+            posts.append({
+                "id": feed["key"] + "-" + re.sub(r"[^a-z0-9]+", "-", (guid or url).lower()).strip("-")[-90:],
+                "title": html.unescape(title),
+                "url": url,
+                "guid": guid,
+                "published": parse_date(item.get("pubDate", "")),
+                "publication": feed["name"],
+                "publicationKey": feed["key"],
+                "summary": plain_text(summary)[:360],
+                "contentHtml": body or "<p>This post is available on the original publication.</p>",
+            })
+        return posts
+    except Exception as conversion_error:
+        print("RSS-to-JSON fallback for " + feed["name"] + ": " + str(conversion_error))
+
+    candidates = ["https://proxy.cors.dev/" + feed["url"], feed["url"]]
     last_error = None
+    root = None
     for feed_url in candidates:
-        request = urllib.request.Request(
-            feed_url,
-            headers={
-                "User-Agent": "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 Chrome/131.0 Safari/537.36",
-                "Accept": "application/rss+xml, application/xml, text/xml, */*",
-            }
-        )
+        request = urllib.request.Request(feed_url, headers={
+            "User-Agent": "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 Chrome/131.0 Safari/537.36",
+            "Accept": "application/rss+xml, application/xml, text/xml, */*",
+        })
         try:
             with urllib.request.urlopen(request, timeout=45) as response:
                 root = ET.fromstring(response.read())
             break
         except Exception as error:
             last_error = error
-    else:
+    if root is None:
         raise last_error
-
     posts = []
     for item in (node for node in root.iter() if local_name(node.tag) == "item"):
         title = child_text(item, "title")
