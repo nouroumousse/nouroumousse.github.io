@@ -1,21 +1,5 @@
 media: media
 content:
-  - name: pages
-    label: Articles
-    type: collection
-    path: docs
-    fields:
-      - name: title
-        label: Title
-        type: string
-        required: true
-      - name: subtitle
-        label: Subtitle
-        type: string
-      - name: body
-        label: Body
-        type: rich-text
-
   - name: projects
     label: Project Cards
     type: file
