@@ -1,6 +1,6 @@
 ---
 title: Taste is your skill not tools!
-subtitle: navigate the new world as a designer
+subtitle: Navigate the new world as a designer
 ---
 Since we’re all riding the AI train to become pixel and vector gods without sweating and grinding to learn every little tool inside (insert your design software here) like our “ancestors” did, what’s the next thing that will elevate a designer above their counterparts?
 
