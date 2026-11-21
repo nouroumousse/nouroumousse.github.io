@@ -2686,102 +2686,133 @@ button { -webkit-tap-highlight-color: transparent; }
 }
 
 
-/* ---------- soft sage theme: a calm middle ground between dark and light ---------- */
-:root[data-theme="sage"] {
-  color-scheme: light;
-  --bg: #e8ebe3;
-  --surface: #f1f3ed;
-  --line: #cbd2c5;
-  --text: #30382f;
-  --muted: #687366;
-  --accent: #647b48;
+
+
+/* ---------- Dusk theme: balanced slate, warm paper surfaces and amber accents ---------- */
+:root[data-theme="dusk"] {
+  color-scheme: dark;
+  --bg: #252b33;
+  --surface: #303944;
+  --surface-2: #3a4551;
+  --line: #53606d;
+  --text: #f3f1ec;
+  --muted: #c2cbd3;
+  --accent: #f0bd72;
 }
-:root[data-theme="sage"] body {
-  background-color: var(--bg);
+:root[data-theme="dusk"] body { background: var(--bg); color: var(--text); }
+:root[data-theme="dusk"] .site-header {
+  background: rgba(37,43,51,.94);
+  border-color: var(--line);
 }
-:root[data-theme="sage"] .site-header {
-  background: rgba(232, 235, 227, .9);
+:root[data-theme="dusk"] .grid-bg {
+  opacity: .16;
 }
-:root[data-theme="sage"] .theme-toggle {
-  color: #354332;
-  background: rgba(255,255,255,.38);
-  border-color: #c2cbb9;
+:root[data-theme="dusk"] :where(
+  .card, .floating-project, .bookmark-featured-card, .jam-card,
+  .hero-bookmark-card, .hero-jam-card, .contact-box, .article-shell,
+  .blog-entry, .bookmark-entry, .timeline li, .work-card,
+  .project-card, .recent-jams-card
+) {
+  color: var(--text);
+  background-color: var(--surface);
+  border-color: var(--line);
 }
-:root[data-theme="sage"] .btn-primary,
-:root[data-theme="sage"] .btn-copy {
-  color: #f8f8f2;
-  background: #647b48;
-  border-color: #647b48;
+:root[data-theme="dusk"] :where(
+  .card h1,.card h2,.card h3,.card h4,
+  .floating-project h1,.floating-project h2,.floating-project h3,
+  .bookmark-featured-card h1,.bookmark-featured-card h2,.bookmark-featured-card h3,
+  .jam-card h1,.jam-card h2,.jam-card h3,
+  .hero-bookmark-card h1,.hero-bookmark-card h2,.hero-bookmark-card h3,
+  .hero-jam-card h1,.hero-jam-card h2,.hero-jam-card h3,
+  .contact-box h1,.contact-box h2,.contact-box h3,
+  .article-shell h1,.article-shell h2,.article-shell h3,
+  .blog-entry h1,.blog-entry h2,.blog-entry h3,
+  .bookmark-entry h1,.bookmark-entry h2,.bookmark-entry h3
+) { color: var(--text); }
+:root[data-theme="dusk"] :where(
+  .card p,.floating-project p,.bookmark-featured-card p,.jam-card p,
+  .hero-bookmark-card p,.hero-jam-card p,.contact-box p,
+  .article-shell p,.blog-entry p,.bookmark-entry p,
+  .card small,.card time,.card .meta,
+  .floating-project-info > p,.floating-project-bottom,
+  .bookmark-featured-date,.bookmark-featured-footer,
+  .jam-card-footer,.jam-card-creator,.jam-card-detail,
+  .hero-bookmark-date,.hero-bookmark-footer > span
+) { color: var(--muted); }
+:root[data-theme="dusk"] :where(
+  .project-drag-handle,.bookmark-featured-topbar,.bookmark-featured-footer,
+  .jam-card-header,.jam-card-footer,.card-header,.card-footer,
+  .bookmark-entry-tags,.project-meta
+) {
+  color: var(--muted);
+  background-color: var(--surface-2);
+  border-color: var(--line);
 }
-:root[data-theme="sage"] .music-toggle[aria-pressed="true"] {
-  color: #263322;
-  background: #c5d5ae;
-  border-color: #91a77a;
-  box-shadow: 0 0 12px rgba(100,123,72,.18);
+:root[data-theme="dusk"] :where(
+  .btn,.button,.hero-next-card,.jam-card-link,
+  .bookmark-filter,.bookmark-tag,.article-original-link,
+  .theme-toggle,.music-toggle
+) {
+  color: var(--text);
+  border-color: var(--line);
 }
-:root[data-theme="sage"] .floating-controls {
-  background: rgba(232,235,227,.9);
-  border-color: #cbd2c5;
+:root[data-theme="dusk"] :where(
+  .btn-primary,.btn-copy,.button-primary
+) {
+  color: #29251f !important;
+  background: var(--accent);
+  border-color: var(--accent);
 }
-:root[data-theme="sage"] .floating-controls .theme-toggle,
-:root[data-theme="sage"] .floating-controls .music-toggle {
-  color: #354332;
-  border-color: #c2cbb9;
+:root[data-theme="dusk"] :where(
+  a,.blog-publication,.article-publication,
+  .bookmark-featured-eyebrow,.jam-card-kind,.hero-bookmark-date
+) { color: var(--accent); }
+:root[data-theme="dusk"] :where(
+  input,textarea,select,.bookmark-search-wrap input
+) {
+  color: var(--text);
+  background: #20262d;
+  border-color: var(--line);
 }
-:root[data-theme="sage"] .floating-controls .music-toggle[aria-pressed="true"] {
-  background: #c5d5ae;
-  border-color: #91a77a;
+:root[data-theme="dusk"] input::placeholder,
+:root[data-theme="dusk"] textarea::placeholder { color: #b7c1ca; opacity: 1; }
+:root[data-theme="dusk"] .blog-quote-paper {
+  color: #302b25;
+  background: #f1e8d9;
+  border-color: #d8c7ad;
 }
-:root[data-theme="sage"] .floating-project,
-:root[data-theme="sage"] .bookmark-featured-card {
-  color: #30382f;
-  background: #f3f5ef;
-  border-color: #cbd2c5;
-  box-shadow: 0 16px 38px rgba(45,57,39,.1);
+:root[data-theme="dusk"] .blog-quote-paper :where(h1,h2,h3,p,blockquote,span) { color: #302b25; }
+:root[data-theme="dusk"] .blog-quote-handle {
+  color: #f3f1ec;
+  background: #3a4551;
+  border-color: var(--line);
 }
-:root[data-theme="sage"] .project-drag-handle,
-:root[data-theme="sage"] .bookmark-featured-topbar,
-:root[data-theme="sage"] .bookmark-featured-footer {
-  color: #687366;
-  background: #e3e8dd;
-  border-color: #cbd2c5;
+:root[data-theme="dusk"] .floating-controls {
+  background: rgba(37,43,51,.96);
+  border-color: var(--line);
 }
-:root[data-theme="sage"] .floating-project-info h3,
-:root[data-theme="sage"] .bookmark-featured-card h2 {
-  color: #30382f;
+:root[data-theme="dusk"] .floating-controls .music-toggle[aria-pressed="true"] {
+  color: #29251f;
+  background: var(--accent);
+  border-color: var(--accent);
+  box-shadow: 0 0 0 3px rgba(240,189,114,.16), 0 0 14px rgba(240,189,114,.2);
 }
-:root[data-theme="sage"] .floating-project-info > p,
-:root[data-theme="sage"] .floating-project-bottom,
-:root[data-theme="sage"] .bookmark-featured-date {
-  color: #687366;
+:root[data-theme="dusk"] .theme-toggle {
+  color: var(--text);
+  background: var(--surface);
 }
-:root[data-theme="sage"] .blog-quote-paper {
-  color: #30382f;
-  background: #f3f1e8;
-  border-color: #d5d1c3;
+:root[data-theme="dusk"] .bookmark-filter[aria-pressed="true"],
+:root[data-theme="dusk"] .bookmark-filter.active,
+:root[data-theme="dusk"] .bookmark-tag:hover,
+:root[data-theme="dusk"] .hero-next-card:hover {
+  color: #29251f;
+  background: var(--accent);
+  border-color: var(--accent);
 }
-:root[data-theme="sage"] .blog-quote-paper blockquote,
-:root[data-theme="sage"] .blog-quote-paper h2 {
-  color: #30382f;
+:root[data-theme="dusk"] :where(a,button):focus-visible {
+  outline-color: var(--accent);
 }
-:root[data-theme="sage"] .blog-quote-handle {
-  color: #687366;
-  background: #e1e5da;
-  border-color: #cbd2c5;
+:root[data-theme="dusk"] .bookmark-featured-card,
+:root[data-theme="dusk"] .floating-project {
+  box-shadow: 0 18px 42px rgba(10,14,19,.28);
 }
-:root[data-theme="sage"] .bookmark-search-wrap input {
-  color: #30382f;
-  background: #f7f8f3;
-  border-color: #cbd2c5;
-}
-:root[data-theme="sage"] .bookmark-filter,
-:root[data-theme="sage"] .bookmark-tag {
-  color: #56634d;
-  border-color: #c4ceba;
-  background: #eef1e9;
-}
-:root[data-theme="sage"] .contact-box {
-  background: #e0e5da;
-  border-color: #cbd2c5;
-}
-:root[data-theme="sage"] a { text-decoration-color: rgba(100,123,72,.45); }
