@@ -3036,3 +3036,34 @@ button { -webkit-tap-highlight-color: transparent; }
     flex-direction: column;
   }
 }
+
+
+/* Dusk: work/project cards use the warm amber accent, never the dark theme's lime. */
+:root[data-theme="dusk"] .work-page .floating-project:hover,
+:root[data-theme="dusk"] .hero-preview-workspace .floating-project:hover {
+  border-color: #f0bd72 !important;
+  box-shadow: 0 22px 54px rgba(10,14,19,.32), 0 0 0 1px rgba(240,189,114,.14);
+}
+:root[data-theme="dusk"] .work-page .floating-project.is-dragging,
+:root[data-theme="dusk"] .hero-preview-workspace .floating-project.is-dragging {
+  border-color: rgba(240,189,114,.8) !important;
+  box-shadow: 0 28px 70px rgba(0,0,0,.42), 0 0 0 1px rgba(240,189,114,.2);
+}
+:root[data-theme="dusk"] .work-page .project-drag-handle span:last-child,
+:root[data-theme="dusk"] .hero-preview-workspace .project-drag-handle span:last-child {
+  color: #f0bd72;
+}
+:root[data-theme="dusk"] .work-page .floating-open,
+:root[data-theme="dusk"] .hero-preview-workspace .floating-open {
+  color: #f0bd72;
+  border-color: rgba(240,189,114,.72);
+  background: transparent;
+}
+:root[data-theme="dusk"] .work-page .floating-open:hover,
+:root[data-theme="dusk"] .work-page .floating-open:focus-visible,
+:root[data-theme="dusk"] .hero-preview-workspace .floating-open:hover,
+:root[data-theme="dusk"] .hero-preview-workspace .floating-open:focus-visible {
+  color: #29251f !important;
+  background: #f0bd72 !important;
+  border-color: #f0bd72 !important;
+}
