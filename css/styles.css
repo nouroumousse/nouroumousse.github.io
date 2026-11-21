@@ -2414,3 +2414,78 @@ body.community-page main#top > section:not(:last-child) {
 :root[data-theme="light"] .hero-bookmark-card .bookmark-featured-eyebrow {
   color:#557600;
 }
+
+
+/* ---------- usability and responsive polish (visual system preserved) ---------- */
+:root {
+  text-rendering: optimizeLegibility;
+  font-synthesis: none;
+}
+body { line-height: 1.65; }
+section[id], main[id], .article-shell { scroll-margin-top: 6rem; }
+
+/* Clear keyboard focus without changing the site's visual language. */
+:where(a, button, input, select, textarea, [tabindex]):focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 4px;
+}
+:where(button, input, select, textarea) { font: inherit; }
+button { -webkit-tap-highlight-color: transparent; }
+
+/* Slightly more comfortable reading for small editorial labels. */
+.kicker, .article-meta, .blog-entry-meta, .bookmark-meta,
+.bookmark-featured-date, .hero-preview-hint, .workspace-hint {
+  line-height: 1.55;
+}
+.bookmark-meta, .article-meta, .blog-entry-meta { font-size: max(.7rem, .68em); }
+.bookmark-entry .bookmark-tag { font-size: .68rem; }
+.bookmark-entry .bookmark-entry-tags { row-gap: .65rem; }
+
+/* Keep the six-item navigation readable on narrow screens. */
+@media (max-width: 760px) {
+  .site-header {
+    flex-wrap: wrap;
+    row-gap: .55rem;
+    padding-top: .7rem;
+    padding-bottom: .7rem;
+  }
+  .site-header nav {
+    order: 3;
+    flex: 1 0 100%;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: flex-start;
+    gap: .25rem .9rem;
+    min-width: 0;
+  }
+  .site-header nav a {
+    display: inline-flex;
+    align-items: center;
+    min-height: 36px;
+    font-size: .74rem;
+  }
+  .site-header > .status {
+    margin-left: auto;
+    font-size: .62rem;
+  }
+}
+@media (max-width: 480px) {
+  .site-header { padding-left: 1rem; padding-right: 1rem; }
+  .site-header > .status .status-label { display: none; }
+  .site-header > .status { gap: .25rem; }
+  .site-header nav { column-gap: .8rem; row-gap: .15rem; }
+  main { padding-left: 1.1rem; padding-right: 1.1rem; }
+  section { padding-top: clamp(3.5rem, 12vw, 4.5rem); padding-bottom: clamp(3.5rem, 12vw, 4.5rem); }
+  .hero { padding-top: 3.75rem; }
+  .section-head { gap: .8rem; margin-bottom: 1.8rem; }
+  .section-head h2 { font-size: .82rem; }
+  .floating-controls { bottom: max(.75rem, env(safe-area-inset-bottom)); right: max(.75rem, env(safe-area-inset-right)); }
+}
+@media (max-width: 360px) {
+  .logo { font-size: .9rem; }
+  .site-header nav { column-gap: .65rem; }
+  .site-header nav a { font-size: .69rem; }
+}
+
+/* Give anchor destinations breathing room below the sticky header. */
+:target { scroll-margin-top: 6rem; }
