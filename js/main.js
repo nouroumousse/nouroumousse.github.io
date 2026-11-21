@@ -105,20 +105,27 @@ if (!prefersReduced && "IntersectionObserver" in window) {
 
   let savedTheme = null;
   try { savedTheme = localStorage.getItem("nour-theme"); } catch {}
-  const initialTheme = savedTheme === "light" ? "light" : "dark";
+  const initialTheme = ["dark", "light", "sage"].includes(savedTheme) ? savedTheme : "dark";
+  const themes = ["dark", "light", "sage"];
+  const labels = {
+    dark: { next: "light", icon: "☾" },
+    light: { next: "sage", icon: "☼" },
+    sage: { next: "dark", icon: "◐" }
+  };
 
   function applyTheme(theme) {
     root.dataset.theme = theme;
-    const light = theme === "light";
-    toggle.setAttribute("aria-pressed", String(light));
-    toggle.setAttribute("aria-label", light ? "Switch to dark mode" : "Switch to light mode");
-    toggle.title = light ? "Switch to dark mode" : "Switch to light mode";
-    toggle.querySelector("span").textContent = light ? "☾" : "☼";
+    const settings = labels[theme];
+    toggle.setAttribute("aria-pressed", String(theme !== "dark"));
+    toggle.setAttribute("aria-label", "Switch to " + settings.next + " mode");
+    toggle.title = "Switch to " + settings.next + " mode";
+    toggle.querySelector("span").textContent = settings.icon;
   }
 
   applyTheme(initialTheme);
   toggle.addEventListener("click", () => {
-    const nextTheme = root.dataset.theme === "light" ? "dark" : "light";
+    const currentIndex = themes.indexOf(root.dataset.theme);
+    const nextTheme = themes[(currentIndex + 1) % themes.length];
     applyTheme(nextTheme);
     try { localStorage.setItem("nour-theme", nextTheme); } catch {}
   });
