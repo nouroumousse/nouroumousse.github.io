@@ -2659,3 +2659,28 @@ button { -webkit-tap-highlight-color: transparent; }
   .bookmark-featured-card { padding: .45rem; }
   .blog-quote-footer { display: none; }
 }
+
+
+/* Make the floating music control visibly reflect playback state in both themes. */
+.floating-controls .music-toggle[aria-pressed="true"] {
+  color: #171a12;
+  border-color: var(--accent);
+  background: var(--accent);
+  box-shadow: 0 0 0 3px rgba(212,255,63,.16), 0 0 16px rgba(212,255,63,.28);
+}
+:root[data-theme="light"] .floating-controls .music-toggle[aria-pressed="true"] {
+  color: #172014;
+  border-color: #a9c83a;
+  background: #c9e66b;
+  box-shadow: 0 0 0 3px rgba(126,157,42,.14), 0 0 14px rgba(126,157,42,.2);
+}
+.floating-controls .music-toggle[aria-pressed="true"] span {
+  animation: music-active-pulse 1.8s ease-in-out infinite;
+}
+@keyframes music-active-pulse {
+  0%, 100% { transform: translateY(-1px) scale(1); }
+  50% { transform: translateY(-1px) scale(1.12); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .floating-controls .music-toggle[aria-pressed="true"] span { animation: none; }
+}
