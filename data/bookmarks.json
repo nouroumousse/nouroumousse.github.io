@@ -124,5 +124,16 @@
     "date": "2026-11-21",
     "featured": false,
     "visible": true
+  },
+  {
+    "title": "Museo: visual search engine for museum art images",
+    "url": "https://museo.app/",
+    "tags": [
+      "website",
+      "tool"
+    ],
+    "date": "2026-11-21",
+    "featured": false,
+    "visible": true
   }
 ]
