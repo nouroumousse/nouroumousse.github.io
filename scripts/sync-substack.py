@@ -39,7 +39,11 @@ def parse_date(value):
     if not value:
         return ""
     try:
-        parsed = email.utils.parsedate_to_datetime(value)
+        # Substack/RSS providers may return either RFC 2822 or ISO-8601 dates.
+        try:
+            parsed = email.utils.parsedate_to_datetime(value)
+        except (TypeError, ValueError, OverflowError):
+            parsed = datetime.fromisoformat(str(value).replace("Z", "+00:00"))
         if parsed.tzinfo is None:
             parsed = parsed.replace(tzinfo=timezone.utc)
         return parsed.astimezone(timezone.utc).isoformat()
@@ -70,7 +74,7 @@ def fetch_feed(feed):
                 "title": html.unescape(title),
                 "url": url,
                 "guid": guid,
-                "published": parse_date(item.get("pubDate", "")),
+                "published": parse_date(item.get("pubDate") or item.get("published") or item.get("date") or item.get("updated") or ""),
                 "publication": feed["name"],
                 "publicationKey": feed["key"],
                 "summary": plain_text(summary)[:360],
