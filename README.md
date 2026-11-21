@@ -19,7 +19,7 @@ A lightweight portfolio built with semantic HTML, CSS and vanilla JavaScript. It
 │   ├── blog-quote.js
 │   ├── article.js
 │   └── bookmarks.js
-├── data/                 # Pages CMS-managed JSON collections
+├── data/                 # CMS collections + generated Substack article index
 ├── docs/                 # Pages CMS blog articles
 ├── media/                # Uploaded images, artwork and audio
 ├── assets/               # Small local SVG assets
@@ -39,7 +39,7 @@ The CMS configuration lives in `.pages.yml`. Keep these paths intact:
 - Articles: `docs/`
 - Uploaded media: `media/`
 
-The site reads those files directly. No build or deployment step is required after a CMS commit; GitHub Pages serves the updated files.
+The site reads those collections directly. Blog articles are imported from the public RSS feeds for Noursletter and Tamazight into `data/substack-posts.json`. GitHub Actions refreshes that index every six hours; you can also run the workflow manually from the Actions tab.
 
 ## Local preview
 
