@@ -47,12 +47,29 @@ def parse_date(value):
 
 
 def fetch_feed(feed):
-    request = urllib.request.Request(
+    # Substack returns 403 to GitHub-hosted runner IPs. Fetch through a
+    # lightweight public RSS proxy, with a direct request as a fallback.
+    candidates = [
+        "https://proxy.cors.dev/" + feed["url"],
         feed["url"],
-        headers={"User-Agent": "NourOumoussePortfolio/1.0 (+https://nouroumousse.github.io)"}
-    )
-    with urllib.request.urlopen(request, timeout=30) as response:
-        root = ET.fromstring(response.read())
+    ]
+    last_error = None
+    for feed_url in candidates:
+        request = urllib.request.Request(
+            feed_url,
+            headers={
+                "User-Agent": "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 Chrome/131.0 Safari/537.36",
+                "Accept": "application/rss+xml, application/xml, text/xml, */*",
+            }
+        )
+        try:
+            with urllib.request.urlopen(request, timeout=45) as response:
+                root = ET.fromstring(response.read())
+            break
+        except Exception as error:
+            last_error = error
+    else:
+        raise last_error
 
     posts = []
     for item in (node for node in root.iter() if local_name(node.tag) == "item"):
