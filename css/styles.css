@@ -3091,3 +3091,20 @@ button { -webkit-tap-highlight-color: transparent; }
   font-size: 1.12rem;
   line-height: 1;
 }
+
+
+/* Dusk field-notes card: preserve the ruled notebook-paper texture.
+   Use a soft warm-grey rule so the lines are visible but remain understated. */
+:root[data-theme="dusk"] .blog-quote-paper {
+  background-color: #f1e8d9 !important;
+  background-image: repeating-linear-gradient(
+    to bottom,
+    transparent 0,
+    transparent 31px,
+    rgba(91, 103, 91, .17) 32px,
+    transparent 33px
+  ) !important;
+}
+:root[data-theme="dusk"] .blog-quote-paper::before {
+  background: rgba(190, 112, 91, .32);
+}
