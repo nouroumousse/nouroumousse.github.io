@@ -1,0 +1,29 @@
+name: Sync Substack publications
+
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: "17 */6 * * *"
+
+permissions:
+  contents: write
+
+jobs:
+  sync:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out portfolio
+        uses: actions/checkout@v4
+      - name: Sync both RSS feeds
+        run: python3 scripts/sync-substack.py
+      - name: Commit updated article index
+        run: |
+          if git diff --quiet -- data/substack-posts.json; then
+            echo "No new Substack content."
+            exit 0
+          fi
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add data/substack-posts.json
+          git commit -m "Sync Substack publications"
+          git push
