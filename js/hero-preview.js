@@ -219,26 +219,22 @@
   };
   nextButton.addEventListener("click", () => render(current + 1));
 
-  Promise.all([
-    fetch("data/projects.json", { cache: "no-store" }).then(r => r.ok ? r.json() : []),
-    fetch("data/recent-jams.json", { cache: "no-store" }).then(r => r.ok ? r.json() : []),
-    fetch("data/bookmarks.json", { cache: "no-store" }).then(r => r.ok ? r.json() : [])
-  ]).then(([projects, jams, bookmarks]) => {
-    const projectCards = (Array.isArray(projects) ? projects : [])
-      .filter(x => x && x.visible !== false && x.title && safe(x.image))
-      .sort((a,b) => (Number(a.order)||0) - (Number(b.order)||0))
-      .slice(0, 1)
-      .map((item,i) => makeProject(item,i+1));
-    const jamCards = (Array.isArray(jams) ? jams : [])
-      .filter(x => x && x.visible !== false && x.title)
-      .sort((a,b) => (Number(a.order)||999) - (Number(b.order)||999))
-      .map((item,i) => makeJam(item, i+1));
-    const featuredBookmark = (Array.isArray(bookmarks) ? bookmarks : [])
-      .find(item => item && item.visible !== false && item.featured === true);
-    const bookmarkCards = featuredBookmark ? [makeBookmark(featuredBookmark, 1)] : [];
-    cards = [...projectCards, ...jamCards, ...bookmarkCards, makeQuote(1)];
-    if (cards.length) render(0);
-  }).catch(error => console.warn("Hero card collection could not load:", error));
+  fetch("data/projects.json", { cache: "no-store" })
+    .then(response => response.ok ? response.json() : [])
+    .then(projects => {
+      // The homepage switcher intentionally contains only the first visible work
+      // card and the field-notes quote card.
+      const firstProject = (Array.isArray(projects) ? projects : [])
+        .filter(item => item && item.visible !== false && item.title && safe(item.image))
+        .sort((a, b) => (Number(a.order) || 0) - (Number(b.order) || 0))[0];
+
+      cards = [
+        ...(firstProject ? [makeProject(firstProject, 1)] : []),
+        makeQuote(1)
+      ];
+      render(0);
+    })
+    .catch(error => console.warn("Hero card collection could not load:", error));
 
   let drag = null, z = 10;
   const read = (card, name) => parseFloat(getComputedStyle(card).getPropertyValue(name)) || 0;
