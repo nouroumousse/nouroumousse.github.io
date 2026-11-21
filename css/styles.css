@@ -2489,3 +2489,28 @@ button { -webkit-tap-highlight-color: transparent; }
 
 /* Give anchor destinations breathing room below the sticky header. */
 :target { scroll-margin-top: 6rem; }
+
+
+/* Combined Substack article labels and original-source link */
+.blog-publication,
+.article-publication {
+  display: inline-flex;
+  align-self: flex-start;
+  width: fit-content;
+  color: var(--accent);
+  font: .62rem/1.5 var(--font-mono);
+  letter-spacing: .1em;
+  text-transform: uppercase;
+}
+.article-publication { margin-top: .2rem; }
+.article-original-link {
+  display: inline-flex;
+  width: fit-content;
+  margin-top: 2rem;
+  padding: .65rem .85rem;
+  border: 1px solid var(--line);
+  color: var(--muted);
+  font-size: .7rem;
+  text-decoration: none;
+}
+.article-original-link:hover { color: var(--accent); border-color: var(--accent); }
