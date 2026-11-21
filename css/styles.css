@@ -3068,3 +3068,26 @@ button { -webkit-tap-highlight-color: transparent; }
   background: #f0bd72 !important;
   border-color: #f0bd72 !important;
 }
+
+
+/* Keep the three-theme glyph optically centered in its circular control. */
+.theme-toggle {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  line-height: 1;
+}
+.theme-toggle > span {
+  display: block;
+  width: 1em;
+  height: 1em;
+  line-height: 1;
+  text-align: center;
+  transform: none !important;
+  translate: 0 0;
+  font-family: Arial, sans-serif;
+}
+:root[data-theme="dusk"] .theme-toggle > span {
+  font-size: 1.12rem;
+  line-height: 1;
+}
