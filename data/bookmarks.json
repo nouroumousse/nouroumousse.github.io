@@ -93,5 +93,15 @@
     "date": "2026-11-21",
     "featured": false,
     "visible": true
+  },
+  {
+    "title": "Slow Roads: a fun online driving game",
+    "url": "https://slowroads.io",
+    "tags": [
+      "game"
+    ],
+    "date": "2026-11-21",
+    "featured": false,
+    "visible": true
   }
 ]
