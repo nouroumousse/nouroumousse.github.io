@@ -2979,3 +2979,60 @@ button { -webkit-tap-highlight-color: transparent; }
   background: #f0bd72 !important;
   border-color: #f0bd72 !important;
 }
+
+
+/* Featured bookmark: remove the mismatched inset bars.
+   The card itself is the surface; its top label and footer should sit directly
+   on that surface without separate dark rectangles or stray border rules. */
+:root[data-theme="dusk"] .bookmark-featured-card .bookmark-featured-topbar {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: .75rem;
+  width: fit-content;
+  max-width: 100%;
+  margin: 0 auto 1.8rem;
+  padding: .25rem 0;
+  color: #e6e9eb;
+  background: transparent !important;
+  border: 0 !important;
+  border-bottom: 0 !important;
+  box-shadow: none;
+}
+:root[data-theme="dusk"] .bookmark-featured-card .bookmark-featured-topbar span:last-child {
+  color: #f0bd72;
+}
+:root[data-theme="dusk"] .bookmark-featured-card .bookmark-featured-footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  margin-top: 1.5rem;
+  padding: 0;
+  color: #d1d8de;
+  background: transparent !important;
+  border: 0 !important;
+  box-shadow: none;
+}
+:root[data-theme="dusk"] .bookmark-featured-card .bookmark-featured-footer > span {
+  color: #c5cdd4;
+}
+:root[data-theme="dusk"] .bookmark-featured-card .bookmark-featured-footer .bookmark-open {
+  flex: 0 0 auto;
+  margin: 0;
+  color: #29251f !important;
+  background: #f0bd72 !important;
+  border: 1px solid #f0bd72 !important;
+  box-shadow: none;
+}
+:root[data-theme="dusk"] .bookmark-featured-card .bookmark-featured-footer .bookmark-open:hover {
+  color: #29251f !important;
+  background: #f6ca8d !important;
+  border-color: #f6ca8d !important;
+}
+@media (max-width: 520px) {
+  :root[data-theme="dusk"] .bookmark-featured-card .bookmark-featured-footer {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+}
