@@ -120,6 +120,19 @@ if (!prefersReduced && "IntersectionObserver" in window) {
     toggle.setAttribute("aria-label", "Switch to " + settings.next + " mode");
     toggle.title = "Switch to " + settings.next + " mode";
     toggle.querySelector("span").textContent = settings.icon;
+
+    // Match the favicon to the active palette, including saved preferences.
+    const favicon = document.querySelector('link[rel~="icon"]');
+    if (favicon) {
+      const palettes = {
+        dark: { background: "#0a0a0b", foreground: "#d4ff3f" },
+        light: { background: "#f5f5f1", foreground: "#668500" },
+        dusk: { background: "#252b33", foreground: "#f0bd72" }
+      };
+      const colors = palettes[theme];
+      const svg = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32"><rect width="32" height="32" rx="6" fill="${colors.background}"/><text x="16" y="22" font-family="monospace" font-size="16" font-weight="700" fill="${colors.foreground}" text-anchor="middle">N</text></svg>`;
+      favicon.href = "data:image/svg+xml," + encodeURIComponent(svg);
+    }
   }
 
   applyTheme(initialTheme);
