@@ -135,5 +135,15 @@
     "date": "2026-11-21",
     "featured": false,
     "visible": true
+  },
+  {
+    "title": "Not everything needs an LLM",
+    "url": "https://newsletter.posthog.com/p/decision-models",
+    "tags": [
+      "article"
+    ],
+    "date": "2026-11-22",
+    "featured": false,
+    "visible": true
   }
 ]
