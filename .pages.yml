@@ -143,3 +143,45 @@ content:
         label: Show on website
         type: boolean
         default: true
+
+  - name: shots
+    label: Shots
+    type: file
+    path: data/shots.json
+    format: json
+    list: true
+    fields:
+      - name: title
+        label: Hover title
+        type: string
+        required: true
+      - name: image
+        label: Image (PNG, JPEG, GIF or SVG)
+        type: image
+        options:
+          path: shots
+          extensions: [png, jpg, jpeg, gif, svg]
+          rename: safe
+      - name: lottie
+        label: Lottie animation (JSON)
+        type: file
+        options:
+          path: shots
+          extensions: [json]
+          rename: safe
+        description: Use this instead of an image for a Lottie animation. Upload the exported .json file.
+      - name: size
+        label: Tile size
+        type: select
+        options:
+          - standard
+          - tall
+          - wide
+          - large
+      - name: order
+        label: Display order
+        type: number
+      - name: visible
+        label: Show on website
+        type: boolean
+        default: true
