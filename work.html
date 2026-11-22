@@ -52,10 +52,12 @@
   </section>
 
   <section id="selected-work" aria-labelledby="work-title">
-    <div class="section-head">
-      <h2 class="mono" id="work-title"><span class="accent">01</span> / selected_work</h2>
+    <div class="section-head work-section-tabs" role="tablist" aria-label="Work views">
+      <button class="work-view-tab mono is-active" id="selected-work-tab" type="button" role="tab" aria-selected="true" aria-controls="selected-work-panel"><span class="accent">01</span> / selected_work</button>
+      <button class="work-view-tab mono" id="shots-tab" type="button" role="tab" aria-selected="false" aria-controls="shots-panel"><span class="accent">02</span> / shots</button>
       <span class="rule" aria-hidden="true"></span>
     </div>
+    <div id="selected-work-panel" class="work-view-panel" role="tabpanel" aria-labelledby="selected-work-tab">
     <div class="floating-workspace" id="floating-workspace" aria-label="Draggable project cards">
       <article class="floating-project" style="--tilt:-4deg;--float-delay:-1.2s;--card-width:340px">
         <div class="project-drag-handle mono" aria-label="Drag Rewilding India card" title="Drag to move">↕ <span>MOVE CARD</span><span>01</span></div>
@@ -119,6 +121,19 @@
     </div>
     <p class="workspace-hint mono">↕ GRAB A CARD AND MOVE IT AROUND</p>
     <div class="work-more"><a class="btn mono" href="https://oumousse.carrd.co/#work" target="_blank" rel="noopener">more selected work ↗</a></div>
+    </div>
+    <div id="shots-panel" class="work-view-panel shots-panel" role="tabpanel" aria-labelledby="shots-tab" hidden>
+      <div class="shots-grid" aria-label="Visual snapshots">
+        <figure class="shot-tile shot-tile-tall"><img src="assets/placeholder-rewilding.svg" alt="Placeholder visual 01" loading="lazy"><span class="shot-index mono">01</span></figure>
+        <figure class="shot-tile shot-tile-wide"><img src="assets/placeholder-todays-budget.svg" alt="Placeholder visual 02" loading="lazy"><span class="shot-index mono">02</span></figure>
+        <figure class="shot-tile"><img src="assets/placeholder-culture-booster.svg" alt="Placeholder visual 03" loading="lazy"><span class="shot-index mono">03</span></figure>
+        <figure class="shot-tile shot-tile-large"><img src="assets/placeholder-independent.svg" alt="Placeholder visual 04" loading="lazy"><span class="shot-index mono">04</span></figure>
+        <figure class="shot-tile shot-tile-wide"><img src="assets/placeholder-tellhop.svg" alt="Placeholder visual 05" loading="lazy"><span class="shot-index mono">05</span></figure>
+        <figure class="shot-tile shot-tile-tall"><img src="assets/placeholder-warmdaz.svg" alt="Placeholder visual 06" loading="lazy"><span class="shot-index mono">06</span></figure>
+        <figure class="shot-tile"><img src="assets/placeholder-rewilding.svg" alt="Placeholder visual 07" loading="lazy"><span class="shot-index mono">07</span></figure>
+        <figure class="shot-tile shot-tile-wide"><img src="assets/placeholder-culture-booster.svg" alt="Placeholder visual 08" loading="lazy"><span class="shot-index mono">08</span></figure>
+      </div>
+    </div>
   </section>
 </main>
 
