@@ -225,8 +225,7 @@
 
   const makeShot = (shot, index) => {
     const tile = document.createElement("figure");
-    const size = ["standard", "tall", "wide", "large"].includes(shot.size) ? shot.size : "standard";
-    tile.className = "shot-tile" + (size === "standard" ? "" : " shot-tile-" + size);
+    tile.className = "shot-tile";
 
     const lottieUrl = safeMediaUrl(shot.lottie);
     const imageUrl = safeMediaUrl(shot.image);
