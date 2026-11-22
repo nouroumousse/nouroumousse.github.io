@@ -209,3 +209,82 @@
   });
   activate(0);
 })();
+
+
+// Render the Pages CMS-managed Shots collection.
+(() => {
+  const grid = document.querySelector(".shots-grid");
+  if (!grid) return;
+
+  const safeMediaUrl = (value) => {
+    const url = String(value || "").trim();
+    if (/^https?:\/\//i.test(url)) return url;
+    if (/^\/(media|assets)\//i.test(url)) return url;
+    return "";
+  };
+
+  const makeShot = (shot, index) => {
+    const tile = document.createElement("figure");
+    const size = ["standard", "tall", "wide", "large"].includes(shot.size) ? shot.size : "standard";
+    tile.className = "shot-tile" + (size === "standard" ? "" : " shot-tile-" + size);
+
+    const lottieUrl = safeMediaUrl(shot.lottie);
+    const imageUrl = safeMediaUrl(shot.image);
+    if (lottieUrl && /\.json(?:$|\?)/i.test(lottieUrl)) {
+      const animation = document.createElement("div");
+      animation.className = "shot-lottie";
+      animation.setAttribute("role", "img");
+      animation.setAttribute("aria-label", shot.title || ("Shot " + (index + 1)));
+      animation.dataset.animation = lottieUrl;
+      tile.appendChild(animation);
+    } else if (imageUrl) {
+      const image = document.createElement("img");
+      image.src = imageUrl;
+      image.alt = shot.title || ("Shot " + (index + 1));
+      image.loading = "lazy";
+      image.decoding = "async";
+      tile.appendChild(image);
+    } else {
+      return null;
+    }
+
+    const caption = document.createElement("figcaption");
+    caption.className = "shot-caption";
+    const title = document.createElement("span");
+    title.textContent = shot.title || ("Shot " + (index + 1));
+    caption.appendChild(title);
+    tile.appendChild(caption);
+    return tile;
+  };
+
+  const loadShots = async () => {
+    try {
+      const response = await fetch("data/shots.json?v=20261122", { cache: "no-store" });
+      if (!response.ok) throw new Error("Shots data returned " + response.status);
+      const shots = await response.json();
+      if (!Array.isArray(shots)) throw new Error("Shots data is not a list");
+      const visible = shots
+        .filter(shot => shot && shot.visible !== false)
+        .sort((a, b) => (Number(a.order) || 0) - (Number(b.order) || 0));
+      const tiles = visible.map(makeShot).filter(Boolean);
+      if (tiles.length) {
+        grid.replaceChildren(...tiles);
+        if (window.lottie) {
+          grid.querySelectorAll(".shot-lottie[data-animation]").forEach(node => {
+            window.lottie.loadAnimation({
+              container: node,
+              renderer: "svg",
+              loop: true,
+              autoplay: true,
+              path: node.dataset.animation
+            });
+          });
+        }
+      }
+    } catch (error) {
+      console.warn("Using built-in Shots placeholders because CMS data could not be loaded:", error);
+    }
+  };
+
+  loadShots();
+})();
