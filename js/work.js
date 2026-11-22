@@ -179,3 +179,33 @@
 
   loadCmsProjects();
 })();
+
+// Toggle between the selected project cards and the shots gallery.
+(() => {
+  const tabs = [
+    { button: document.getElementById("selected-work-tab"), panel: document.getElementById("selected-work-panel") },
+    { button: document.getElementById("shots-tab"), panel: document.getElementById("shots-panel") }
+  ];
+  if (tabs.some(item => !item.button || !item.panel)) return;
+
+  const activate = (index) => {
+    tabs.forEach((item, i) => {
+      const active = i === index;
+      item.button.classList.toggle("is-active", active);
+      item.button.setAttribute("aria-selected", String(active));
+      item.button.tabIndex = active ? 0 : -1;
+      item.panel.hidden = !active;
+    });
+  };
+  tabs.forEach((item, index) => {
+    item.button.addEventListener("click", () => activate(index));
+    item.button.addEventListener("keydown", (event) => {
+      if (event.key !== "ArrowLeft" && event.key !== "ArrowRight") return;
+      event.preventDefault();
+      const next = event.key === "ArrowRight" ? (index + 1) % tabs.length : (index + tabs.length - 1) % tabs.length;
+      activate(next);
+      tabs[next].button.focus();
+    });
+  });
+  activate(0);
+})();
