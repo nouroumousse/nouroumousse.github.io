@@ -3158,7 +3158,7 @@ button { -webkit-tap-highlight-color: transparent; }
 .work-page .work-view-tab:not(.is-active) .accent { color: var(--muted); }
 .work-page .work-view-panel[hidden] { display: none !important; }
 .work-page .shots-panel { padding-top: .25rem; }
-.work-page /* Shots gallery — consistent two-column, 16:9 image tiles. */
+/* Shots gallery — consistent two-column, 16:9 image tiles. */
 .work-page .shots-grid {
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
