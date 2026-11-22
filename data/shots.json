@@ -1,50 +1,8 @@
 [
   {
     "title": "Shot 01 — Placeholder",
-    "image": "/assets/placeholder-rewilding.svg",
+    "lottie": "/media/neocity1600x900.json",
     "order": 1,
-    "visible": true
-  },
-  {
-    "title": "Shot 02 — Placeholder",
-    "image": "/assets/placeholder-todays-budget.svg",
-    "order": 2,
-    "visible": true
-  },
-  {
-    "title": "Shot 03 — Placeholder",
-    "image": "/assets/placeholder-culture-booster.svg",
-    "order": 3,
-    "visible": true
-  },
-  {
-    "title": "Shot 04 — Placeholder",
-    "image": "/assets/placeholder-independent.svg",
-    "order": 4,
-    "visible": true
-  },
-  {
-    "title": "Shot 05 — Placeholder",
-    "image": "/assets/placeholder-tellhop.svg",
-    "order": 5,
-    "visible": true
-  },
-  {
-    "title": "Shot 06 — Placeholder",
-    "image": "/assets/placeholder-warmdaz.svg",
-    "order": 6,
-    "visible": true
-  },
-  {
-    "title": "Shot 07 — Placeholder",
-    "image": "/assets/placeholder-rewilding.svg",
-    "order": 7,
-    "visible": true
-  },
-  {
-    "title": "Shot 08 — Placeholder",
-    "image": "/assets/placeholder-culture-booster.svg",
-    "order": 8,
     "visible": true
   }
 ]
