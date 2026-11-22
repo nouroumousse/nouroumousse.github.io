@@ -3108,3 +3108,37 @@ button { -webkit-tap-highlight-color: transparent; }
 :root[data-theme="dusk"] .blog-quote-paper::before {
   background: rgba(190, 112, 91, .32);
 }
+
+
+/* Minimal custom cursor set — warm amber pointer with a matching interactive cursor.
+   Keep native grab/grabbing cursors for draggable cards and native text selection. */
+@media (hover: hover) and (pointer: fine) {
+  :root {
+    --cursor-arrow: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='32' height='32' viewBox='0 0 32 32'%3E%3Cpath d='M5 3.5 5.5 25l5.8-6 4.2 9 4-1.9-4.3-8.8 8.5-.4L5 3.5Z' fill='%23f0bd72' stroke='%23252b33' stroke-width='1.8' stroke-linejoin='round'/%3E%3C/svg%3E") 4 3, auto;
+    --cursor-link: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='32' height='32' viewBox='0 0 32 32'%3E%3Ccircle cx='15' cy='15' r='9.5' fill='%23f0bd72' fill-opacity='.22' stroke='%23f0bd72' stroke-width='2'/%3E%3Ccircle cx='15' cy='15' r='3' fill='%23f0bd72' stroke='%23252b33' stroke-width='1'/%3E%3C/svg%3E") 15 15, pointer;
+  }
+  html, body {
+    cursor: var(--cursor-arrow);
+  }
+  a, button, [role="button"], summary, label[for],
+  input[type="checkbox"], input[type="radio"], select {
+    cursor: var(--cursor-link);
+  }
+  input:not([type="checkbox"]):not([type="radio"]):not([type="button"]):not([type="submit"]),
+  textarea, [contenteditable="true"] {
+    cursor: text;
+  }
+}
+/* Preserve the familiar drag affordance on draggable portfolio cards. */
+.floating-project,
+.bookmark-featured-card,
+.jam-card,
+.hero-rotating-card {
+  cursor: grab;
+}
+.floating-project.is-dragging,
+.bookmark-featured-card.is-dragging,
+.jam-card.is-dragging,
+.hero-rotating-card.is-dragging {
+  cursor: grabbing;
+}
