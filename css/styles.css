@@ -3158,25 +3158,21 @@ button { -webkit-tap-highlight-color: transparent; }
 .work-page .work-view-tab:not(.is-active) .accent { color: var(--muted); }
 .work-page .work-view-panel[hidden] { display: none !important; }
 .work-page .shots-panel { padding-top: .25rem; }
-.work-page /* Shots gallery — editorial, mixed-scale project grid inspired by Jades. */
-.shots-grid {
+.work-page /* Shots gallery — consistent two-column, 16:9 image tiles. */
+.work-page .shots-grid {
   display: grid;
-  grid-template-columns: repeat(6, minmax(0, 1fr));
-  grid-auto-rows: clamp(74px, 8.2vw, 124px);
-  grid-auto-flow: dense;
-  gap: clamp(7px, .8vw, 12px);
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: clamp(8px, 1vw, 14px);
 }
-.work-page .shot-tile-standard { grid-column: span 2; grid-row: span 3; }
-.work-page .shot-tile-tall { grid-column: span 2; grid-row: span 5; }
-.work-page .shot-tile-wide { grid-column: span 4; grid-row: span 3; }
-.work-page .shot-tile-large { grid-column: span 4; grid-row: span 5; }
 .work-page .shot-tile {
   position: relative;
   min-width: 0;
-  min-height: 0;
+  aspect-ratio: 16 / 9;
   overflow: hidden;
   margin: 0;
   background: var(--surface);
+  grid-column: auto !important;
+  grid-row: auto !important;
 }
 .work-page .shot-tile img {
   display: block;
@@ -3198,25 +3194,11 @@ button { -webkit-tap-highlight-color: transparent; }
 }
 @media (max-width: 760px) {
   .work-page .work-section-tabs { flex-wrap: wrap; gap: .9rem; }
-  .work-page .shots-grid {
-    grid-template-columns: repeat(4, minmax(0, 1fr));
-    grid-auto-rows: clamp(70px, 15vw, 112px);
-    gap: 6px;
-  }
-  .work-page .shot-tile-standard { grid-column: span 2; grid-row: span 3; }
-  .work-page .shot-tile-tall { grid-column: span 2; grid-row: span 4; }
-  .work-page .shot-tile-wide { grid-column: span 4; grid-row: span 3; }
-  .work-page .shot-tile-large { grid-column: span 4; grid-row: span 4; }
-}
-@media (max-width: 420px) {
-  .work-page .shots-grid { grid-auto-rows: clamp(64px, 17vw, 86px); gap: 5px; }
-  .work-page .shot-tile-tall { grid-row: span 4; }
-  .work-page .shot-tile-large { grid-row: span 4; }
+  .work-page .shots-grid { gap: 7px; }
 }
 @media (prefers-reduced-motion: reduce) {
   .work-page .shot-tile img { transition: none; }
 }
-
 
 /* CMS-managed shots: titles reveal on hover/focus with a restrained gradient. */
 .work-page .shot-tile { isolation: isolate; }
