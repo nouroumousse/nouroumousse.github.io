@@ -2,56 +2,48 @@
   {
     "title": "Shot 01 — Placeholder",
     "image": "/assets/placeholder-rewilding.svg",
-    "size": "tall",
     "order": 1,
     "visible": true
   },
   {
     "title": "Shot 02 — Placeholder",
     "image": "/assets/placeholder-todays-budget.svg",
-    "size": "wide",
     "order": 2,
     "visible": true
   },
   {
     "title": "Shot 03 — Placeholder",
     "image": "/assets/placeholder-culture-booster.svg",
-    "size": "standard",
     "order": 3,
     "visible": true
   },
   {
     "title": "Shot 04 — Placeholder",
     "image": "/assets/placeholder-independent.svg",
-    "size": "large",
     "order": 4,
     "visible": true
   },
   {
     "title": "Shot 05 — Placeholder",
     "image": "/assets/placeholder-tellhop.svg",
-    "size": "wide",
     "order": 5,
     "visible": true
   },
   {
     "title": "Shot 06 — Placeholder",
     "image": "/assets/placeholder-warmdaz.svg",
-    "size": "tall",
     "order": 6,
     "visible": true
   },
   {
     "title": "Shot 07 — Placeholder",
     "image": "/assets/placeholder-rewilding.svg",
-    "size": "standard",
     "order": 7,
     "visible": true
   },
   {
     "title": "Shot 08 — Placeholder",
     "image": "/assets/placeholder-culture-booster.svg",
-    "size": "wide",
     "order": 8,
     "visible": true
   }
