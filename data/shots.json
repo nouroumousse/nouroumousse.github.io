@@ -12,15 +12,9 @@
     "visible": true
   },
   {
-    "title": "TELLHOP LOGO OPTIONS",
-    "image": "/media/tellhop3.png",
-    "order": 3,
-    "visible": true
-  },
-  {
     "title": "CLOUD-DOC APP ICONS OPTIONS",
     "image": "/media/cloud.png",
-    "order": 4,
+    "order": 3,
     "visible": true
   }
 ]
