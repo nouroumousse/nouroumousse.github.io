@@ -3136,11 +3136,11 @@ button { -webkit-tap-highlight-color: transparent; }
 }
 
 
-/* Work page: clear, tactile buttons for switching between the two views. */
+/* Work view switcher — restrained segmented controls, tuned to each theme. */
 .work-page .work-section-tabs {
   display: flex;
   align-items: center;
-  gap: clamp(.55rem, 1.2vw, 1rem);
+  gap: .55rem;
 }
 .work-page .work-view-tab {
   appearance: none;
@@ -3148,36 +3148,54 @@ button { -webkit-tap-highlight-color: transparent; }
   align-items: center;
   justify-content: center;
   gap: .55rem;
-  min-height: 44px;
-  border: 1px solid var(--line);
-  border-radius: 3px;
-  padding: .68rem clamp(.8rem, 1.5vw, 1.15rem);
+  min-height: 40px;
+  padding: .55rem .9rem;
   margin: 0;
-  background: var(--surface);
+  border: 1px solid transparent;
+  border-radius: 2px;
+  background: transparent;
   color: var(--muted);
-  font: 500 clamp(.76rem, 1.35vw, .9rem)/1.2 var(--font-mono);
-  letter-spacing: .035em;
+  font: 500 clamp(.72rem, 1.1vw, .84rem)/1.2 var(--font-mono);
+  letter-spacing: .025em;
   white-space: nowrap;
   cursor: pointer;
-  transition: color .2s ease, background-color .2s ease, border-color .2s ease, transform .2s ease;
+  transition: color .18s ease, background-color .18s ease, border-color .18s ease;
 }
-.work-page .work-view-tab .accent { color: var(--accent); }
+.work-page .work-view-tab .accent {
+  color: var(--accent);
+  font-weight: 600;
+}
 .work-page .work-view-tab:hover {
   color: var(--text);
-  border-color: var(--accent);
-  transform: translateY(-1px);
+  background: var(--surface);
+  border-color: var(--line);
 }
 .work-page .work-view-tab.is-active {
   color: var(--text);
+  background: var(--surface);
   border-color: var(--accent);
-  background: var(--surface-raised, var(--surface));
   box-shadow: inset 0 -2px 0 var(--accent);
 }
+.work-page .work-view-tab.is-active .accent { color: var(--accent); }
 .work-page .work-view-tab:focus-visible {
   outline: 2px solid var(--accent);
   outline-offset: 3px;
 }
 .work-page .work-view-tab:not(.is-active) .accent { color: var(--muted); }
+:root[data-theme="light"] .work-page .work-view-tab.is-active {
+  background: #f0f1e9;
+  color: #20211d;
+}
+:root[data-theme="light"] .work-page .work-view-tab.is-active .accent { color: #668500; }
+:root[data-theme="dusk"] .work-page .work-view-tab.is-active {
+  background: #3a4551;
+  color: #f3f1ec;
+}
+:root[data-theme="dusk"] .work-page .work-view-tab.is-active .accent { color: #f0bd72; }
+@media (max-width: 520px) {
+  .work-page .work-section-tabs { gap: .35rem; }
+  .work-page .work-view-tab { min-height: 38px; padding: .5rem .65rem; }
+}
 .work-page .work-view-panel[hidden] { display: none !important; }
 .work-page .shots-panel { padding-top: .25rem; }
 /* Shots gallery — consistent two-column, 16:9 image tiles. */
