@@ -3698,3 +3698,44 @@ button { -webkit-tap-highlight-color: transparent; }
   outline: 2px solid #176da8;
   outline-offset: 3px;
 }
+
+
+/* Blue Sky hero project card: override legacy dark-card colors explicitly. */
+:root[data-theme="bluesky"] .floating-project {
+  color: #173247 !important;
+  background: #f8fbfe !important;
+  border-color: #b8ccdc !important;
+}
+:root[data-theme="bluesky"] .floating-project .project-drag-handle {
+  color: #45647d !important;
+  background: #dceaf4 !important;
+  border-bottom-color: #b8ccdc !important;
+}
+:root[data-theme="bluesky"] .floating-project .project-drag-handle span:last-child { color: #176da8 !important; }
+:root[data-theme="bluesky"] .floating-project .floating-project-info,
+:root[data-theme="bluesky"] .floating-project .floating-project-info h3 { color: #173247 !important; }
+:root[data-theme="bluesky"] .floating-project .floating-project-info > p,
+:root[data-theme="bluesky"] .floating-project .floating-project-bottom { color: #526b80 !important; }
+:root[data-theme="bluesky"] .floating-project .floating-open {
+  color: #176da8 !important;
+  background: #f8fbfe !important;
+  border-color: #176da8 !important;
+}
+:root[data-theme="bluesky"] .floating-project .floating-open:hover,
+:root[data-theme="bluesky"] .floating-project .floating-open:focus-visible {
+  color: #fff !important;
+  background: #176da8 !important;
+  border-color: #176da8 !important;
+}
+:root[data-theme="bluesky"] .floating-project :where(.project-meta,.project-tags,.tag) {
+  color: #45647d;
+  background-color: #e5eff6;
+  border-color: #b8ccdc;
+}
+.floating-controls .theme-toggle { display: inline-grid; place-items: center; padding: 0; }
+.floating-controls .theme-toggle > span {
+  display: block; width: 1em; height: 1em;
+  font-family: Arial, sans-serif; font-size: 1.2rem;
+  font-weight: 400; line-height: 1; text-align: center;
+}
+:root[data-theme="bluesky"] .floating-controls .theme-toggle { color: #176da8 !important; }
