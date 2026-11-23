@@ -3557,3 +3557,144 @@ button { -webkit-tap-highlight-color: transparent; }
     transition: none;
   }
 }
+
+
+/* Blue Sky: final, page-wide color normalization.
+   Keep all controls on the same accessible blue palette instead of inheriting
+   dark/dusk/light hard-coded text and button colors. */
+:root[data-theme="bluesky"] {
+  --bg: #eaf3f9;
+  --surface: #f8fbfe;
+  --surface-2: #dceaf4;
+  --line: #b8ccdc;
+  --text: #173247;
+  --muted: #526b80;
+  --accent: #176da8;
+  --blue-button-ink: #ffffff;
+}
+:root[data-theme="bluesky"] body,
+:root[data-theme="bluesky"] main,
+:root[data-theme="bluesky"] section {
+  color: var(--text);
+}
+:root[data-theme="bluesky"] :where(
+  h1,h2,h3,h4,h5,h6,
+  .hero .lede,.section-head,.section-head h2,
+  .timeline,.timeline strong,.timeline h3,
+  .article-shell,.article-shell :where(h1,h2,h3,h4,p,li,blockquote),
+  .blog-entry,.blog-entry :where(h2,h3,p),
+  .bookmark-entry,.bookmark-entry :where(h2,h3,p),
+  .work-card,.work-card :where(h2,h3,p),
+  .project-card,.project-card :where(h2,h3,p),
+  .floating-project,.floating-project :where(h2,h3,p),
+  .jam-card,.jam-card :where(h2,h3,p),
+  .contact-box,.contact-box :where(h2,h3,p)
+) { color: var(--text); }
+:root[data-theme="bluesky"] :where(
+  .hero .lede,.timeline p,.timeline .company,
+  .article-shell .article-meta,.blog-entry .blog-meta,
+  .bookmark-meta,.bookmark-description,
+  .project-meta,.floating-project-bottom,
+  .jam-card-detail,.jam-card-creator,
+  .bookmark-featured-date,.bookmark-featured-footer
+) { color: var(--muted); }
+
+/* Standard and primary buttons, including controls on pages other than home. */
+:root[data-theme="bluesky"] :where(
+  button,.btn,.button,.hero-next-card,.jam-card-link,
+  .bookmark-open,.article-original-link,
+  .theme-toggle,.music-toggle,.work-view-tab
+) {
+  color: var(--text);
+  background-color: var(--surface);
+  border-color: var(--line);
+}
+:root[data-theme="bluesky"] :where(
+  button,.btn,.button,.hero-next-card,.jam-card-link,
+  .bookmark-open,.article-original-link,.work-view-tab
+):hover,
+:root[data-theme="bluesky"] :where(
+  button,.btn,.button,.hero-next-card,.jam-card-link,
+  .bookmark-open,.article-original-link,.work-view-tab
+):focus-visible {
+  color: #124d76;
+  background-color: #dcecf7;
+  border-color: #6c9fc2;
+}
+:root[data-theme="bluesky"] :where(
+  .btn-primary,.btn-copy,.button-primary,
+  .hero-actions .btn-primary,.bookmark-open.btn-primary,
+  .contact-box .btn-primary
+) {
+  color: #fff !important;
+  background-color: #176da8 !important;
+  border-color: #176da8 !important;
+}
+:root[data-theme="bluesky"] :where(
+  .btn-primary,.btn-copy,.button-primary,
+  .hero-actions .btn-primary,.bookmark-open.btn-primary,
+  .contact-box .btn-primary
+):hover,
+:root[data-theme="bluesky"] :where(
+  .btn-primary,.btn-copy,.button-primary,
+  .hero-actions .btn-primary,.bookmark-open.btn-primary,
+  .contact-box .btn-primary
+):focus-visible {
+  color: #fff !important;
+  background-color: #105987 !important;
+  border-color: #105987 !important;
+  box-shadow: 0 5px 16px rgba(23,109,168,.2);
+}
+:root[data-theme="bluesky"] .floating-controls :where(.theme-toggle,.music-toggle) {
+  color: var(--text);
+  background-color: transparent;
+}
+:root[data-theme="bluesky"] .floating-controls :where(.theme-toggle,.music-toggle):hover,
+:root[data-theme="bluesky"] .floating-controls :where(.theme-toggle,.music-toggle):focus-visible {
+  color: #125d91;
+  background-color: #dcecf7;
+  border-color: #6c9fc2;
+}
+:root[data-theme="bluesky"] .floating-controls .music-toggle[aria-pressed="true"] {
+  color: #fff;
+  background-color: #176da8;
+  border-color: #176da8;
+}
+
+/* Keep each bookmark tag's own category hue; only normalize uncolored filters. */
+:root[data-theme="bluesky"] .bookmark-filter:not([style*="--bookmark-tag-hue"]) {
+  color: var(--text);
+  background: var(--surface-2);
+  border-color: var(--line);
+}
+:root[data-theme="bluesky"] .bookmark-filter:not([style*="--bookmark-tag-hue"])[aria-pressed="true"],
+:root[data-theme="bluesky"] .bookmark-filter:not([style*="--bookmark-tag-hue"]).active {
+  color: #fff;
+  background: #176da8;
+  border-color: #176da8;
+}
+:root[data-theme="bluesky"] :where(a,.accent,.blog-publication,.article-publication) {
+  color: #176da8;
+}
+:root[data-theme="bluesky"] :where(a:hover,.accent:hover) { color: #105987; }
+:root[data-theme="bluesky"] :where(input,textarea,select,.bookmark-search-wrap input) {
+  color: #173247;
+  background-color: #fff;
+  border-color: #a9c1d3;
+}
+:root[data-theme="bluesky"] :where(input,textarea,select,.bookmark-search-wrap input)::placeholder {
+  color: #60798d;
+  opacity: 1;
+}
+:root[data-theme="bluesky"] .blog-quote-paper,
+:root[data-theme="bluesky"] .blog-quote-paper :where(*) {
+  color: #302b25;
+}
+:root[data-theme="bluesky"] .blog-quote-paper {
+  background: #fffdf5;
+  border-color: #d9d0b8;
+}
+:root[data-theme="bluesky"] :where(a,button,input,textarea,select):focus-visible {
+  outline: 2px solid #176da8;
+  outline-offset: 3px;
+}
