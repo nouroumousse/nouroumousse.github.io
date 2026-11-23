@@ -3373,3 +3373,130 @@ button { -webkit-tap-highlight-color: transparent; }
   font-family: Arial, sans-serif; font-size: 1.2rem;
   font-weight: 400; line-height: 1; text-align: center;
 }
+
+
+/* ---------- Light theme: restrained monochrome system ---------- */
+:root[data-theme="light"] {
+  color-scheme: light;
+  --bg: #f3f3f1;
+  --surface: #ffffff;
+  --line: #c9c9c6;
+  --text: #191919;
+  --muted: #555553;
+  --accent: #252525;
+}
+:root[data-theme="light"] body,
+:root[data-theme="light"] .site-header {
+  color: #191919;
+  background-color: #f3f3f1;
+}
+:root[data-theme="light"] .site-header {
+  background: rgba(243,243,241,.94);
+  border-color: #c9c9c6;
+}
+:root[data-theme="light"] :is(
+  .card, .timeline li, .contact-box, .bookmark-card, .bookmark-item,
+  .shot-tile, .shot-card, .article-card, .post-card, .experience-item,
+  .floating-project, .recent-jam-card, .quote-card, .note-card,
+  .work-list-item, .blog-list-item
+) {
+  color: #191919;
+  background-color: #ffffff;
+  border-color: #c9c9c6;
+  box-shadow: 0 8px 24px rgba(0,0,0,.055);
+}
+:root[data-theme="light"] :is(
+  h1,h2,h3,h4,h5,h6,p,li,label,small,time,
+  .muted,.meta,.eyebrow,.section-number,.section-title,
+  .floating-project-info > p,.floating-project-bottom
+) {
+  text-shadow: none;
+}
+:root[data-theme="light"] :is(
+  .card, .timeline li, .contact-box, .bookmark-card, .bookmark-item,
+  .shot-tile, .shot-card, .article-card, .post-card, .experience-item,
+  .floating-project, .recent-jam-card, .quote-card, .note-card,
+  .work-list-item, .blog-list-item
+) :is(h1,h2,h3,h4,h5,h6,p,li,label,small,time,a:not(.btn):not(.button)) {
+  color: #202020;
+}
+:root[data-theme="light"] :is(.muted,.meta,.eyebrow,.date,.company,.subtitle) {
+  color: #555553;
+}
+:root[data-theme="light"] :is(
+  button, .btn, .button, a.btn, a.button, .btn-primary, .btn-copy,
+  .floating-open, .filter-button, .tag, .chip, .tab-button,
+  .work-tab, .theme-toggle, .music-toggle
+) {
+  color: #202020;
+  background-color: #ffffff;
+  border-color: #777775;
+  box-shadow: none;
+}
+:root[data-theme="light"] :is(
+  button, .btn, .button, a.btn, a.button, .btn-primary, .btn-copy,
+  .floating-open, .filter-button, .tag, .chip, .tab-button,
+  .work-tab, .theme-toggle, .music-toggle
+):hover,
+:root[data-theme="light"] :is(
+  button, .btn, .button, a.btn, a.button, .btn-primary, .btn-copy,
+  .floating-open, .filter-button, .tag, .chip, .tab-button,
+  .work-tab, .theme-toggle, .music-toggle
+):focus-visible {
+  color: #ffffff;
+  background-color: #292929;
+  border-color: #292929;
+}
+:root[data-theme="light"] :is(a, .text-link):not(.btn):not(.button) {
+  color: #222222;
+  text-decoration-color: #777775;
+}
+:root[data-theme="light"] :is(a, .text-link):not(.btn):not(.button):hover {
+  color: #000000;
+}
+:root[data-theme="light"] :is(.project-drag-handle,.floating-project-header,.card-header) {
+  color: #333333;
+  background: #e8e8e6;
+  border-color: #c9c9c6;
+}
+:root[data-theme="light"] :is(.project-drag-handle span:last-child,.floating-project-info h3) {
+  color: #191919;
+}
+:root[data-theme="light"] .floating-controls {
+  background: rgba(255,255,255,.97);
+  border-color: #bdbdb9;
+  box-shadow: 0 8px 28px rgba(0,0,0,.12);
+}
+:root[data-theme="light"] .floating-controls :is(.theme-toggle,.music-toggle) {
+  color: #202020;
+  background: #ffffff;
+  border-color: #777775;
+}
+:root[data-theme="light"] .music-toggle[aria-pressed="true"] {
+  color: #ffffff;
+  background: #292929;
+  border-color: #292929;
+  box-shadow: none;
+}
+:root[data-theme="light"] :is(.tag,.chip,.bookmark-tag,.category-tag) {
+  color: #303030;
+  background: #eeeeec;
+  border-color: #bdbdb9;
+}
+:root[data-theme="light"] :is(input,textarea,select) {
+  color: #191919;
+  background: #ffffff;
+  border-color: #858582;
+}
+:root[data-theme="light"] :is(input,textarea,select)::placeholder {
+  color: #666664;
+  opacity: 1;
+}
+:root[data-theme="light"] :is(hr,.divider,.section-head::after) {
+  border-color: #c9c9c6;
+  background-color: #c9c9c6;
+}
+:root[data-theme="light"] :focus-visible {
+  outline: 2px solid #292929;
+  outline-offset: 3px;
+}
