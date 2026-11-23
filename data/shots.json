@@ -34,5 +34,17 @@
     "image": "/media/gitpaid3-1.png",
     "order": 6,
     "visible": true
+  },
+  {
+    "title": "PONDER LOGO",
+    "image": "/media/ponder.png",
+    "order": 7,
+    "visible": true
+  },
+  {
+    "title": "FLOW LOGO",
+    "image": "/media/flow.png",
+    "order": 8,
+    "visible": true
   }
 ]
