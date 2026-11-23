@@ -22,5 +22,17 @@
     "image": "/media/tellhop4.png",
     "order": 4,
     "visible": true
+  },
+  {
+    "title": "3D MAC ON BLENDER",
+    "image": "/media/blender.png",
+    "order": 5,
+    "visible": true
+  },
+  {
+    "title": "GITPAID LOGO",
+    "image": "/media/gitpaid3-1.png",
+    "order": 6,
+    "visible": true
   }
 ]
