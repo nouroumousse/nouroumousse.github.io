@@ -97,7 +97,7 @@ if (!prefersReduced && "IntersectionObserver" in window) {
 })();
 
 
-// Persistent site-wide three-theme switch. Dusk is the default for new visitors.
+// Persistent site-wide four-theme switch. Dusk is the default for new visitors.
 (() => {
   const root = document.documentElement;
   const toggle = document.querySelector(".theme-toggle");
@@ -105,12 +105,13 @@ if (!prefersReduced && "IntersectionObserver" in window) {
 
   let savedTheme = null;
   try { savedTheme = localStorage.getItem("nour-theme"); } catch {}
-  const initialTheme = ["dark", "light", "dusk"].includes(savedTheme) ? savedTheme : "dusk";
-  const themes = ["dark", "light", "dusk"];
+  const initialTheme = ["dark", "light", "dusk", "bluesky"].includes(savedTheme) ? savedTheme : "dusk";
+  const themes = ["dark", "light", "dusk", "bluesky"];
   const labels = {
     dark: { next: "light", icon: "☾" },
     light: { next: "dusk", icon: "☼" },
-    dusk: { next: "dark", icon: "◐" }
+    dusk: { next: "bluesky", icon: "◐" },
+    bluesky: { next: "dark", icon: "☁" }
   };
 
   function applyTheme(theme) {
@@ -127,7 +128,8 @@ if (!prefersReduced && "IntersectionObserver" in window) {
       const palettes = {
         dark: { background: "#0a0a0b", foreground: "#d4ff3f" },
         light: { background: "#f5f5f1", foreground: "#668500" },
-        dusk: { background: "#252b33", foreground: "#f0bd72" }
+        dusk: { background: "#252b33", foreground: "#f0bd72" },
+        bluesky: { background: "#eaf4fb", foreground: "#1877b9" }
       };
       const colors = palettes[theme];
       const svg = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32"><rect width="32" height="32" rx="6" fill="${colors.background}"/><text x="16" y="22" font-family="monospace" font-size="16" font-weight="700" fill="${colors.foreground}" text-anchor="middle">N</text></svg>`;
