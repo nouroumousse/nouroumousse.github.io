@@ -10,5 +10,11 @@
     "image": "/media/sunset.png",
     "order": 2,
     "visible": true
+  },
+  {
+    "title": "TELLHOP LOGO OPTIONS",
+    "image": "/media/tellhop3.png",
+    "order": 3,
+    "visible": true
   }
 ]
