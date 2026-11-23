@@ -3480,3 +3480,80 @@ button { -webkit-tap-highlight-color: transparent; }
   background: var(--accent) !important;
   border-color: var(--accent) !important;
 }
+
+
+/* Small speech-bubble hints for the floating preference buttons. */
+.floating-controls .theme-toggle,
+.floating-controls .music-toggle {
+  position: relative;
+}
+.floating-controls .theme-toggle::after,
+.floating-controls .music-toggle::after {
+  content: attr(data-tooltip);
+  position: absolute;
+  left: 50%;
+  bottom: calc(100% + 11px);
+  z-index: 5;
+  width: max-content;
+  max-width: 130px;
+  padding: .38rem .55rem;
+  border: 1px solid var(--line);
+  border-radius: 5px;
+  color: var(--text);
+  background: var(--surface);
+  box-shadow: 0 4px 14px rgba(0,0,0,.14);
+  font: 500 .62rem/1.2 var(--font-mono);
+  letter-spacing: .015em;
+  white-space: nowrap;
+  pointer-events: none;
+  opacity: 0;
+  visibility: hidden;
+  transform: translate(-50%, 4px);
+  transition: opacity .16s ease, transform .16s ease, visibility .16s ease;
+}
+.floating-controls .theme-toggle::before,
+.floating-controls .music-toggle::before {
+  content: "";
+  position: absolute;
+  left: 50%;
+  bottom: calc(100% + 5px);
+  z-index: 6;
+  width: 7px;
+  height: 7px;
+  border-right: 1px solid var(--line);
+  border-bottom: 1px solid var(--line);
+  background: var(--surface);
+  pointer-events: none;
+  opacity: 0;
+  visibility: hidden;
+  transform: translate(-50%, 4px) rotate(45deg);
+  transition: opacity .16s ease, transform .16s ease, visibility .16s ease;
+}
+.floating-controls .theme-toggle:hover::before,
+.floating-controls .theme-toggle:hover::after,
+.floating-controls .music-toggle:hover::before,
+.floating-controls .music-toggle:hover::after,
+.floating-controls .theme-toggle:focus-visible::before,
+.floating-controls .theme-toggle:focus-visible::after,
+.floating-controls .music-toggle:focus-visible::before,
+.floating-controls .music-toggle:focus-visible::after {
+  opacity: 1;
+  visibility: visible;
+  transform: translate(-50%, 0);
+}
+@media (hover: none) {
+  .floating-controls .theme-toggle::before,
+  .floating-controls .theme-toggle::after,
+  .floating-controls .music-toggle::before,
+  .floating-controls .music-toggle::after {
+    display: none;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .floating-controls .theme-toggle::before,
+  .floating-controls .theme-toggle::after,
+  .floating-controls .music-toggle::before,
+  .floating-controls .music-toggle::after {
+    transition: none;
+  }
+}
