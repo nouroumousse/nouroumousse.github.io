@@ -144,5 +144,15 @@
     "date": "2026-11-22",
     "featured": false,
     "visible": true
+  },
+  {
+    "title": "Little City - A 3D building game inspired by townscaper",
+    "url": "https://littlecity.io/",
+    "tags": [
+      "game"
+    ],
+    "date": "2026-11-25",
+    "featured": false,
+    "visible": true
   }
 ]
