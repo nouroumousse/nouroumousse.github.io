@@ -154,5 +154,15 @@
     "date": "2026-11-25",
     "featured": false,
     "visible": true
+  },
+  {
+    "title": "Lope Os - an online MacOs clone",
+    "url": "https://lopeos.online/",
+    "tags": [
+      "website"
+    ],
+    "date": "2026-11-26",
+    "featured": false,
+    "visible": true
   }
 ]
