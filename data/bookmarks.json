@@ -164,5 +164,16 @@
     "date": "2026-11-26",
     "featured": false,
     "visible": true
+  },
+  {
+    "title": "UnKernel Dev - Full Linux kernal and distro in a browser tab.",
+    "url": "https://unkernel.dev/",
+    "tags": [
+      "website",
+      "tool"
+    ],
+    "date": "2026-11-28",
+    "featured": false,
+    "visible": true
   }
 ]
